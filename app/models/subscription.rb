@@ -10,8 +10,9 @@
 #
 # Indexes
 #
-#  index_subscriptions_on_user_id_and_channel_id  (user_id,channel_id)
-#  sqlite_autoindex_subscriptions_1               (id) UNIQUE
+#  index_subscriptions_on_channel_id  (channel_id)
+#  index_subscriptions_on_user_id     (user_id)
+#  sqlite_autoindex_subscriptions_1   (id) UNIQUE
 #
 
 class Subscription < ActiveRecord::Base
@@ -23,4 +24,7 @@ class Subscription < ActiveRecord::Base
   has_many :items, dependent: :destroy
   # convenience
   has_many :videos, through: :items
+
+  # TODO add cached counts of new and later items
+  # probably add scoped associations, with cached counts each?
 end

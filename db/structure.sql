@@ -15,7 +15,8 @@ CREATE TABLE "videos" ("id" binary(16) PRIMARY KEY NOT NULL, "api_id" varchar NO
 CREATE INDEX "index_videos_on_api_id" ON "videos" ("api_id");
 CREATE INDEX "index_videos_on_channel_id" ON "videos" ("channel_id");
 CREATE TABLE "subscriptions" ("id" binary(16) PRIMARY KEY NOT NULL, "user_id" binary(16) NOT NULL, "channel_id" binary(16) NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
-CREATE INDEX "index_subscriptions_on_user_id_and_channel_id" ON "subscriptions" ("user_id", "channel_id");
+CREATE INDEX "index_subscriptions_on_user_id" ON "subscriptions" ("user_id");
+CREATE INDEX "index_subscriptions_on_channel_id" ON "subscriptions" ("channel_id");
 CREATE TABLE "items" ("id" binary(16) PRIMARY KEY NOT NULL, "subscription_id" binary(16) NOT NULL, "video_id" binary(16) NOT NULL, "state" integer DEFAULT 0 NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE INDEX "index_items_on_subscription_id" ON "items" ("subscription_id");
 CREATE INDEX "index_items_on_video_id" ON "items" ("video_id");

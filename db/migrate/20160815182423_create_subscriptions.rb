@@ -9,6 +9,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :subscriptions, [ :user_id, :channel_id ]
+    add_index :subscriptions, :user_id
+    add_index :subscriptions, :channel_id
   end
 end
