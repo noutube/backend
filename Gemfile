@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.1'
+gem 'rails', '~> 4.2'
 
 # backend and database
 gem 'sqlite3'
@@ -8,6 +8,8 @@ gem 'sqlite3'
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
 gem 'simple_token_authentication'
+gem 'cancancan'
+gem 'rolify'
 
 # api
 gem 'jbuilder', '~> 2.0'
@@ -31,9 +33,11 @@ gem 'google-api-client'
 
 # development
 group :development, :test do
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'rubocop'
+  gem 'annotate', github: 'ctran/annotate_models'
 end
 
