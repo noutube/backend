@@ -4,6 +4,7 @@ gem 'rails', '~> 4.2'
 
 # backend and database
 gem 'sqlite3'
+gem 'activeuuid'
 #gem 'pg'
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise'

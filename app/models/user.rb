@@ -2,7 +2,7 @@
 #
 # Table name: users
 #
-#  id                     :uuid
+#  id                     :uuid(16)         not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
@@ -19,15 +19,20 @@
 #  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  authentication_token   :string
 #
 # Indexes
 #
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  sqlite_autoindex_users_1             (id) UNIQUE
 #
 
 class User < ActiveRecord::Base
+  include ActiveUUID::UUID
+  natural_key :created_at
+
   rolify
 
   acts_as_token_authenticatable

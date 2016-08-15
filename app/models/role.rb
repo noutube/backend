@@ -2,9 +2,9 @@
 #
 # Table name: roles
 #
-#  id            :uuid
+#  id            :uuid(16)         not null, primary key
 #  name          :string
-#  resource_id   :integer
+#  resource_id   :uuid(16)
 #  resource_type :string
 #  created_at    :datetime
 #  updated_at    :datetime
@@ -13,18 +13,19 @@
 #
 #  index_roles_on_name                                    (name)
 #  index_roles_on_name_and_resource_type_and_resource_id  (name,resource_type,resource_id)
+#  sqlite_autoindex_roles_1                               (id) UNIQUE
 #
 
 class Role < ActiveRecord::Base
-  has_and_belongs_to_many :users, :join_table => :users_roles
+  include ActiveUUID::UUID
+  natural_key :created_at
 
-  belongs_to :resource,
-             :polymorphic => true,
-             :optional => true
+  has_and_belongs_to_many :users, join_table: :users_roles
+  belongs_to :resource, polymorphic: true, required: false
 
   validates :resource_type,
-            :inclusion => { :in => Rolify.resource_types },
-            :allow_nil => true
+            inclusion: { in: Rolify.resource_types },
+            allow_nil: true
 
   scopify
 end
