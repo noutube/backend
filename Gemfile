@@ -11,9 +11,6 @@ gem 'simple_token_authentication'
 gem 'cancancan'
 gem 'rolify'
 
-# api
-gem 'jbuilder', '~> 2.0'
-
 # frontend and assets
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
