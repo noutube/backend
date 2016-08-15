@@ -35,6 +35,12 @@ class User < ActiveRecord::Base
 
   rolify
 
+  has_many :subscriptions, dependent: :destroy
+  has_many :channels, through: :subscriptions
+  # convenience
+  has_many :items, through: :subscriptions
+  has_many :videos, through: :subscriptions
+
   acts_as_token_authenticatable
 
   # Include default devise modules. Others available are:
