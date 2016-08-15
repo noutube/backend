@@ -9,19 +9,22 @@ class WelcomeController < ApplicationController
     @channels = [{ id: 'UCAWQEAjn8udSFKN6D4NlqWQ' }, { id: 'UCFKDEp9si4RmHFWJW1vYsMA' }, { id: 'UC3tNpTOHsTnkmbwztCs30sA' }]
     @videos = []
 
-    @channels.each do |channel|
-      # get channel data, updated infrequently
-      result = youtube.list_channels 'snippet,contentDetails',
-        id: channel[:id]
-      channel[:title] = result.items[0].snippet.title
-      channel[:thumbnail] = result.items[0].snippet.thumbnails.default.url
-      channel[:uploads] = result.items[0].content_details.related_playlists.uploads
-      channel[:checked] = DateTime.now - 4.days
+    # get channel data, updated infrequently
+    youtube.batch do |youtube|
+      @channels.each do |channel|
+        youtube.list_channels('snippet,contentDetails', id: channel[:id]) do |result|
+          item = result.items.first
+          channel[:title] = item.snippet.title
+          channel[:thumbnail] = item.snippet.thumbnails.default.url
+          channel[:uploads] = item.content_details.related_playlists.uploads
+          channel[:checked] = DateTime.now - 4.days # XXX arbitrary initial limit on videos to fetch
+        end
+      end
+    end
 
-      # check for new items
-      result = youtube.list_playlist_items 'snippet',
-        playlist_id: channel[:uploads],
-        max_results: 2
+    # get new videos
+    @channels.each do |channel|
+      result = youtube.list_playlist_items('snippet', playlist_id: channel[:uploads], max_results: 2)
       while true
         added = 0
         result.items.each do |item|
@@ -47,17 +50,14 @@ class WelcomeController < ApplicationController
       end
     end
 
-    # get durations
-    i = 0
-    limit = 50
-    while i < @videos.length
-      result = youtube.list_videos 'contentDetails',
-        id: @videos[i...i+limit].map{ |video| video[:id] }.join(','),
-        max_results: [@videos.length - i, limit].min
-      result.items.each do |item|
-        captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?(\d+)S/).captures
-        @videos[i][:duration] = (captures[1].nil? ? 0 : captures[1].to_i.hours) + (captures[3].nil? ? 0 : captures[3].to_i.minutes) + captures[4].to_i.seconds
-        i += 1
+    # get duration for each video
+    youtube.batch do |youtube|
+      @videos.each do |video|
+        youtube.list_videos('snippet,contentDetails', id: video[:id]) do |result|
+          item = result.items.first
+          captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?(\d+)S/).captures
+          video[:duration] = (captures[1].nil? ? 0 : captures[1].to_i.hours) + (captures[3].nil? ? 0 : captures[3].to_i.minutes) + captures[4].to_i.seconds
+        end
       end
     end
 
