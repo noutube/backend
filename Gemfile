@@ -7,10 +7,15 @@ gem 'sqlite3'
 gem 'activeuuid'
 #gem 'pg'
 gem 'activeadmin', github: 'activeadmin'
+
+# auth
 gem 'devise'
 gem 'simple_token_authentication'
 gem 'cancancan'
 gem 'rolify'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'signet'
 
 # frontend and assets
 gem 'sass-rails', '~> 5.0'
