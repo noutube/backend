@@ -6,7 +6,7 @@
 #  api_id     :string           not null
 #  title      :string           not null
 #  thumbnail  :string           not null
-#  uploads_id :string           not null
+#  uploads_id :string           default(""), not null
 #  checked_at :datetime         not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -19,7 +19,7 @@
 
 class Channel < ActiveRecord::Base
   include ActiveUUID::UUID
-  natural_key :created_at
+  natural_key :created_at, :api_id
 
   has_many :videos, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
@@ -30,5 +30,4 @@ class Channel < ActiveRecord::Base
   validates :api_id, presence: true
   validates :title, presence: true
   validates :thumbnail, presence: true
-  validates :uploads_id, presence: true
 end

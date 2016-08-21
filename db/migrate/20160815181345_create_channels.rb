@@ -6,7 +6,7 @@ class CreateChannels < ActiveRecord::Migration
 
       t.string :title, null: false
       t.string :thumbnail, null: false
-      t.string :uploads_id, null: false
+      t.string :uploads_id, default: '', null: false
       t.datetime :checked_at, null: false
 
       t.timestamps null: false

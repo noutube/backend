@@ -10,14 +10,15 @@
 #
 # Indexes
 #
-#  index_subscriptions_on_channel_id  (channel_id)
-#  index_subscriptions_on_user_id     (user_id)
-#  sqlite_autoindex_subscriptions_1   (id) UNIQUE
+#  index_subscriptions_on_channel_id              (channel_id)
+#  index_subscriptions_on_user_id                 (user_id)
+#  index_subscriptions_on_user_id_and_channel_id  (user_id,channel_id)
+#  sqlite_autoindex_subscriptions_1               (id) UNIQUE
 #
 
 class Subscription < ActiveRecord::Base
   include ActiveUUID::UUID
-  natural_key :created_at
+  natural_key :created_at, :user_id, :channel_id
 
   belongs_to :user
   belongs_to :channel

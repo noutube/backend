@@ -7,7 +7,7 @@ class CreateVideos < ActiveRecord::Migration
       t.uuid :channel_id, null: false
       t.string :title, null: false
       t.string :thumbnail, null: false
-      t.integer :duration, null: false
+      t.integer :duration, default: 0, null: false
       t.datetime :published_at, null: false
 
       t.timestamps null: false

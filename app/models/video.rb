@@ -7,7 +7,7 @@
 #  channel_id   :uuid(16)         not null
 #  title        :string           not null
 #  thumbnail    :string           not null
-#  duration     :integer          not null
+#  duration     :integer          default(0), not null
 #  published_at :datetime         not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -21,7 +21,7 @@
 
 class Video < ActiveRecord::Base
   include ActiveUUID::UUID
-  natural_key :created_at
+  natural_key :created_at, :api_id
 
   belongs_to :channel
   has_many :items, dependent: :destroy

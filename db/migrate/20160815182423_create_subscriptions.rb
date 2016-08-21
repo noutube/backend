@@ -11,5 +11,6 @@ class CreateSubscriptions < ActiveRecord::Migration
 
     add_index :subscriptions, :user_id
     add_index :subscriptions, :channel_id
+    add_index :subscriptions, [ :user_id, :channel_id ]
   end
 end
