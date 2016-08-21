@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     get 'users/sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
+  ActiveAdmin.routes(self)
+
   root 'welcome#index'
 
   get 'welcome/index'
