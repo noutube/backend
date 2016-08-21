@@ -1,6 +1,6 @@
 CREATE TABLE "schema_migrations" ("version" varchar NOT NULL);
 CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version");
-CREATE TABLE "users" ("id" binary(16) PRIMARY KEY NOT NULL, "email" varchar DEFAULT '' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "authentication_token" varchar, "provider" varchar DEFAULT '' NOT NULL, "uid" varchar DEFAULT '' NOT NULL, "access_token" varchar, "refresh_token" varchar, "expires_at" datetime);
+CREATE TABLE "users" ("id" binary(16) PRIMARY KEY NOT NULL, "email" varchar DEFAULT '' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "authentication_token" varchar, "provider" varchar DEFAULT '' NOT NULL, "uid" varchar DEFAULT '' NOT NULL, "refresh_token" varchar);
 CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email");
 CREATE TABLE "roles" ("id" binary(16) PRIMARY KEY NOT NULL, "name" varchar, "resource_id" binary(16), "resource_type" varchar, "created_at" datetime, "updated_at" datetime);
 CREATE TABLE "users_roles" ("user_id" binary(16), "role_id" binary(16));

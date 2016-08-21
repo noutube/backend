@@ -9,9 +9,7 @@
 #  authentication_token :string
 #  provider             :string           default(""), not null
 #  uid                  :string           default(""), not null
-#  access_token         :string
 #  refresh_token        :string
-#  expires_at           :datetime
 #
 # Indexes
 #
@@ -44,14 +42,8 @@ class User < ActiveRecord::Base
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
     end
-    user.update_authorization(auth.credentials)
+    user.refresh_token = auth.credentials.refresh_token
     user.save
     user
-  end
-
-  def update_authorization(credentials)
-    self.access_token = credentials.token
-    self.refresh_token = credentials.refresh_token
-    self.expires_at = Time.at(credentials.expires_at)
   end
 end

@@ -9,13 +9,11 @@ class WelcomeController < ApplicationController
       token_credential_uri: 'https://www.googleapis.com/oauth2/v3/token',
       client_id: ENV['GOOGLE_CLIENT_ID'],
       client_secret: ENV['GOOGLE_CLIENT_SECRET'],
-      access_token: current_user.access_token,
-      refresh_token: current_user.refresh_token,
-      expires_at: current_user.expires_at
+      refresh_token: current_user.refresh_token
     )
-
-    # call this and save changes back to DB
-    #authorization.refresh!
+    authorization.refresh!
+    current_user.refresh_token = authorization.refresh_token
+    current_user.save
 
     youtube = Google::Apis::YoutubeV3::YouTubeService.new
     youtube.authorization = authorization
