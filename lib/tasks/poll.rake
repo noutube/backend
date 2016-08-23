@@ -4,7 +4,7 @@ require 'google/apis/youtube_v3'
 namespace :nou2ube do
   desc 'Poll for new videos'
   task poll: :environment do
-    puts "getting subscriptions for #{User.count} users"
+    puts "getting subscriptions for #{User.count} users..."
     channel_count = Channel.count
     subscription_count = Subscription.count
     User.all.each do |user|
@@ -43,7 +43,7 @@ namespace :nou2ube do
                items.map{ |item| item.snippet.resource_id.channel_id })
         .destroy_all
     end
-    puts "added #{Channel.count - channel_count} channels, #{Subscription.count - subscription_count} subscriptions"
+    puts "added #{Channel.count - channel_count} channels (#{Subscription.count - subscription_count} subscriptions)"
 
     # create anonymous service
     youtube = Google::Apis::YoutubeV3::YouTubeService.new
@@ -51,8 +51,8 @@ namespace :nou2ube do
 
     # get uploads_id if missing
     channels = Channel.where(uploads_id: '')
-    puts "getting uploads_id for #{channels.count} channels"
     if channels.count > 0
+      puts "filling uploads_id for #{channels.count} channels..."
       youtube.batch do |youtube|
         channels.each do |channel|
           youtube.list_channels('snippet,contentDetails', id: channel.api_id) do |result, err|
@@ -65,7 +65,7 @@ namespace :nou2ube do
     end
 
     # get new videos
-    puts "getting new videos for #{Channel.count} channels"
+    puts "getting new videos for #{Channel.count} channels..."
     video_count = Video.count
     item_count = Item.count
     to_check = Channel.all.to_a.clone
@@ -109,18 +109,20 @@ namespace :nou2ube do
         end
       end
     end
-    puts "added #{Video.count - video_count} videos, #{Item.count - item_count} items"
+    puts "added #{Video.count - video_count} videos (#{Item.count - item_count} items)"
 
     # get duration if missing
     videos = Video.where(duration: 0)
-    puts "getting duration for #{videos.count} videos"
     if videos.count > 0
+      puts "filling duration for #{videos.count} videos..."
       youtube.batch do |youtube|
         videos.each do |video|
           youtube.list_videos('contentDetails', id: video.api_id) do |result, err|
             item = result.items.first
             captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
-            video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) + (captures[2].nil? ? 0 : captures[3].to_i.minutes) + (captures[4].nil? ? 0 : captures[5].to_i.seconds)
+            video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours)
+                              + (captures[2].nil? ? 0 : captures[3].to_i.minutes)
+                              + (captures[4].nil? ? 0 : captures[5].to_i.seconds)
             video.save
           end
         end
@@ -128,10 +130,13 @@ namespace :nou2ube do
     end
 
     # cull leftover records
-    video_count = Video.count
-    Video.where('(SELECT COUNT(*) FROM items WHERE items.video_id = videos.id) = 0').destroy_all
     channel_count = Channel.count
+    subscription_count = Subscription.count
+    video_count = Video.count
+    item_count = Item.count
     Channel.where('(SELECT COUNT(*) FROM subscriptions WHERE subscriptions.channel_id = channels.id) = 0').destroy_all
-    puts "culled #{video_count - Video.count} videos, #{channel_count - Channel.count} channels"
+    Video.where('(SELECT COUNT(*) FROM items WHERE items.video_id = videos.id) = 0').destroy_all
+    puts "culled #{channel_count - Channel.count} channels (#{subscription_count - Subscription.count} subscriptions)"
+    puts "culled #{video_count - Video.count} videos (#{item_count - Item.count} items)"
   end
 end
