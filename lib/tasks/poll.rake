@@ -25,9 +25,10 @@ namespace :nou2ube do
       youtube.authorization = authorization
 
       # get subscriptions
-      youtube.fetch_all do |token|
+      items = youtube.fetch_all do |token|
         youtube.list_subscriptions('snippet', mine: true, max_results: 50, page_token: token)
-      end.each do |item|
+      end
+      items.each do |item|
         channel = Channel.find_or_initialize_by(api_id: item.snippet.resource_id.channel_id)
         channel.title = item.snippet.title
         channel.thumbnail = item.snippet.thumbnails.default.url
@@ -35,9 +36,12 @@ namespace :nou2ube do
         channel.save
 
         Subscription.find_or_create_by(user: user, channel: channel)
-
-        # TODO remove subscriptions which no longer exist
       end
+      # remove subscriptions which no longer exist
+      Subscription.joins(:channel, :user)
+        .where('users.id = ? AND channels.api_id NOT IN (?)', user.id,
+               items.map{ |item| item.snippet.resource_id.channel_id })
+        .destroy_all
     end
     puts "added #{Channel.count - channel_count} channels, #{Subscription.count - subscription_count} subscriptions"
 
