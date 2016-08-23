@@ -66,24 +66,27 @@ namespace :nou2ube do
     item_count = Item.count
     to_check = Channel.all.to_a.clone
     to_check_token = {}
+    to_check_latest = {}
     while to_check.count > 0 do
       youtube.batch do |youtube|
         to_check.each do |channel|
           youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, err|
             to_check_token[channel.api_id] = result.next_page_token
-            added_all = true
+            to_check_latest[channel.api_id] = channel.checked_at if to_check_latest[channel.api_id].nil?
+
+            stop = false
             result.items.each do |item|
-              added = item.snippet.published_at.to_datetime > channel.checked_at
-              added_all = added_all && added
-              unless added
-                channel.checked_at = DateTime.now
-                channel.save
+              published_at = item.snippet.published_at.to_datetime
+              unless published_at > channel.checked_at
+                stop = true
                 break
               end
 
+              to_check_latest[channel.api_id] = published_at if published_at > to_check_latest[channel.api_id]
+
               video = Video.find_or_create_by(api_id: item.snippet.resource_id.video_id)  do |video|
                 video.channel = channel
-                video.published_at = item.snippet.published_at.to_datetime
+                video.published_at = published_at
                 video.title = item.snippet.title
                 video.thumbnail = item.snippet.thumbnails.default.url
               end
@@ -93,7 +96,11 @@ namespace :nou2ube do
               end
             end
 
-            to_check.delete channel unless added_all
+            if stop
+              to_check.delete channel
+              channel.checked_at = to_check_latest[channel.api_id]
+              channel.save
+            end
           end
         end
       end
