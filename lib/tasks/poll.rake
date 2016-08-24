@@ -120,9 +120,9 @@ namespace :nou2ube do
           youtube.list_videos('contentDetails', id: video.api_id) do |result, err|
             item = result.items.first
             captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
-            video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours)
-                              + (captures[2].nil? ? 0 : captures[3].to_i.minutes)
-                              + (captures[4].nil? ? 0 : captures[5].to_i.seconds)
+            video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +
+                             (captures[2].nil? ? 0 : captures[3].to_i.minutes) +
+                             (captures[4].nil? ? 0 : captures[5].to_i.seconds)
             video.save
           end
         end
