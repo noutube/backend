@@ -1,5 +1,6 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :subscription_id, :state
+  attributes :id, :state
 
+  belongs_to :subscription
   belongs_to :video
 end
