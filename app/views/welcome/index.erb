@@ -1,0 +1,23 @@
+<h2>New Videos</h1>
+<div id="new_videos">
+</div>
+
+<h2>Watch Later</h2>
+<div id="watch_later">
+</div>
+
+<script>
+  $.get('/items.json').then(function (items) {
+    window.items = items;
+
+    items.forEach(function (item) {
+      $(item.state === 'state_new' ? '#new_videos' : '#watch_later').append($('<div id="' + item.id + '" class="item">'
+          + '<img src="' + item.video.thumbnail + '" alt="thumbnail" />'
+          + '<p><a href="https://www.youtube.com/watch?v=' + item.video.api_id + '">' + item.video.title + '</a> &mdash; ' + item.video.duration + '</p>'
+          + '<p>Published at ' + item.video.published_at + '</p>'
+          + '<button onclick="javascript:$.ajax(\'/items/' + item.id + '/later\', { method: \'PUT\' });">Watch Later</button>'
+          + '<button onclick="javascript:$.ajax(\'/items/' + item.id + '\', { method: \'DELETE\' });">Delete</button>'
+          + '</div>'));
+    });
+  });
+</script>

@@ -27,6 +27,4 @@ class Item < ActiveRecord::Base
   # convenience
   has_one :channel, through: :video
   has_one :user, through: :subscription
-
-  # TODO on destroy, destroy associated video if no other items for it exist
 end

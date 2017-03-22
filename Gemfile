@@ -7,6 +7,7 @@ gem 'sqlite3'
 gem 'activeuuid'
 #gem 'pg'
 gem 'activeadmin', github: 'activeadmin'
+gem 'active_model_serializers', '~> 0.10.0'
 
 # auth
 gem 'devise'
@@ -28,12 +29,6 @@ gem 'turbolinks'
 # other
 gem 'google-api-client'
 
-# deployment
-#gem 'unicorn'
-#gem 'foreman'
-#gem 'capistrano-rails', group: :development
-#gem 'rails_12factor', group: :production
-
 # development
 group :development, :test do
   gem 'pry'
@@ -42,5 +37,13 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate', github: 'ctran/annotate_models'
+  gem 'thin'
 end
 
+group :production do
+  # deployment
+  #gem 'unicorn'
+  #gem 'foreman'
+  #gem 'capistrano-rails', group: :development
+  #gem 'rails_12factor', group: :production
+end
