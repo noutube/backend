@@ -88,6 +88,9 @@ GEM
     builder (3.2.2)
     byebug (9.0.5)
     cancancan (1.15.0)
+    climate_control (0.1.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -105,6 +108,12 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    ember-cli-rails (0.8.4)
+      cocaine (~> 0.5.8)
+      ember-cli-rails-assets (~> 0.6.2)
+      html_page (~> 0.1.0)
+      railties (>= 3.2)
+    ember-cli-rails-assets (0.6.2)
     erubis (2.7.0)
     eventmachine (1.2.3)
     execjs (2.7.0)
@@ -137,6 +146,7 @@ GEM
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
     hashie (3.4.4)
+    html_page (0.1.0)
     httpclient (2.8.2)
     hurley (0.2)
     i18n (0.7.0)
@@ -307,6 +317,7 @@ DEPENDENCIES
   cancancan
   coffee-rails (~> 4.1.0)
   devise
+  ember-cli-rails
   google-api-client
   jquery-rails
   omniauth

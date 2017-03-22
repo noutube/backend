@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
   def current_ability
     @current_ability ||= ::Ability.new(current_user)
   end
+
+  def force_trailing_slash
+    unless request.env['REQUEST_URI'].match(/[^\?]+/).to_s.last == '/'
+      redirect_to url_for(params.merge(trailing_slash: true)), status: 301
+    end
+  end
 end

@@ -1,8 +1,6 @@
 class ItemsController < ApplicationController
   acts_as_token_authentication_handler_for User
 
-  skip_before_action :verify_authenticity_token
-
   respond_to :json
 
   def index
