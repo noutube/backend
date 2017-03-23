@@ -12,6 +12,7 @@ ActiveAdmin.register Item do
     column :subscription do |item| link_to 'Subscription', admin_subscription_path(item.subscription) end
     column :user, sortable: 'user.email'
     column :channel, sortable: 'channel.title'
+    column :state
     actions
   end
 
