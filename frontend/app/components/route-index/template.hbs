@@ -1,0 +1,19 @@
+<h2>New Videos</h2>
+
+{{#each newSubscriptions as |subscription|}}
+  <h2>{{subscription.channel.title}}</h2>
+  <img src={{subscription.channel.thumbnail}}>
+  {{#each subscription.newItems as |item|}}
+    <p><a href="https://www.youtube.com/watch?v={{item.video.apiId}}">{{item.video.title}}</a> &mdash; {{item.video.duration}}, published at {{item.video.publishedAt}}</p>
+  {{/each}}
+{{/each}}
+
+<h2>Watch Later</h2>
+
+{{#each laterSubscriptions as |subscription|}}
+  <h2>{{subscription.channel.title}}</h2>
+  <img src={{subscription.channel.thumbnail}}>
+  {{#each subscription.laterItems as |item|}}
+    <p><a href="https://www.youtube.com/watch?v={{item.video.apiId}}">{{item.video.title}}</a> &mdash; {{item.video.duration}}, published at {{item.video.publishedAt}}</p>
+  {{/each}}
+{{/each}}
