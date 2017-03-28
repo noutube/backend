@@ -1,0 +1,10 @@
+<img src={{item.video.thumbnail}}>
+<div>
+  <p><a href="https://www.youtube.com/watch?v={{item.video.apiId}}">{{item.video.title}}</a></p>
+  <p>{{moment-duration item.video.duration 'seconds'}} long, published {{moment-from-now item.video.publishedAt}}</p>
+  {{#if item.isNew}}
+    <p><button {{action 'markLater'}}>Watch Later</button> <button {{action 'destroy'}}>Ignore</button></p>
+  {{else}}
+    <p><button {{action 'destroy'}}>Watched</button></p>
+  {{/if}}
+</div>

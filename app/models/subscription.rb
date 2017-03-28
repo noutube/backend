@@ -25,7 +25,4 @@ class Subscription < ActiveRecord::Base
   has_many :items, dependent: :destroy
   # convenience
   has_many :videos, through: :items
-
-  # TODO add cached counts of new and later items
-  # probably add scoped associations, with cached counts each?
 end

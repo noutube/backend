@@ -20,9 +20,6 @@ Rails.application.routes.draw do
 
   # API
 
-  get 'subscriptions', to: 'subscriptions#index'
-
-  get 'items', to: 'items#index'
-  put 'items/:item_id/later', to: 'items#later'
-  delete 'items/:item_id', to: 'items#destroy'
+  resources :subscriptions, only: [:index]
+  resources :items, only: [:index, :update, :destroy]
 end

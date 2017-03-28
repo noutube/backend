@@ -1,0 +1,12 @@
+{{#if items}}
+  <div class="subscription">
+    <img src={{subscription.channel.thumbnail}}>
+    <div>
+      <p><a href="https://www.youtube.com/channel/{{subscription.channel.apiId}}">{{subscription.channel.title}}</a></p>
+      <p>{{pluralize items.length 'video'}}</p>
+    </div>
+  </div>
+  {{#each items as |item|}}
+    {{display-item item=item}}
+  {{/each}}
+{{/if}}

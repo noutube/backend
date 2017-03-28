@@ -6,18 +6,20 @@ class ItemsController < ApiController
            include: [:video]
   end
 
-  def later
-    item = Item.find(params[:item_id])
+  def update
+    item = Item.find(params[:id])
     authorize! :update, item
-    item.state = :state_later
-    item.save!
-    render nothing: true
+    if item.update(params[:data][:attributes].permit(:state))
+      head :no_content
+    else
+      render json: item.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    item = Item.find(params[:item_id])
+    item = Item.find(params[:id])
     authorize! :destroy, item
     item.destroy!
-    render nothing: true
+    head :no_content
   end
 end

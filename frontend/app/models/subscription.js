@@ -5,14 +5,14 @@ export default DS.Model.extend({
   channel: DS.belongsTo('channel'),
   items: DS.hasMany('items'),
 
-  newItems: Ember.computed('items', function() {
+  newItems: Ember.computed('items.@each.state', function() {
     return DS.PromiseArray.create({
-      promise: this.get('items').then(items => items.filter(item => item.get('state') === 'state_new'))
+      promise: this.get('items').then(items => items.filter(item => item.get('isNew')))
     });
   }),
-  laterItems: Ember.computed('items', function() {
+  laterItems: Ember.computed('items.@each.state', function() {
     return DS.PromiseArray.create({
-      promise: this.get('items').then(items => items.filter(item => item.get('state') === 'state_later'))
+      promise: this.get('items').then(items => items.filter(item => !item.get('isNew')))
     });
   })
 });
