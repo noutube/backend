@@ -19,3 +19,6 @@
 # vim
 *.swp
 *.swo
+
+/.env
+/public/assets/

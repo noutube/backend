@@ -1,3 +1,3 @@
 EmberCli.configure do |c|
-  c.app :frontend
+  c.app :frontend, yarn: true
 end

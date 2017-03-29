@@ -48,3 +48,5 @@ group :production do
   #gem 'capistrano-rails', group: :development
   #gem 'rails_12factor', group: :production
 end
+
+gem 'dotenv-rails'
