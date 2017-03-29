@@ -1,7 +1,7 @@
 <img src={{item.video.thumbnail}}>
 <div>
   <p><a href="https://www.youtube.com/watch?v={{item.video.apiId}}">{{item.video.title}}</a></p>
-  <p>{{moment-duration item.video.duration 'seconds'}} long, published {{moment-from-now item.video.publishedAt}}</p>
+  <p><span title={{item.video.duration}}>{{moment-duration item.video.duration 'seconds'}}</span> long, published <span title={{moment item.video.publishedAt}}>{{moment-from-now item.video.publishedAt}}</span></p>
   {{#if item.isNew}}
     <p><button {{action 'markLater'}}>Watch Later</button> <button {{action 'destroy'}}>Ignore</button></p>
   {{else}}
