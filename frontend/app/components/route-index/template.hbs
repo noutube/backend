@@ -1,11 +1,13 @@
-<h2>New Videos</h2>
+{{#if newSubscriptions}}
+  <h2>New Videos</h2>
+  {{#each newSubscriptions as |subscription|}}
+    {{display-subscription subscription=subscription items=subscription.newItems}}
+  {{/each}}
+{{/if}}
 
-{{#each subscriptions as |subscription|}}
-  {{display-subscription subscription=subscription state='new'}}
-{{/each}}
-
-<h2>Watch Later</h2>
-
-{{#each subscriptions as |subscription|}}
-  {{display-subscription subscription=subscription state='later'}}
-{{/each}}
+{{#if laterSubscriptions}}
+  <h2>Watch Later</h2>
+  {{#each laterSubscriptions as |subscription|}}
+    {{display-subscription subscription=subscription items=subscription.laterItems}}
+  {{/each}}
+{{/if}}
