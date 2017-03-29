@@ -100,6 +100,8 @@ namespace :nou2ube do
               end
             end
 
+            stop = true unless result.next_page_token
+
             if stop
               to_check.delete channel
               channel.checked_at = to_check_latest[channel.api_id]
