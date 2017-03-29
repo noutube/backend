@@ -11,5 +11,4 @@ ActiveAdmin.register User do
 
   filter :email
   filter :roles
-  filter :channels_title, as: :string
 end

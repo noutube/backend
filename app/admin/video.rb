@@ -1,6 +1,8 @@
 ActiveAdmin.register Video do
   menu priority: 4
 
+  permit_params :channel_id, :title, :thumbnail, :duration, :published_at
+
   controller do
     def scoped_collection
       super.includes :channel

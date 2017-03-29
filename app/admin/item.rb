@@ -1,7 +1,7 @@
 ActiveAdmin.register Item do
   menu parent: 'Videos'
 
-  permit_params :state
+  permit_params :subscription_id, :video_id, :state
 
   controller do
     def scoped_collection
@@ -11,7 +11,7 @@ ActiveAdmin.register Item do
 
   index do
     column :video, sortable: 'video.title'
-    column :subscription do |item| link_to 'Subscription', admin_subscription_path(item.subscription) end
+    column :subscription
     column :user, sortable: 'user.email'
     column :channel, sortable: 'channel.title'
     column :state do |item|
@@ -28,6 +28,8 @@ ActiveAdmin.register Item do
   form do |f|
     semantic_errors
     inputs 'Details' do
+      input :video
+      input :subscription
       input :state, as: :select, collection: Item::STATE_LABELS.zip(Item.states.keys), include_blank: false
     end
     actions

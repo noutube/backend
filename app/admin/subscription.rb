@@ -1,6 +1,8 @@
 ActiveAdmin.register Subscription do
   menu parent: 'Channels'
 
+  permit_params :user_id, :channel_id
+
   controller do
     def scoped_collection
       super.includes :user, :channel

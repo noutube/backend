@@ -1,6 +1,8 @@
 ActiveAdmin.register Channel do
   menu priority: 3
 
+  permit_params :title, :thumbnail, :checked_at
+
   index do
     column :thumbnail do |channel|
       image_tag channel.thumbnail
@@ -17,5 +19,4 @@ ActiveAdmin.register Channel do
   config.sort_order = 'title_asc'
 
   filter :title
-  filter :users_email, as: :string
 end

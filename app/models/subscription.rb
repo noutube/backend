@@ -25,4 +25,8 @@ class Subscription < ActiveRecord::Base
   has_many :items, dependent: :destroy
   # convenience
   has_many :videos, through: :items
+
+  def display_name
+    "#{user.email} - #{channel.title}"
+  end
 end
