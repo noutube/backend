@@ -92,7 +92,7 @@ namespace :nou2ube do
                 video.channel = channel
                 video.published_at = published_at
                 video.title = item.snippet.title
-                video.thumbnail = item.snippet.thumbnails.default.url
+                video.thumbnail = item.snippet.thumbnails.medium.url
               end
 
               channel.users.each do |user|
