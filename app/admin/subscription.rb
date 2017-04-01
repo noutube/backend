@@ -10,8 +10,8 @@ ActiveAdmin.register Subscription do
   end
 
   index do
-    column :user, sortable: 'user.email'
-    column :channel, sortable: 'channel.title'
+    column :user, sortable: 'users.email'
+    column :channel, sortable: 'channels.title'
     actions
   end
 

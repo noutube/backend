@@ -16,7 +16,7 @@ ActiveAdmin.register Video do
     column :title do |video|
       link_to video.title, "https://youtube.com/watch?v=#{video.api_id}"
     end
-    column :channel, sortable: 'channel.title'
+    column :channel, sortable: 'channels.title'
     column :duration do |video|
       span Time.at(video.duration).utc.strftime('%H:%M:%S'), title: video.duration
     end

@@ -10,10 +10,10 @@ ActiveAdmin.register Item do
   end
 
   index do
-    column :video, sortable: 'video.title'
+    column :video, sortable: 'videos.title'
     column :subscription
-    column :user, sortable: 'user.email'
-    column :channel, sortable: 'channel.title'
+    column :user, sortable: 'users.email'
+    column :channel, sortable: 'channels.title'
     column :state do |item|
       Item::STATE_LABELS[Item.states[item.state]]
     end
