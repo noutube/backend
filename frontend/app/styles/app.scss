@@ -31,9 +31,16 @@ a {
   text-decoration: none;
 }
 
+html,
+body,
+body > div {
+  height: 100%;
+}
+
 // our styles
 
 .container {
+  min-height: 100%;
   font-family: sans-serif;
   background: $base3;
   color: $base00;
