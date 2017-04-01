@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   # API
   resources :subscriptions, only: [:index]
   resources :items, only: [:index, :update, :destroy]
+  get 'push/:channel_id', to: 'push#validate'
+  post 'push/:channel_id', to: 'push#callback'
 end
