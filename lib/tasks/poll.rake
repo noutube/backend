@@ -88,15 +88,11 @@ namespace :nou2ube do
 
               to_check_latest[channel.api_id] = published_at if published_at > to_check_latest[channel.api_id]
 
-              video = Video.find_or_create_by(api_id: item.snippet.resource_id.video_id)  do |video|
+              video = Video.find_or_create_by(api_id: item.snippet.resource_id.video_id) do |video|
                 video.channel = channel
                 video.published_at = published_at
                 video.title = item.snippet.title
                 video.thumbnail = item.snippet.thumbnails.medium.url
-              end
-
-              channel.users.each do |user|
-                Item.find_or_create_by(subscription: Subscription.find_by(user: user, channel: channel), video: video)
               end
             end
 

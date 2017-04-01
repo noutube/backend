@@ -32,4 +32,10 @@ class Video < ActiveRecord::Base
   validates :api_id, presence: true
   validates :title, presence: true
   validates :thumbnail, presence: true
+
+  after_create do
+    channel.users.each do |user|
+      Item.find_or_create_by(subscription: Subscription.find_by(user: user, channel: channel), video: self)
+    end
+  end
 end
