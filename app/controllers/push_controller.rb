@@ -29,7 +29,7 @@ class PushController < ApplicationController
     elsif video.new_record?
       youtube = Google::Apis::YoutubeV3::YouTubeService.new
       youtube.key = ENV['GOOGLE_API_KEY']
-      youtube.list_videos('snippet,contentDetails', id: video.api_id) do |result, err|
+      youtube.list_videos('snippet,contentDetails', id: video.api_id) do |result, _err|
         item = result.items.first
         captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
         video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +

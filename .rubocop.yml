@@ -1,0 +1,47 @@
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'frontend/**/*'
+
+# ignore things we disagree with
+
+Bundler/OrderedGems:
+  Exclude:
+    - 'Gemfile'
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+
+# ignore all metrics
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# ignore all documentation
+
+Style/Documentation:
+  Enabled: false

@@ -39,9 +39,9 @@ namespace :nou2ube do
       end
       # remove subscriptions which no longer exist
       Subscription.joins(:channel, :user)
-        .where('users.id = ? AND channels.api_id NOT IN (?)', user.id,
-               items.map{ |item| item.snippet.resource_id.channel_id })
-        .destroy_all
+                  .where('users.id = ? AND channels.api_id NOT IN (?)', user.id,
+                         items.map { |item| item.snippet.resource_id.channel_id })
+                  .destroy_all
     end
     puts "added #{Channel.count - channel_count} channels (#{Subscription.count - subscription_count} subscriptions)"
 
@@ -55,7 +55,7 @@ namespace :nou2ube do
       puts "filling uploads_id for #{channels.count} channels..."
       youtube.batch do |youtube|
         channels.each do |channel|
-          youtube.list_channels('snippet,contentDetails', id: channel.api_id) do |result, err|
+          youtube.list_channels('snippet,contentDetails', id: channel.api_id) do |result, _err|
             item = result.items.first
             channel.uploads_id = item.content_details.related_playlists.uploads
             channel.save
@@ -71,10 +71,10 @@ namespace :nou2ube do
     to_check = Channel.all.to_a.clone
     to_check_token = {}
     to_check_latest = {}
-    while to_check.count > 0 do
+    while to_check.count > 0
       youtube.batch do |youtube|
         to_check.each do |channel|
-          youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, err|
+          youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, _err|
             to_check_token[channel.api_id] = result.next_page_token
             to_check_latest[channel.api_id] = channel.checked_at if to_check_latest[channel.api_id].nil?
 
@@ -88,7 +88,7 @@ namespace :nou2ube do
 
               to_check_latest[channel.api_id] = published_at if published_at > to_check_latest[channel.api_id]
 
-              video = Video.find_or_create_by(api_id: item.snippet.resource_id.video_id) do |video|
+              Video.find_or_create_by(api_id: item.snippet.resource_id.video_id) do |video|
                 video.channel = channel
                 video.published_at = published_at
                 video.title = item.snippet.title
@@ -115,7 +115,7 @@ namespace :nou2ube do
       puts "filling duration for #{videos.count} videos..."
       youtube.batch do |youtube|
         videos.each do |video|
-          youtube.list_videos('contentDetails', id: video.api_id) do |result, err|
+          youtube.list_videos('contentDetails', id: video.api_id) do |result, _err|
             item = result.items.first
             captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
             video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +

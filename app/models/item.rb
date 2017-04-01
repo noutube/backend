@@ -20,7 +20,7 @@ class Item < ActiveRecord::Base
   include ActiveUUID::UUID
   natural_key :created_at, :subscription_id, :video_id
 
-  enum state: [ :state_new, :state_later ]
+  enum state: [:state_new, :state_later]
   STATE_LABELS = ['New', 'Later'].freeze
 
   belongs_to :subscription

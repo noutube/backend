@@ -5,7 +5,7 @@ gem 'rails', '~> 4.2'
 # backend and database
 gem 'sqlite3'
 gem 'activeuuid'
-#gem 'pg'
+# gem 'pg'
 gem 'activeadmin', github: 'activeadmin'
 gem 'active_model_serializers', '~> 0.10.0'
 
@@ -22,7 +22,7 @@ gem 'signet'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
-#gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'ember-cli-rails'
@@ -32,6 +32,7 @@ gem 'google-api-client'
 
 # development
 group :development, :test do
+  gem 'rubocop'
   gem 'pry'
   gem 'pry-byebug'
   gem 'quiet_assets'
@@ -43,10 +44,10 @@ end
 
 group :production do
   # deployment
-  #gem 'unicorn'
-  #gem 'foreman'
-  #gem 'capistrano-rails', group: :development
-  #gem 'rails_12factor', group: :production
+  # gem 'unicorn'
+  # gem 'foreman'
+  # gem 'capistrano-rails', group: :development
+  # gem 'rails_12factor', group: :production
 end
 
 gem 'dotenv-rails'
