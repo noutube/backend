@@ -19,8 +19,11 @@
 #
 
 require 'securerandom'
+require 'net/http'
 
 class Channel < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+
   include ActiveUUID::UUID
   natural_key :created_at, :api_id
 
@@ -38,5 +41,19 @@ class Channel < ActiveRecord::Base
 
   def generate_secret_key
     self.secret_key = SecureRandom.hex
+  end
+
+  before_destroy do
+    subscribe('unsubscribe')
+  end
+
+  def subscribe(mode = 'subscribe')
+    Net::HTTP.post_form \
+      URI('https://pubsubhubbub.appspot.com/subscribe'),
+      'hub.callback' => push_callback_url(api_id),
+      'hub.topic' => "https://www.youtube.com/xml/feeds/videos.xml?channel_id=#{api_id}",
+      'hub.mode' => mode,
+      'hub.secret' => secret_key,
+      'hub.verify' => 'async'
   end
 end

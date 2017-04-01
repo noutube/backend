@@ -1,7 +1,7 @@
 Rails.application.configure do
-  config.action_controller.default_url_options = { host: 'noutu.be' }
-
   # Settings specified here will take precedence over those in config/application.rb.
+  Rails.application.routes.default_url_options = { host: 'noutu.be' }
+  config.action_mailer.default_url_options = { host: 'noutu.be' }
 
   # Code is not reloaded between requests.
   config.cache_classes = true

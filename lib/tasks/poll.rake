@@ -137,5 +137,11 @@ namespace :nou2ube do
     Video.where('(SELECT COUNT(*) FROM items WHERE items.video_id = videos.id) = 0').destroy_all
     puts "culled #{channel_count - Channel.count} channels (#{subscription_count - Subscription.count} subscriptions)"
     puts "culled #{video_count - Video.count} videos (#{item_count - Item.count} items)"
+
+    # subscribe for push notifications to supplement polling
+    puts "refreshing push notification subscription for #{Channel.count} channels..."
+    Channel.all.each do |channel|
+      channel.subscribe
+    end
   end
 end
