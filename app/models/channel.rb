@@ -43,6 +43,8 @@ class Channel < ActiveRecord::Base
     self.secret_key = SecureRandom.hex
   end
 
+  after_create :subscribe
+
   before_destroy do
     subscribe('unsubscribe')
   end
