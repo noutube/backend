@@ -24,7 +24,9 @@ class PushController < ApplicationController
       video.title = entry['title']
     end
 
-    if video.new_record?
+    if video.published_at < 1.hour.ago
+      # ignore, just someone updating an ancient video
+    elsif video.new_record?
       youtube = Google::Apis::YoutubeV3::YouTubeService.new
       youtube.key = ENV['GOOGLE_API_KEY']
       youtube.list_videos('snippet,contentDetails', id: video.api_id) do |result, err|
