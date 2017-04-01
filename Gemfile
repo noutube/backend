@@ -1,11 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2'
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
+gem 'rails', '~> 5.0.2'
 
 # backend and database
+gem 'thin'
 gem 'sqlite3'
 gem 'activeuuid'
-#gem 'pg'
 gem 'activeadmin', github: 'activeadmin'
 gem 'active_model_serializers', '~> 0.10.0'
 
@@ -21,10 +26,9 @@ gem 'signet'
 # frontend and assets
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
-#gem 'therubyracer', platforms: :ruby
+gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
-gem 'turbolinks'
+gem 'turbolinks', '~> 5'
 gem 'ember-cli-rails'
 
 # other
@@ -32,21 +36,19 @@ gem 'google-api-client'
 
 # development
 group :development, :test do
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '~> 3.0.5'
   gem 'pry'
   gem 'pry-byebug'
-  gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate', github: 'ctran/annotate_models'
-  gem 'thin'
 end
 
+# deployment
 group :production do
-  # deployment
-  #gem 'unicorn'
-  #gem 'foreman'
-  #gem 'capistrano-rails', group: :development
-  #gem 'rails_12factor', group: :production
+  gem 'dotenv-rails'
 end
 
-gem 'dotenv-rails'
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -16,7 +16,7 @@
 #  sqlite_autoindex_subscriptions_1               (id) UNIQUE
 #
 
-class Subscription < ActiveRecord::Base
+class Subscription < ApplicationRecord
   include ActiveUUID::UUID
   natural_key :created_at, :user_id, :channel_id
 

@@ -21,7 +21,7 @@
 require 'securerandom'
 require 'net/http'
 
-class Channel < ActiveRecord::Base
+class Channel < ApplicationRecord
   include Rails.application.routes.url_helpers
 
   include ActiveUUID::UUID

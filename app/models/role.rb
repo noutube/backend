@@ -16,7 +16,7 @@
 #  sqlite_autoindex_roles_1                               (id) UNIQUE
 #
 
-class Role < ActiveRecord::Base
+class Role < ApplicationRecord
   include ActiveUUID::UUID
   natural_key :created_at
 

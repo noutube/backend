@@ -16,7 +16,7 @@
 #  sqlite_autoindex_items_1        (id) UNIQUE
 #
 
-class Item < ActiveRecord::Base
+class Item < ApplicationRecord
   include ActiveUUID::UUID
   natural_key :created_at, :subscription_id, :video_id
 

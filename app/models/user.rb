@@ -18,7 +18,7 @@
 #  sqlite_autoindex_users_1         (id) UNIQUE
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include ActiveUUID::UUID
   natural_key :created_at
 

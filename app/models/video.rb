@@ -19,7 +19,7 @@
 #  sqlite_autoindex_videos_1   (id) UNIQUE
 #
 
-class Video < ActiveRecord::Base
+class Video < ApplicationRecord
   include ActiveUUID::UUID
   natural_key :created_at, :api_id
 
