@@ -1,5 +1,26 @@
+// solarized
+$base03:    #002b36;
+$base02:    #073642;
+$base01:    #586e75;
+$base00:    #657b83;
+$base0:     #839496;
+$base1:     #93a1a1;
+$base2:     #eee8d5;
+$base3:     #fdf6e3;
+$yellow:    #b58900;
+$orange:    #cb4b16;
+$red:       #dc322f;
+$magenta:   #d33682;
+$violet:    #6c71c4;
+$blue:      #268bd2;
+$cyan:      #2aa198;
+$green:     #859900;
+
+// override defaults
+
 body {
-  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 p {
@@ -7,32 +28,79 @@ p {
 }
 
 a {
-  color: rgb(0, 0, 0);
   text-decoration: none;
-  text-shadow: 1px 1px 3px rgb(95, 95, 95);
 }
 
-h2 {
-  border-radius: 8px;
-  padding: 4px 0 0 4px;
-  margin: 8px 0px;
-  border: 1px solid rgb(137, 195, 235);
-  background: linear-gradient(to bottom,  rgb(235,241,246) 0%,rgb(171,211,238) 50%,rgb(137,195,235) 51%,rgb(213,235,251) 100%);
+// our styles
+
+.container {
+  font-family: sans-serif;
+  background: $base3;
+  color: $base00;
+
+  &.dark {
+    background: $base03;
+    color: $base0;
+  }
+}
+
+.menu-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px;
+  background: $blue;
+  color: $base3;
+  font-size: 20px;
+  font-weight: bold;
+
+  a {
+    padding: 0 8px;
+    color: inherit;
+  }
+
+  .dark & {
+    color: $base03;
+  }
+}
+
+.section {
+  margin: 0;
+  padding: 8px 16px;
+  background: $blue;
+  color: $base3;
+  font-size: 20px;
+  font-weight: bold;
+
+  .dark & {
+    color: $base03;
+  }
 }
 
 .subscription {
   display: flex;
   align-items: center;
 
-  margin: 8px;
-  border-radius: 8px;
-  border: 1px solid rgb(181, 198, 208);
-  background: linear-gradient(to bottom,  rgb(191,210,85) 0%,rgb(142,185,42) 50%,rgb(114,170,0) 51%,rgb(158,203,45) 100%);
+  padding: 8px;
+  background: $base2;
 
   img {
-    margin: 4px;
+    margin-right: 8px;
     width: 44px;
     height: 44px;
+  }
+
+  a {
+    font-weight: bold;
+    color: $base01;
+
+    .dark & {
+      color: $base1;
+    }
+  }
+
+  .dark & {
+    background: $base02;
   }
 }
 
@@ -40,11 +108,25 @@ h2 {
   display: flex;
   align-items: center;
 
-  margin: 8px;
+  margin: 8px 0;
+  padding: 0 16px;
 
   img {
-    margin: 4px;
+    margin-right: 8px;
     width: 106px;
     height: 60px;
+  }
+
+  p:nth-of-type(1) a {
+    font-weight: bold;
+    color: $base01;
+
+    .dark & {
+      color: $base1;
+    }
+  }
+
+  p:nth-of-type(3) a {
+    color: $violet;
   }
 }

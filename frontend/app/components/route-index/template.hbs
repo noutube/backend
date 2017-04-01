@@ -1,14 +1,12 @@
-<a href="/users/sign_out">Sign Out</a>
-
 {{#if newSubscriptions}}
-  <h2>New Videos</h2>
+  {{#section-header}}New Videos{{/section-header}}
   {{#each newSubscriptions as |subscription|}}
     {{display-subscription subscription=subscription items=subscription.newItems}}
   {{/each}}
 {{/if}}
 
 {{#if laterSubscriptions}}
-  <h2>Watch Later</h2>
+  {{#section-header}}Watch Later{{/section-header}}
   {{#each laterSubscriptions as |subscription|}}
     {{display-subscription subscription=subscription items=subscription.laterItems}}
   {{/each}}
