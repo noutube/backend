@@ -8,10 +8,18 @@ class PushController < ApplicationController
   end
 
   def callback
-    entry = Hash.from_xml(request.body)['feed']['entry']
+    channel = Channel.find_by(api_id: params[:channel_id])
+    body = request.body.read
 
+    signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), channel.secret_key, body)
+    if "sha1=#{signature}" != request.headers['X-Hub-Signature']
+      render nothing: true, status: 200
+      return
+    end
+
+    entry = Hash.from_xml(body)['feed']['entry']
     video = Video.find_or_initialize_by(api_id: entry['videoId']) do |video|
-      video.channel = Channel.find_by(api_id: entry['channelId'])
+      video.channel = channel
       video.published_at = entry['published']
       video.title = entry['title']
     end
@@ -19,7 +27,7 @@ class PushController < ApplicationController
     if video.new_record?
       youtube = Google::Apis::YoutubeV3::YouTubeService.new
       youtube.key = ENV['GOOGLE_API_KEY']
-      youtube.list_videos('snippet,contentDetails', id: entry['videoId']) do |result, err|
+      youtube.list_videos('snippet,contentDetails', id: video.api_id) do |result, err|
         item = result.items.first
         captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
         video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +

@@ -7,7 +7,7 @@ CREATE TABLE "users_roles" ("user_id" binary(16), "role_id" binary(16));
 CREATE INDEX "index_roles_on_name" ON "roles" ("name");
 CREATE INDEX "index_roles_on_name_and_resource_type_and_resource_id" ON "roles" ("name", "resource_type", "resource_id");
 CREATE INDEX "index_users_roles_on_user_id_and_role_id" ON "users_roles" ("user_id", "role_id");
-CREATE TABLE "channels" ("id" binary(16) PRIMARY KEY NOT NULL, "api_id" varchar NOT NULL, "title" varchar NOT NULL, "thumbnail" varchar NOT NULL, "uploads_id" varchar DEFAULT '' NOT NULL, "checked_at" datetime NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
+CREATE TABLE "channels" ("id" binary(16) PRIMARY KEY NOT NULL, "api_id" varchar NOT NULL, "title" varchar NOT NULL, "thumbnail" varchar NOT NULL, "uploads_id" varchar DEFAULT '' NOT NULL, "checked_at" datetime NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "secret_key" varchar DEFAULT '' NOT NULL);
 CREATE INDEX "index_channels_on_api_id" ON "channels" ("api_id");
 CREATE TABLE "videos" ("id" binary(16) PRIMARY KEY NOT NULL, "api_id" varchar NOT NULL, "channel_id" binary(16) NOT NULL, "title" varchar NOT NULL, "thumbnail" varchar NOT NULL, "duration" integer DEFAULT 0 NOT NULL, "published_at" datetime NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE INDEX "index_videos_on_api_id" ON "videos" ("api_id");
@@ -37,4 +37,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160815184158');
 INSERT INTO schema_migrations (version) VALUES ('20160817162932');
 
 INSERT INTO schema_migrations (version) VALUES ('20160817173237');
+
+INSERT INTO schema_migrations (version) VALUES ('20170401020551');
 
