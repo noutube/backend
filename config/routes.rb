@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   # frontend
+  get 'frontend', to: redirect('/', status: 302)
   mount_ember_app :frontend, to: '/', controller: 'frontend'
 
   # API
