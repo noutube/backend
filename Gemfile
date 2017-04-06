@@ -10,7 +10,7 @@ gem 'rails', '~> 5.0.2'
 # backend and database
 gem 'thin'
 gem 'sqlite3'
-gem 'activeuuid'
+gem 'activeuuid', github: 'inbeom/activeuuid'
 gem 'activeadmin', github: 'activeadmin'
 gem 'active_model_serializers', '~> 0.10.0'
 

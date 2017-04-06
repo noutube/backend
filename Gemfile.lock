@@ -25,6 +25,14 @@ GIT
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 12.0)
 
+GIT
+  remote: https://github.com/inbeom/activeuuid.git
+  revision: 4d5609a592914e9ade224a04f5a56a21ba1873af
+  specs:
+    activeuuid (0.6.1)
+      activerecord (>= 4.0)
+      uuidtools
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -70,9 +78,6 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    activeuuid (0.6.1)
-      activerecord (>= 3.1)
-      uuidtools
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     arbre (1.1.1)
@@ -342,7 +347,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
   activeadmin!
-  activeuuid
+  activeuuid!
   annotate!
   better_errors
   binding_of_caller
@@ -371,4 +376,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.13.5
+   1.14.6
