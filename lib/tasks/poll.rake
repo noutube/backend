@@ -115,7 +115,8 @@ namespace :nou2ube do
       puts "filling duration for #{videos.count} videos..."
       youtube.batch do |youtube|
         videos.each do |video|
-          youtube.list_videos('contentDetails', id: video.api_id) do |result, _err|
+          youtube.list_videos('contentDetails', id: video.api_id) do |result, err|
+            next if err
             item = result.items.first
             captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
             video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +
