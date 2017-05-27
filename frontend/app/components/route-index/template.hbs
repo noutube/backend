@@ -1,3 +1,7 @@
+{{#portal-content for="menu-bar-extras"}}
+  <a href="#" {{action 'refresh'}}><img src="/assets/images/refresh.png" alt="Refresh"></a>
+{{/portal-content}}
+
 {{#if newSubscriptions}}
   {{#section-header}}New Videos{{/section-header}}
   {{#each newSubscriptions as |subscription|}}

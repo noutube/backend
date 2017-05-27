@@ -7,5 +7,11 @@ export default Ember.Route.extend({
       items: this.get('store').findAll('item'),
       subscriptions: this.get('store').findAll('subscription')
     });
+  },
+
+  actions: {
+    refresh() {
+      this.refresh();
+    }
   }
 });

@@ -14,5 +14,11 @@ export default Ember.Component.extend({
     return DS.PromiseArray.create({
       promise: Ember.RSVP.filter(this.get('subscriptions').toArray(), (subscription) => subscription.get('laterItems').then((items) => items.length > 0))
     });
-  })
+  }),
+
+  actions: {
+    refresh() {
+      this.attrs.refresh();
+    }
+  }
 });
