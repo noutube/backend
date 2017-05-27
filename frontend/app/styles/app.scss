@@ -65,6 +65,13 @@ body > div {
   a {
     padding: 0 8px;
     color: inherit;
+
+    img {
+      margin: -8px 0;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+    }
   }
 
   .dark & {
