@@ -71,6 +71,11 @@ body > div {
       width: 24px;
       height: 24px;
       vertical-align: middle;
+      filter: invert(100%);
+
+      .dark & {
+        filter: invert(0%);
+      }
     }
   }
 
