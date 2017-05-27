@@ -1,5 +1,5 @@
 <div class="subscription">
-  <img src={{subscription.channel.thumbnail}}>
+  <img src={{subscription.channel.thumbnail}} alt={{subscription.channel.title}}>
   <div>
     <p><a href="https://www.youtube.com/channel/{{subscription.channel.apiId}}">{{subscription.channel.title}}</a></p>
     <p>{{pluralize items.length 'video'}}, <span title={{totalDuration}}>{{moment-duration totalDuration 'seconds'}}</span></p>

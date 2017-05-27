@@ -7,12 +7,12 @@ export default Ember.Component.extend({
 
   newSubscriptions: Ember.computed('subscriptions.@each.newItems', function() {
     return DS.PromiseArray.create({
-      promise: Ember.RSVP.filter(this.get('subscriptions').toArray(), subscription => subscription.get('newItems').then(items => items.length > 0))
+      promise: Ember.RSVP.filter(this.get('subscriptions').toArray(), (subscription) => subscription.get('newItems').then((items) => items.length > 0))
     });
   }),
   laterSubscriptions: Ember.computed('subscriptions.@each.laterItems', function() {
     return DS.PromiseArray.create({
-      promise: Ember.RSVP.filter(this.get('subscriptions').toArray(), subscription => subscription.get('laterItems').then(items => items.length > 0))
+      promise: Ember.RSVP.filter(this.get('subscriptions').toArray(), (subscription) => subscription.get('laterItems').then((items) => items.length > 0))
     });
   })
 });

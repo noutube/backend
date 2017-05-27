@@ -1,0 +1,5 @@
+rules:
+  nesting-depth: 0
+  property-sort-order:
+    - 1
+    - order: concentric

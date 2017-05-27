@@ -7,12 +7,12 @@ export default DS.Model.extend({
 
   newItems: Ember.computed('items.@each.state', function() {
     return DS.PromiseArray.create({
-      promise: this.get('items').then(items => items.filter(item => item.get('isNew')))
+      promise: this.get('items').then((items) => items.filter((item) => item.get('isNew')))
     });
   }),
   laterItems: Ember.computed('items.@each.state', function() {
     return DS.PromiseArray.create({
-      promise: this.get('items').then(items => items.filter(item => !item.get('isNew')))
+      promise: this.get('items').then((items) => items.filter((item) => !item.get('isNew')))
     });
   })
 });

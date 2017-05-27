@@ -10,5 +10,5 @@ export default Ember.Component.extend({
 
   themeClass: Ember.computed('settings.theme', function() {
     return this.get('settings.theme');
-  }),
+  })
 });

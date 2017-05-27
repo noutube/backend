@@ -40,11 +40,11 @@ body > div {
 // our styles
 
 .container {
-  min-height: 100%;
-  padding-bottom: 8px;
-  font-family: sans-serif;
   background: $base3;
+  padding-bottom: 8px;
+  min-height: 100%;
   color: $base00;
+  font-family: sans-serif;
 
   &.dark {
     background: $base03;
@@ -56,8 +56,8 @@ body > div {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 8px;
   background: $blue;
+  padding: 8px;
   color: $base3;
   font-size: 20px;
   font-weight: bold;
@@ -74,8 +74,8 @@ body > div {
 
 .section {
   margin: 0;
-  padding: 8px 16px;
   background: $blue;
+  padding: 8px 16px;
   color: $base3;
   font-size: 20px;
   font-weight: bold;
@@ -89,8 +89,8 @@ body > div {
   display: flex;
   align-items: center;
 
-  padding: 8px;
   background: $base2;
+  padding: 8px;
 
   img {
     margin-right: 8px;
@@ -99,8 +99,8 @@ body > div {
   }
 
   a {
-    font-weight: bold;
     color: $base01;
+    font-weight: bold;
 
     .dark & {
       color: $base1;
@@ -125,16 +125,22 @@ body > div {
     height: 60px;
   }
 
-  p:nth-of-type(1) a {
-    font-weight: bold;
-    color: $base01;
+  p {
+    &:nth-of-type(1) {
+      a {
+        color: $base01;
+        font-weight: bold;
 
-    .dark & {
-      color: $base1;
+        .dark & {
+          color: $base1;
+        }
+      }
     }
-  }
 
-  p:nth-of-type(3) a {
-    color: $violet;
+    &:nth-of-type(3) {
+      a {
+        color: $violet;
+      }
+    }
   }
 }
