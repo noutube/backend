@@ -1,7 +1,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  Rails.application.routes.default_url_options = { host: 'noutu.be', protocol: 'https', port: 443 }
-  config.action_mailer.default_url_options = { host: 'noutu.be', protocol: 'https', port: 443 }
+  Rails.application.routes.default_url_options = { host: 'noutu.be' }
+  config.action_mailer.default_url_options = { host: 'noutu.be' }
+  OmniAuth.config.full_host = 'https://noutu.be'
 
   # Code is not reloaded between requests.
   config.cache_classes = true
