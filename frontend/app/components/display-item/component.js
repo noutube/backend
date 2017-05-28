@@ -4,6 +4,7 @@ export default Ember.Component.extend({
   classNames: ['item'],
 
   item: null,
+  embed: false,
 
   actions: {
     markLater() {
@@ -14,6 +15,9 @@ export default Ember.Component.extend({
     },
     destroy() {
       this.get('item').destroyRecord();
+    },
+    toggleEmbed() {
+      this.toggleProperty('embed');
     }
   }
 });

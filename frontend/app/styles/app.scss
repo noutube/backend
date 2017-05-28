@@ -114,7 +114,6 @@ body > div {
 .subscription {
   display: flex;
   align-items: center;
-
   background: $base2;
   padding: 8px;
 
@@ -130,11 +129,15 @@ body > div {
 }
 
 .item {
-  display: flex;
-  align-items: center;
+  > div {
+    margin: 8px 0;
+    padding: 0 16px;
 
-  margin: 8px 0;
-  padding: 0 16px;
+    &:nth-of-type(1) {
+      display: flex;
+      align-items: center;
+    }
+  }
 
   img {
     margin-right: 8px;
