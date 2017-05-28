@@ -1,7 +1,7 @@
 <div class="subscription">
   <img src={{subscription.channel.thumbnail}} alt={{subscription.channel.title}}>
   <div>
-    <p><a href="https://www.youtube.com/channel/{{subscription.channel.apiId}}">{{subscription.channel.title}}</a></p>
+    <p class="title"><a href="https://www.youtube.com/channel/{{subscription.channel.apiId}}">{{subscription.channel.title}}</a></p>
     <p>{{pluralize items.length 'video'}}, <span title={{totalDuration}}>{{moment-duration totalDuration 'seconds'}}</span></p>
     {{#if isNew}}
       <p><a href="#" {{action 'markAllLater'}}>Watch All Later</a> &middot; <a href="#" {{action 'destroyAll'}}>Ignore All</a></p>

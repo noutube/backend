@@ -29,6 +29,16 @@ p {
 
 a {
   text-decoration: none;
+  color: $violet;
+
+  .title & {
+    color: $base01;
+    font-weight: bold;
+
+    .dark & {
+      color: $base1;
+    }
+  }
 }
 
 html,
@@ -114,25 +124,8 @@ body > div {
     height: 66px;
   }
 
-  a {
-    color: $base01;
-    font-weight: bold;
-
-    .dark & {
-      color: $base1;
-    }
-  }
-
   .dark & {
     background: $base02;
-  }
-
-  p {
-    &:nth-of-type(3) {
-      a {
-        color: $violet;
-      }
-    }
   }
 }
 
@@ -147,22 +140,5 @@ body > div {
     margin-right: 8px;
     width: 106px;
     height: 60px;
-  }
-
-  a {
-    color: $base01;
-    font-weight: bold;
-
-    .dark & {
-      color: $base1;
-    }
-  }
-
-  p {
-    &:nth-of-type(3) {
-      a {
-        color: $violet;
-      }
-    }
   }
 }
