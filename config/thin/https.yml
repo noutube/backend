@@ -15,3 +15,4 @@ daemonize: true
 ssl: true
 ssl_key_file: <%= ENV['SSL_KEY_FILE'] %>
 ssl_cert_file: <%= ENV['SSL_CERT_FILE'] %>
+ssl_disable_verify: true
