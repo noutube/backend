@@ -20,4 +20,4 @@
 *.swp
 *.swo
 
-/.env
+.env
