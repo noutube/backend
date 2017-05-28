@@ -1,0 +1,17 @@
+---
+chdir: "/root/nou2ube"
+environment: production
+address: 0.0.0.0
+port: 443
+timeout: 30
+log: "log/thin-https.log"
+pid: tmp/pids/thin-https.pid
+max_conns: 1024
+max_persistent_conns: 100
+require: []
+wait: 30
+threadpool_size: 20
+daemonize: true
+ssl: true
+ssl_key_file: <%= ENV['SSL_KEY_FILE'] %>
+ssl_cert_file: <%= ENV['SSL_CERT_FILE'] %>

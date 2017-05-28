@@ -4,8 +4,8 @@ environment: production
 address: 0.0.0.0
 port: 80
 timeout: 30
-log: "/thin/nou2ube/log/thin.log"
-pid: tmp/pids/thin.pid
+log: "log/thin-http.log"
+pid: tmp/pids/thin-http.pid
 max_conns: 1024
 max_persistent_conns: 100
 require: []
