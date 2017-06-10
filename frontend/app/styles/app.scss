@@ -51,7 +51,6 @@ body > div {
 
 .container {
   background: $base3;
-  padding-bottom: 8px;
   min-height: 100%;
   color: $base00;
   font-family: sans-serif;
@@ -95,6 +94,16 @@ body > div {
 
   .dark & {
     color: $base03;
+  }
+}
+
+.footer {
+  padding: 8px;
+  text-align: center;
+  color: $base1;
+
+  .dark & {
+    color: $base01;
   }
 }
 
