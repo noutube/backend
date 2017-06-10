@@ -1,11 +1,10 @@
 ---
 chdir: "/root/nou2ube"
 environment: production
-address: 0.0.0.0
-port: 80
+socket: tmp/sockets/thin.sock
 timeout: 30
-log: "log/thin-http.log"
-pid: tmp/pids/thin-http.pid
+log: "log/thin.log"
+pid: tmp/pids/thin.pid
 max_conns: 1024
 max_persistent_conns: 100
 require: []
