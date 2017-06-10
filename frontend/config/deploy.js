@@ -23,7 +23,8 @@ module.exports = function(deployTarget) {
     ENV['scp'] = {
       username: process.env.SCP_USER,
       host: process.env.SCP_HOST,
-      path: process.env.SCP_PATH
+      path: process.env.SCP_PATH,
+      flags: 'rtvuK'
     };
   }
 
