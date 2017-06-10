@@ -6,9 +6,5 @@ export default Ember.Component.extend({
 
   classNames: ['container'],
 
-  classNameBindings: ['themeClass'],
-
-  themeClass: Ember.computed('settings.theme', function() {
-    return this.get('settings.theme');
-  })
+  classNameBindings: ['settings.theme']
 });

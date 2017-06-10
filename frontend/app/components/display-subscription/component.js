@@ -1,20 +1,13 @@
 import Ember from 'ember';
 
+import { array } from 'ember-awesome-macros';
+
 export default Ember.Component.extend({
   subscription: null,
   state: null,
 
-  items: Ember.computed('state', 'subscription.items.@each.{new,later}', function() {
-    return this.get('subscription.items')
-      .filter((item) => item.get(this.get('state')))
-      .sort((itemA, itemB) => itemB.get('video.publishedAt') - itemA.get('video.publishedAt'));
-  }),
-
-  totalDuration: Ember.computed('items.[]', function() {
-    return this.get('items')
-      .map((item) => item.get('video.duration'))
-      .reduce((acc, n) => acc + n, 0);
-  }),
+  items: array.filterBy('subscription.items', 'state', true),
+  totalDuration: array.reduce(array.map('items', (item) => item.get('video.duration')), (acc, n) => acc + n, 0),
 
   actions: {
     markAllLater() {

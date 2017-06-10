@@ -1,5 +1,7 @@
-import Ember from 'ember';
 import DS from 'ember-data';
+
+import { and, eq, not } from 'ember-awesome-macros';
+import raw from 'ember-macro-helpers/raw';
 
 export default DS.Model.extend({
   subscription: DS.belongsTo('subscription'),
@@ -7,12 +9,8 @@ export default DS.Model.extend({
 
   state: DS.attr('string'),
 
-  new: Ember.computed('state', 'isDeleted', function() {
-    return this.get('state') === 'state_new' && !this.get('isDeleted');
-  }),
-  later: Ember.computed('state', 'isDeleted', function() {
-    return this.get('state') === 'state_later' && !this.get('isDeleted');
-  }),
+  new: and(eq('state', raw('state_new')), not('isDeleted')),
+  later: and(eq('state', raw('state_later')), not('isDeleted')),
 
   markLater() {
     this.set('state', 'state_later');
