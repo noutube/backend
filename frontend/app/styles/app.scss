@@ -120,6 +120,17 @@ body > div {
   }
 }
 
+.message {
+  background: $base2;
+  padding: 8px;
+  color: $base01;
+
+  .dark & {
+    background: $base02;
+    color: $base1;
+  }
+}
+
 .subscription {
   display: flex;
   align-items: center;
