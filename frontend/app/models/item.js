@@ -7,10 +7,10 @@ export default DS.Model.extend({
 
   state: DS.attr('string'),
 
-  isNew: Ember.computed('state', 'isDeleted', function() {
+  new: Ember.computed('state', 'isDeleted', function() {
     return this.get('state') === 'state_new' && !this.get('isDeleted');
   }),
-  isLater: Ember.computed('state', 'isDeleted', function() {
+  later: Ember.computed('state', 'isDeleted', function() {
     return this.get('state') === 'state_later' && !this.get('isDeleted');
   }),
 

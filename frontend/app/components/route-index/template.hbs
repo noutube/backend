@@ -2,16 +2,6 @@
   <a href="#" {{action 'refresh'}}><img src="/assets/images/refresh.png" alt="Refresh"></a>
 {{/portal-content}}
 
-{{#if newSubscriptions}}
-  {{#section-header}}New Videos{{/section-header}}
-  {{#each newSubscriptions as |subscription|}}
-    {{display-subscription subscription=subscription items=subscription.newItems}}
-  {{/each}}
-{{/if}}
+{{display-section subscriptions=subscriptions items=items state='new'}}
 
-{{#if laterSubscriptions}}
-  {{#section-header}}Watch Later{{/section-header}}
-  {{#each laterSubscriptions as |subscription|}}
-    {{display-subscription subscription=subscription items=subscription.laterItems}}
-  {{/each}}
-{{/if}}
+{{display-section subscriptions=subscriptions items=items state='later'}}

@@ -2,14 +2,18 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   subscription: null,
-  items: null,
+  state: null,
 
-  totalDuration: Ember.computed('items.[]', function() {
-    return this.get('items').map((item) => item.get('video.duration')).reduce((acc, n) => acc + n, 0);
+  items: Ember.computed('state', 'subscription.items.@each.{new,later}', function() {
+    return this.get('subscription.items')
+      .filter((item) => item.get(this.get('state')))
+      .sort((itemA, itemB) => itemB.get('video.publishedAt') - itemA.get('video.publishedAt'));
   }),
 
-  isNew: Ember.computed('items.[]', function() {
-    return this.get('items').any((item) => item.get('isNew'));
+  totalDuration: Ember.computed('items.[]', function() {
+    return this.get('items')
+      .map((item) => item.get('video.duration'))
+      .reduce((acc, n) => acc + n, 0);
   }),
 
   actions: {

@@ -1,0 +1,12 @@
+{{#if realSubscriptions}}
+  {{#section-header}}
+    {{#if (eq state 'new')}}
+      New Videos
+    {{else}}
+      Watch Later
+    {{/if}}
+  {{/section-header}}
+  {{#each realSubscriptions as |subscription|}}
+    {{display-subscription subscription=subscription state=state}}
+  {{/each}}
+{{/if}}
