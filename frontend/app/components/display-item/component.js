@@ -8,13 +8,10 @@ export default Ember.Component.extend({
 
   actions: {
     markLater() {
-      this.get('item').set('state', 'state_later');
-      this.get('item').save().catch(() => {
-        this.get('item').rollbackAttributes();
-      });
+      this.get('item').markLater();
     },
     destroy() {
-      this.get('item').destroyRecord();
+      this.get('item').markDeleted();
     },
     toggleEmbed() {
       this.toggleProperty('embed');

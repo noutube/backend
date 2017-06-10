@@ -14,15 +14,10 @@ export default Ember.Component.extend({
 
   actions: {
     markAllLater() {
-      this.get('items').forEach((item) => {
-        item.set('state', 'state_later');
-        item.save().catch(() => {
-          item.rollbackAttributes();
-        });
-      });
+      this.get('items').invoke('markLater');
     },
     destroyAll() {
-      this.get('items').invoke('destroyRecord');
+      this.get('items').invoke('markDeleted');
     }
   }
 });
