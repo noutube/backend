@@ -21,3 +21,7 @@
 *.swo
 
 .env
+/public/assets/.sprockets-manifest-*
+/public/assets/active_admin
+/public/assets/active_admin-*
+/public/assets/application-*
