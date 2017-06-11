@@ -1,4 +1,5 @@
 rules:
+  force-pseudo-nesting: 0
   nesting-depth: 0
   property-sort-order:
     - 1

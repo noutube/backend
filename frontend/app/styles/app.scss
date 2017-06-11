@@ -132,23 +132,29 @@ body > div {
 }
 
 .subscription {
-  display: flex;
-  align-items: center;
-  background: $base2;
-  padding: 8px;
+  position: relative;
+
+  > div:nth-of-type(1) {
+    display: flex;
+    align-items: center;
+    background: $base2;
+    padding: 8px;
+
+    .dark & {
+      background: $base02;
+    }
+  }
 
   img {
     margin-right: 8px;
     width: 66px;
     height: 66px;
   }
-
-  .dark & {
-    background: $base02;
-  }
 }
 
 .item {
+  position: relative;
+
   > div {
     margin: 8px 0;
     padding: 0 16px;
@@ -164,4 +170,16 @@ body > div {
     width: 106px;
     height: 60px;
   }
+}
+
+// expand hitbox while swiping so cancel can be detected
+.swiping::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  transform: scale(1, 2);
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  content: ' ';
 }

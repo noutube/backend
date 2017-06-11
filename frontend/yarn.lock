@@ -2023,6 +2023,12 @@ ember-ajax@^3.0.0:
   dependencies:
     ember-cli-babel "^6.0.0"
 
+ember-allpurpose@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ember-allpurpose/-/ember-allpurpose-1.1.0.tgz#9a299475f3ab2635591592bc1540d4555cad29e8"
+  dependencies:
+    ember-cli-babel "^5.0.0"
+
 ember-awesome-macros@^0.36.1:
   version "0.36.1"
   resolved "https://registry.yarnpkg.com/ember-awesome-macros/-/ember-awesome-macros-0.36.1.tgz#2cf0883717a71252a796c2970044773d81b61a94"
@@ -2042,7 +2048,7 @@ ember-cli-app-version@^3.0.0:
     ember-cli-htmlbars "^1.0.0"
     git-repo-version "0.4.1"
 
-ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7:
+ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.2.4.tgz#5ce4f46b08ed6f6d21e878619fb689719d6e8e13"
   dependencies:
@@ -2154,7 +2160,7 @@ ember-cli-htmlbars-inline-precompile@^0.4.3:
     hash-for-dep "^1.0.2"
     silent-error "^1.1.0"
 
-ember-cli-htmlbars@^1.0.0, ember-cli-htmlbars@^1.0.3:
+ember-cli-htmlbars@^1.0.0, ember-cli-htmlbars@^1.0.1, ember-cli-htmlbars@^1.0.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-1.3.3.tgz#06815262c1577736235bd42ce99db559ce5ebfd1"
   dependencies:
@@ -2471,6 +2477,16 @@ ember-factory-for-polyfill@^1.1.0:
     ember-cli-babel "^5.1.7"
     ember-cli-version-checker "^1.2.0"
 
+ember-gestures@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/ember-gestures/-/ember-gestures-0.4.4.tgz#f0b715f3a6342a441fee6eede6b19d2238f6758a"
+  dependencies:
+    ember-allpurpose "^1.1.0"
+    ember-cli-babel "^5.1.5"
+    ember-cli-htmlbars "^1.0.1"
+    ember-cli-version-checker "^1.2.0"
+    rsvp "^3.1.0"
+
 ember-getowner-polyfill@^1.1.1, ember-getowner-polyfill@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-1.2.3.tgz#ea70f4a48b1c05b91056371d1878bbafe018222e"
@@ -2478,6 +2494,15 @@ ember-getowner-polyfill@^1.1.1, ember-getowner-polyfill@^1.2.3:
     ember-cli-babel "^5.1.6"
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
+
+ember-hammertime@^1.1.2:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/ember-hammertime/-/ember-hammertime-1.2.1.tgz#0a6c8386c6f7164366bf3369f60d1d0382c7a037"
+  dependencies:
+    broccoli-funnel "^1.1.0"
+    broccoli-merge-trees "^2.0.0"
+    ember-cli-babel "^6.0.0"
+    hammer-timejs "^1.1.0"
 
 ember-inflector@^2.0.0:
   version "2.0.1"
@@ -3391,7 +3416,7 @@ glob-parent@^2.0.0:
   dependencies:
     is-glob "^2.0.0"
 
-glob@7.1.1:
+glob@7.1.1, glob@^7.0.0, glob@^7.0.3, glob@^7.0.4, glob@^7.0.5, glob@^7.1.1, glob@~7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.1.tgz#805211df04faaf1c63a3600306cdf5ade50b2ec8"
   dependencies:
@@ -3409,17 +3434,6 @@ glob@^5.0.10, glob@^5.0.15, glob@~5.0.0:
     inflight "^1.0.4"
     inherits "2"
     minimatch "2 || 3"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
-glob@^7.0.0, glob@^7.0.3, glob@^7.0.4, glob@^7.0.5, glob@^7.1.1, glob@~7.1.1:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
-  dependencies:
-    fs.realpath "^1.0.0"
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "^3.0.4"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
@@ -3483,6 +3497,10 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.4,
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
+
+hammer-timejs@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/hammer-timejs/-/hammer-timejs-1.1.0.tgz#fc07ec1e4012228fe51b6a51218ec12661a32a42"
 
 handlebars@^4.0.4, handlebars@^4.0.6:
   version "4.0.10"
@@ -4518,7 +4536,7 @@ mime@^1.2.11:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.6.tgz#591d84d3653a6b0b4a3b9df8de5aa8108e72e5e0"
 
-"minimatch@2 || 3", minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4, minimatch@~3.0.2:
+"minimatch@2 || 3", minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3, minimatch@~3.0.2:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   dependencies:

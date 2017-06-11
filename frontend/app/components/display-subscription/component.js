@@ -1,8 +1,15 @@
 import Ember from 'ember';
 
 import { array } from 'ember-awesome-macros';
+import computed from 'ember-macro-helpers/computed';
 
-export default Ember.Component.extend({
+import SwipeableMixin from 'frontend/mixins/swipeable';
+
+export default Ember.Component.extend(SwipeableMixin, {
+  classNames: ['subscription'],
+
+  classNameBindings: ['swipeClass'],
+
   subscription: null,
   state: null,
 
@@ -16,5 +23,11 @@ export default Ember.Component.extend({
     destroyAll() {
       this.get('items').invoke('markDeleted');
     }
-  }
+  },
+
+  swipeLeft: 'destroyAll',
+  swipeRight: computed('state', (state) => state === 'new' ? 'markAllLater' : 'destroyAll'),
+  swipePositionObserver: Ember.observer('deltaX', function() {
+    Ember.$(this.element).css('left', this.get('swipePosition'));
+  })
 });
