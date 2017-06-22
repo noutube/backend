@@ -363,7 +363,7 @@ DEPENDENCIES
   pry
   pry-byebug
   puma
-  rails (~> 5.0.2)
+  rails (~> 5.0.4)
   rolify
   rubocop
   sass-rails (~> 5.0)
