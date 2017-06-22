@@ -39,8 +39,9 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate', github: 'ctran/annotate_models'
-  gem 'thin'
 end
+
+gem 'puma'
 
 group :production do
   # deployment
