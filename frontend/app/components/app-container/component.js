@@ -1,14 +1,14 @@
 import Ember from 'ember';
 import { storageFor } from 'ember-local-storage';
 
-export default Ember.Component.extend({
+import RecognizerMixin from 'ember-gestures/mixins/recognizers';
+
+export default Ember.Component.extend(RecognizerMixin, {
+  recognizers: 'pan',
+
   settings: storageFor('settings'),
 
   classNames: ['container'],
 
-  classNameBindings: ['themeClass'],
-
-  themeClass: Ember.computed('settings.theme', function() {
-    return this.get('settings.theme');
-  }),
+  classNameBindings: ['settings.theme']
 });

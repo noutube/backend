@@ -1,13 +1,24 @@
+{{#portal-content for="menu-bar-extras"}}
+  <a href="#" {{action 'refresh'}}><img src="/assets/images/refresh.png" alt="Refresh"></a>
+{{/portal-content}}
+
 {{#if newSubscriptions}}
   {{#section-header}}New Videos{{/section-header}}
   {{#each newSubscriptions as |subscription|}}
-    {{display-subscription subscription=subscription items=subscription.newItems}}
+    {{display-subscription subscription=subscription state='new'}}
   {{/each}}
 {{/if}}
 
 {{#if laterSubscriptions}}
   {{#section-header}}Watch Later{{/section-header}}
   {{#each laterSubscriptions as |subscription|}}
-    {{display-subscription subscription=subscription items=subscription.laterItems}}
+    {{display-subscription subscription=subscription state='later'}}
   {{/each}}
 {{/if}}
+
+{{#unless anyItems}}
+  {{#section-header}}No Videos{{/section-header}}
+  <div class="message">
+    <p>You've watched everything for now, check again later.</p>
+  </div>
+{{/unless}}

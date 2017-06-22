@@ -5,7 +5,7 @@ ActiveAdmin.register Item do
 
   controller do
     def scoped_collection
-      super.includes :video, subscription: [ :user, :channel ]
+      super.includes :video, subscription: [:user, :channel]
     end
   end
 
@@ -25,7 +25,7 @@ ActiveAdmin.register Item do
   filter :user_email, as: :string
   filter :channel_title, as: :string
 
-  form do |f|
+  form do |_f|
     semantic_errors
     inputs 'Details' do
       input :video

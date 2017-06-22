@@ -8,10 +8,9 @@ end
 gem 'rails', '~> 5.0.2'
 
 # backend and database
-gem 'thin'
 gem 'sqlite3'
 gem 'activeuuid', github: 'inbeom/activeuuid'
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin'
 gem 'active_model_serializers', '~> 0.10.0'
 
 # auth
@@ -38,17 +37,17 @@ gem 'google-api-client'
 group :development, :test do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
+  gem 'rubocop'
   gem 'pry'
   gem 'pry-byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'annotate', github: 'ctran/annotate_models'
+  gem 'annotate'
 end
 
 # deployment
-group :production do
-  gem 'dotenv-rails'
-end
+gem 'puma'
+gem 'dotenv-rails'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

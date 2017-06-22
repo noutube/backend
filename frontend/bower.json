@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "dependencies": {
-    "blob-polyfill": "^1.0.20150320"
+    "blob-polyfill": "^1.0.20150320",
+    "hammer.js": "2.0.6"
   }
 }

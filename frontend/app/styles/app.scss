@@ -29,6 +29,16 @@ p {
 
 a {
   text-decoration: none;
+  color: $violet;
+
+  .title & {
+    color: $base01;
+    font-weight: bold;
+
+    .dark & {
+      color: $base1;
+    }
+  }
 }
 
 html,
@@ -40,10 +50,10 @@ body > div {
 // our styles
 
 .container {
-  min-height: 100%;
-  font-family: sans-serif;
   background: $base3;
+  min-height: 100%;
   color: $base00;
+  font-family: sans-serif;
 
   &.dark {
     background: $base03;
@@ -55,26 +65,52 @@ body > div {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 8px;
   background: $blue;
+  padding: 8px;
   color: $base3;
   font-size: 20px;
   font-weight: bold;
 
+  div {
+    display: inline;
+  }
+
   a {
     padding: 0 8px;
     color: inherit;
+
+    img {
+      margin: -8px 0;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      filter: invert(100%);
+
+      .dark & {
+        filter: invert(0%);
+      }
+    }
   }
 
   .dark & {
     color: $base03;
+  }
+}
+
+.footer {
+  padding: 8px;
+  text-align: center;
+  color: $base1;
+
+  .dark & {
+    color: $base01;
   }
 }
 
 .section {
   margin: 0;
-  padding: 8px 16px;
   background: $blue;
+  padding: 8px 16px;
   color: $base3;
   font-size: 20px;
   font-weight: bold;
@@ -84,56 +120,66 @@ body > div {
   }
 }
 
-.subscription {
-  display: flex;
-  align-items: center;
-
-  padding: 8px;
+.message {
   background: $base2;
-
-  img {
-    margin-right: 8px;
-    width: 44px;
-    height: 44px;
-  }
-
-  a {
-    font-weight: bold;
-    color: $base01;
-
-    .dark & {
-      color: $base1;
-    }
-  }
+  padding: 8px;
+  color: $base01;
 
   .dark & {
     background: $base02;
+    color: $base1;
+  }
+}
+
+.subscription {
+  position: relative;
+
+  > div:nth-of-type(1) {
+    display: flex;
+    align-items: center;
+    background: $base2;
+    padding: 8px;
+
+    .dark & {
+      background: $base02;
+    }
+  }
+
+  img {
+    margin-right: 8px;
+    width: 66px;
+    height: 66px;
   }
 }
 
 .item {
-  display: flex;
-  align-items: center;
+  position: relative;
 
-  margin: 8px 0;
-  padding: 0 16px;
+  > div {
+    margin: 8px 0;
+    padding: 0 16px;
+
+    &:nth-of-type(1) {
+      display: flex;
+      align-items: center;
+    }
+  }
 
   img {
     margin-right: 8px;
     width: 106px;
     height: 60px;
   }
+}
 
-  p:nth-of-type(1) a {
-    font-weight: bold;
-    color: $base01;
-
-    .dark & {
-      color: $base1;
-    }
-  }
-
-  p:nth-of-type(3) a {
-    color: $violet;
-  }
+// expand hitbox while swiping so cancel can be detected
+.swiping::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  transform: scale(1, 2);
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  content: ' ';
 }

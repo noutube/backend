@@ -1,19 +1,32 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+import computed from 'ember-macro-helpers/computed';
+
+import SwipeableMixin from 'frontend/mixins/swipeable';
+
+export default Ember.Component.extend(SwipeableMixin, {
   classNames: ['item'],
 
+  classNameBindings: ['swipeClass'],
+
   item: null,
+  embed: false,
 
   actions: {
     markLater() {
-      this.get('item').set('state', 'state_later');
-      this.get('item').save().catch(() => {
-        this.get('item').rollbackAttributes();
-      });
+      this.get('item').markLater();
     },
     destroy() {
-      this.get('item').destroyRecord();
+      this.get('item').markDeleted();
+    },
+    toggleEmbed() {
+      this.toggleProperty('embed');
     }
-  }
+  },
+
+  swipeLeft: 'destroy',
+  swipeRight: computed('item.state', (state) => state === 'state_new' ? 'markLater' : 'destroy'),
+  swipePositionObserver: Ember.observer('deltaX', function() {
+    Ember.$(this.element).css('left', this.get('swipePosition'));
+  })
 });

@@ -1,7 +1,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  Rails.application.routes.default_url_options = { host: 'noutu.be' }
-  config.action_mailer.default_url_options = { host: 'noutu.be' }
+  Rails.application.routes.default_url_options = { host: 'noutu.be', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'noutu.be', protocol: 'https' }
+  OmniAuth.config.full_host = 'https://noutu.be'
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -42,7 +43,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.

@@ -1,18 +1,14 @@
-import Ember from 'ember';
 import DS from 'ember-data';
+
+import { array } from 'ember-awesome-macros';
+import computed from 'ember-macro-helpers/computed';
+import raw from 'ember-macro-helpers/raw';
 
 export default DS.Model.extend({
   channel: DS.belongsTo('channel'),
   items: DS.hasMany('items'),
 
-  newItems: Ember.computed('items.@each.state', function() {
-    return DS.PromiseArray.create({
-      promise: this.get('items').then(items => items.filter(item => item.get('isNew')))
-    });
-  }),
-  laterItems: Ember.computed('items.@each.state', function() {
-    return DS.PromiseArray.create({
-      promise: this.get('items').then(items => items.filter(item => !item.get('isNew')))
-    });
-  })
+  sortableTitle: computed('channel.title', (title) => title.toLowerCase()),
+  hasNew: array.isAny('items', raw('new'), raw(true)),
+  hasLater: array.isAny('items', raw('later'), raw(true))
 });

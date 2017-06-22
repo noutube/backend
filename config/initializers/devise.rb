@@ -7,7 +7,7 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'e62bb6ef71eea32b54317daf48a1ccb4247b9aead02584b33cb2b142b019b36bcf934099eba2f6b81376a6168166447dc838fb2fe29f2c92fe9fbe7ecf96679d'
-  config.secret_key = ENV["DEVISE_SECRET_KEY"]
+  config.secret_key = ENV['DEVISE_SECRET_KEY']
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -249,7 +249,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], scope: "email youtube.readonly", prompt: 'consent'
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], scope: 'email youtube.readonly', prompt: 'consent'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
