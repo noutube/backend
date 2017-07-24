@@ -16,7 +16,11 @@ namespace :nou2ube do
         client_secret: ENV['GOOGLE_CLIENT_SECRET'],
         refresh_token: user.refresh_token
       )
-      authorization.refresh!
+      begin
+        authorization.refresh!
+      rescue
+        puts "Failed for #{user.email}"
+      end
       user.refresh_token = authorization.refresh_token
       user.save
 
@@ -53,28 +57,34 @@ namespace :nou2ube do
     channels = Channel.where(uploads_id: '')
     if channels.count > 0
       puts "filling uploads_id for #{channels.count} channels..."
-      youtube.batch do |youtube|
+      #youtube.batch do |youtube|
         channels.each do |channel|
-          youtube.list_channels('snippet,contentDetails', id: channel.api_id) do |result, _err|
+          youtube.list_channels('snippet,contentDetails', id: channel.api_id) do |result, err|
+            next if err
             item = result.items.first
             channel.uploads_id = item.content_details.related_playlists.uploads
             channel.save
           end
         end
-      end
+      #end
     end
 
     # get new videos
-    puts "getting new videos for #{Channel.count} channels..."
+    print "getting new videos for #{Channel.count} channels"
     video_count = Video.count
     item_count = Item.count
     to_check = Channel.all.to_a.clone
     to_check_token = {}
     to_check_latest = {}
     while to_check.count > 0
-      youtube.batch do |youtube|
+      #youtube.batch do |youtube|
         to_check.each do |channel|
-          youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, _err|
+          youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, err|
+            print "."
+            if err
+              to_check.delete channel
+              next
+            end
             to_check_token[channel.api_id] = result.next_page_token
             to_check_latest[channel.api_id] = channel.checked_at if to_check_latest[channel.api_id].nil?
 
@@ -105,15 +115,16 @@ namespace :nou2ube do
             end
           end
         end
-      end
+      #end
     end
+    puts ""
     puts "added #{Video.count - video_count} videos (#{Item.count - item_count} items)"
 
     # get duration if missing
     videos = Video.where(duration: 0)
     if videos.count > 0
       puts "filling duration for #{videos.count} videos..."
-      youtube.batch do |youtube|
+      #youtube.batch do |youtube|
         videos.each do |video|
           youtube.list_videos('contentDetails', id: video.api_id) do |result, err|
             next if err
@@ -125,10 +136,11 @@ namespace :nou2ube do
             video.save
           end
         end
-      end
+      #end
     end
 
     # cull leftover records
+    puts "culling leftover records..."
     channel_count = Channel.count
     subscription_count = Subscription.count
     video_count = Video.count

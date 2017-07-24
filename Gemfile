@@ -29,10 +29,10 @@ gem 'ember-cli-rails'
 gem 'google-api-client'
 
 # development
+gem 'pry'
+gem 'pry-byebug'
 group :development, :test do
   gem 'rubocop'
-  gem 'pry'
-  gem 'pry-byebug'
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
