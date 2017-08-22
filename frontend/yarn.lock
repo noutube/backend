@@ -2160,6 +2160,12 @@ ember-awesome-macros@^0.38.3:
     ember-macro-helpers "^0.16.0"
     ember-string-ishtmlsafe-polyfill "^2.0.0"
 
+ember-cable@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/ember-cable/-/ember-cable-0.6.1.tgz#3d838945695a5f52a4aba14d8d47aedcee29b0f4"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+
 ember-cli-app-version@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-app-version/-/ember-cli-app-version-3.1.0.tgz#074b0330581a7b8ab094ff07fefb34e0d0254bfd"

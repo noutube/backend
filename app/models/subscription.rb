@@ -29,4 +29,22 @@ class Subscription < ApplicationRecord
   def display_name
     "#{user.email} - #{channel.title}"
   end
+
+  after_create :broadcast_create
+  before_destroy :broadcast_destroy
+
+  private
+
+  def broadcast_create
+    FeedChannel.broadcast_to(user,
+                             action: :create,
+                             payload: ActiveModelSerializers::SerializableResource.new(self, include: [:channel]))
+  end
+
+  def broadcast_destroy
+    FeedChannel.broadcast_to(user,
+                             action: :destroy,
+                             type: self.class.to_s.underscore,
+                             id: self.id)
+  end
 end

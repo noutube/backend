@@ -12,6 +12,7 @@ gem 'sqlite3'
 gem 'activeuuid', github: 'jlsookiki/activeuuid', branch: 'rails5'
 gem 'activeadmin'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'redis'
 
 # auth
 gem 'devise'

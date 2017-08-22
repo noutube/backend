@@ -28,4 +28,29 @@ class Item < ApplicationRecord
   # convenience
   has_one :channel, through: :video
   has_one :user, through: :subscription
+
+  after_create :broadcast_create
+  after_update :broadcast_update
+  before_destroy :broadcast_destroy
+
+  private
+
+  def broadcast_create
+    FeedChannel.broadcast_to(user,
+                             action: :create,
+                             payload: ActiveModelSerializers::SerializableResource.new(self, include: [:video]))
+  end
+
+  def broadcast_update
+    FeedChannel.broadcast_to(user,
+                             action: :update,
+                             payload: ActiveModelSerializers::SerializableResource.new(self))
+  end
+
+  def broadcast_destroy
+    FeedChannel.broadcast_to(user,
+                             action: :destroy,
+                             type: self.class.to_s.underscore,
+                             id: self.id)
+  end
 end
