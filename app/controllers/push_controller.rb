@@ -13,7 +13,7 @@ class PushController < ApplicationController
 
     signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), channel.secret_key, body)
     if "sha1=#{signature}" != request.headers['X-Hub-Signature']
-      render nothing: true, status: 200
+      head :ok
       return
     end
 
@@ -43,6 +43,6 @@ class PushController < ApplicationController
       video.save
     end
 
-    render nothing: true, status: 200
+    head :ok
   end
 end
