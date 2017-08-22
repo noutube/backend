@@ -17,6 +17,9 @@
 #
 
 class Subscription < ApplicationRecord
+  include ActiveUUID::UUID
+  natural_key :created_at, :user_id, :channel_id
+
   belongs_to :user
   belongs_to :channel
   has_many :items, dependent: :destroy

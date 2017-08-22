@@ -24,6 +24,9 @@ require 'net/http'
 class Channel < ApplicationRecord
   include Rails.application.routes.url_helpers
 
+  include ActiveUUID::UUID
+  natural_key :created_at, :api_id
+
   has_many :videos, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   has_many :users, through: :subscriptions
