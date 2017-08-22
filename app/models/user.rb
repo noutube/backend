@@ -2,7 +2,7 @@
 #
 # Table name: users
 #
-#  id                   :binary(16)       not null, primary key
+#  id                   :integer          not null, primary key
 #  email                :string           default(""), not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -14,14 +14,11 @@
 # Indexes
 #
 #  index_users_on_email             (email) UNIQUE
-#  index_users_on_provider_and_uid  (provider,uid)
-#  sqlite_autoindex_users_1         (id) UNIQUE
+#  index_users_on_id                (id) UNIQUE
+#  index_users_on_provider_and_uid  (provider,uid) UNIQUE
 #
 
 class User < ApplicationRecord
-  include ActiveUUID::UUID
-  natural_key :created_at
-
   rolify
 
   has_many :subscriptions, dependent: :destroy

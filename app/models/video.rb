@@ -2,9 +2,9 @@
 #
 # Table name: videos
 #
-#  id           :binary(16)       not null, primary key
+#  id           :integer          not null, primary key
 #  api_id       :string           not null
-#  channel_id   :binary(16)       not null
+#  channel_id   :integer          not null
 #  title        :string           not null
 #  thumbnail    :string           not null
 #  duration     :integer          default(0), not null
@@ -14,15 +14,12 @@
 #
 # Indexes
 #
-#  index_videos_on_api_id      (api_id)
+#  index_videos_on_api_id      (api_id) UNIQUE
 #  index_videos_on_channel_id  (channel_id)
-#  sqlite_autoindex_videos_1   (id) UNIQUE
+#  index_videos_on_id          (id) UNIQUE
 #
 
 class Video < ApplicationRecord
-  include ActiveUUID::UUID
-  natural_key :created_at, :api_id
-
   belongs_to :channel
   has_many :items, dependent: :destroy
   # convenience

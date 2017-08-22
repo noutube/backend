@@ -2,7 +2,7 @@
 #
 # Table name: channels
 #
-#  id         :binary(16)       not null, primary key
+#  id         :integer          not null, primary key
 #  api_id     :string           not null
 #  title      :string           not null
 #  thumbnail  :string           not null
@@ -14,8 +14,8 @@
 #
 # Indexes
 #
-#  index_channels_on_api_id     (api_id)
-#  sqlite_autoindex_channels_1  (id) UNIQUE
+#  index_channels_on_api_id  (api_id) UNIQUE
+#  index_channels_on_id      (id) UNIQUE
 #
 
 require 'securerandom'
@@ -23,9 +23,6 @@ require 'net/http'
 
 class Channel < ApplicationRecord
   include Rails.application.routes.url_helpers
-
-  include ActiveUUID::UUID
-  natural_key :created_at, :api_id
 
   has_many :videos, dependent: :destroy
   has_many :subscriptions, dependent: :destroy

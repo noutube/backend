@@ -1,7 +1,7 @@
 class CreateChannels < ActiveRecord::Migration[4.2]
   def change
     create_table :channels, id: false do |t|
-      t.uuid :id, primary_key: true, null: false
+      t.integer :id, primary_key: true, null: false
       t.string :api_id, null: false
 
       t.string :title, null: false
@@ -12,6 +12,7 @@ class CreateChannels < ActiveRecord::Migration[4.2]
       t.timestamps null: false
     end
 
-    add_index :channels, :api_id
+    add_index :channels, :id, unique: true
+    add_index :channels, :api_id, unique: true
   end
 end
