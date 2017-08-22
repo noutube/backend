@@ -17,9 +17,6 @@
 #
 
 class Role < ApplicationRecord
-  include ActiveUUID::UUID
-  natural_key :created_at
-
   has_and_belongs_to_many :users, join_table: :users_roles
   belongs_to :resource, polymorphic: true, required: false
 

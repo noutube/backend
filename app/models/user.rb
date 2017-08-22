@@ -19,9 +19,6 @@
 #
 
 class User < ApplicationRecord
-  include ActiveUUID::UUID
-  natural_key :created_at
-
   rolify
 
   has_many :subscriptions, dependent: :destroy
@@ -39,7 +36,7 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.from_omniauth(auth)
-    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+    user = where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
       user.email = auth.info.email
     end
     user.refresh_token = auth.credentials.refresh_token

@@ -20,9 +20,6 @@
 #
 
 class Video < ApplicationRecord
-  include ActiveUUID::UUID
-  natural_key :created_at, :api_id
-
   belongs_to :channel
   has_many :items, dependent: :destroy
   # convenience
