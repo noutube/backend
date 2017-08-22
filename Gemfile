@@ -33,12 +33,12 @@ gem 'ember-cli-rails'
 gem 'google-api-client'
 
 # development
+gem 'pry'
+gem 'pry-byebug'
 group :development, :test do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop'
-  gem 'pry'
-  gem 'pry-byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate'
