@@ -2,7 +2,7 @@
 #
 # Table name: channels
 #
-#  id         :uuid(16)         not null, primary key
+#  id         :binary(16)       not null, primary key
 #  api_id     :string           not null
 #  title      :string           not null
 #  thumbnail  :string           not null
@@ -21,11 +21,8 @@
 require 'securerandom'
 require 'net/http'
 
-class Channel < ActiveRecord::Base
+class Channel < ApplicationRecord
   include Rails.application.routes.url_helpers
-
-  include ActiveUUID::UUID
-  natural_key :created_at, :api_id
 
   has_many :videos, dependent: :destroy
   has_many :subscriptions, dependent: :destroy

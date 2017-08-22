@@ -1,4 +1,4 @@
-class CreateItems < ActiveRecord::Migration
+class CreateItems < ActiveRecord::Migration[4.2]
   def change
     create_table :items, id: false do |t|
       t.uuid :id, primary_key: true, null: false

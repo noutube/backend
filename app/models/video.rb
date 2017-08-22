@@ -2,9 +2,9 @@
 #
 # Table name: videos
 #
-#  id           :uuid(16)         not null, primary key
+#  id           :binary(16)       not null, primary key
 #  api_id       :string           not null
-#  channel_id   :uuid(16)         not null
+#  channel_id   :binary(16)       not null
 #  title        :string           not null
 #  thumbnail    :string           not null
 #  duration     :integer          default(0), not null
@@ -19,10 +19,7 @@
 #  sqlite_autoindex_videos_1   (id) UNIQUE
 #
 
-class Video < ActiveRecord::Base
-  include ActiveUUID::UUID
-  natural_key :created_at, :api_id
-
+class Video < ApplicationRecord
   belongs_to :channel
   has_many :items, dependent: :destroy
   # convenience

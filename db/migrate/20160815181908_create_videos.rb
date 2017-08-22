@@ -1,4 +1,4 @@
-class CreateVideos < ActiveRecord::Migration
+class CreateVideos < ActiveRecord::Migration[4.2]
   def change
     create_table :videos, id: false do |t|
       t.uuid :id, primary_key: true, null: false

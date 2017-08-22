@@ -2,9 +2,9 @@
 #
 # Table name: roles
 #
-#  id            :uuid(16)         not null, primary key
+#  id            :binary(16)       not null, primary key
 #  name          :string
-#  resource_id   :uuid(16)
+#  resource_id   :binary(16)
 #  resource_type :string
 #  created_at    :datetime
 #  updated_at    :datetime
@@ -16,10 +16,7 @@
 #  sqlite_autoindex_roles_1                               (id) UNIQUE
 #
 
-class Role < ActiveRecord::Base
-  include ActiveUUID::UUID
-  natural_key :created_at
-
+class Role < ApplicationRecord
   has_and_belongs_to_many :users, join_table: :users_roles
   belongs_to :resource, polymorphic: true, required: false
 

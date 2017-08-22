@@ -2,7 +2,7 @@
 #
 # Table name: users
 #
-#  id                   :uuid(16)         not null, primary key
+#  id                   :binary(16)       not null, primary key
 #  email                :string           default(""), not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -18,10 +18,7 @@
 #  sqlite_autoindex_users_1         (id) UNIQUE
 #
 
-class User < ActiveRecord::Base
-  include ActiveUUID::UUID
-  natural_key :created_at
-
+class User < ApplicationRecord
   rolify
 
   has_many :subscriptions, dependent: :destroy
@@ -39,7 +36,7 @@ class User < ActiveRecord::Base
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.from_omniauth(auth)
-    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+    user = where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
       user.email = auth.info.email
     end
     user.refresh_token = auth.credentials.refresh_token
