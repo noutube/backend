@@ -1,4 +1,4 @@
-class CreateChannels < ActiveRecord::Migration
+class CreateChannels < ActiveRecord::Migration[4.2]
   def change
     create_table :channels, id: false do |t|
       t.uuid :id, primary_key: true, null: false

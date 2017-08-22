@@ -2,10 +2,10 @@
 #
 # Table name: items
 #
-#  id              :uuid(16)         not null, primary key
-#  subscription_id :uuid(16)         not null
-#  video_id        :uuid(16)         not null
-#  state           :integer          default(0), not null
+#  id              :binary(16)       not null, primary key
+#  subscription_id :binary(16)       not null
+#  video_id        :binary(16)       not null
+#  state           :integer          default("state_new"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

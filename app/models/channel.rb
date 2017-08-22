@@ -2,7 +2,7 @@
 #
 # Table name: channels
 #
-#  id         :uuid(16)         not null, primary key
+#  id         :binary(16)       not null, primary key
 #  api_id     :string           not null
 #  title      :string           not null
 #  thumbnail  :string           not null

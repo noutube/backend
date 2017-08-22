@@ -2,9 +2,9 @@
 #
 # Table name: videos
 #
-#  id           :uuid(16)         not null, primary key
+#  id           :binary(16)       not null, primary key
 #  api_id       :string           not null
-#  channel_id   :uuid(16)         not null
+#  channel_id   :binary(16)       not null
 #  title        :string           not null
 #  thumbnail    :string           not null
 #  duration     :integer          default(0), not null

@@ -2,9 +2,9 @@
 #
 # Table name: roles
 #
-#  id            :uuid(16)         not null, primary key
+#  id            :binary(16)       not null, primary key
 #  name          :string
-#  resource_id   :uuid(16)
+#  resource_id   :binary(16)
 #  resource_type :string
 #  created_at    :datetime
 #  updated_at    :datetime

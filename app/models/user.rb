@@ -2,7 +2,7 @@
 #
 # Table name: users
 #
-#  id                   :uuid(16)         not null, primary key
+#  id                   :binary(16)       not null, primary key
 #  email                :string           default(""), not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
