@@ -1,6 +1,7 @@
 GIT
-  remote: https://github.com/inbeom/activeuuid.git
-  revision: 4d5609a592914e9ade224a04f5a56a21ba1873af
+  remote: https://github.com/jlsookiki/activeuuid.git
+  revision: 70e7484dd460fdaf7240a9418989a4673c8573bf
+  branch: rails5
   specs:
     activeuuid (0.6.1)
       activerecord (>= 4.0)
