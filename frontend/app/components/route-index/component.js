@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 import { array } from 'ember-awesome-macros';
+import computed from 'ember-macro-helpers/computed';
 import raw from 'ember-macro-helpers/raw';
 
 export default Ember.Component.extend({
@@ -9,5 +10,7 @@ export default Ember.Component.extend({
 
   newSubscriptions: array.sort(array.filterBy('subscriptions', raw('hasNew'), true), ['sortableTitle']),
   laterSubscriptions: array.sort(array.filterBy('subscriptions', raw('hasLater'), true), ['sortableTitle']),
-  anyItems: array.isAny('items', raw('isDeleted'), false)
+  anyItems: array.isAny('items', raw('isDeleted'), false),
+
+  titleNotification: computed('newSubscriptions.length', (newCount) => newCount > 0 ? `(${newCount})` : '')
 });
