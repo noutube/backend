@@ -4,7 +4,7 @@ class PushController < ApplicationController
   protect_from_forgery except: :callback
 
   def validate
-    render text: params['hub.challenge'].chomp, status: 200
+    render plain: params['hub.challenge'].chomp
   end
 
   def callback
