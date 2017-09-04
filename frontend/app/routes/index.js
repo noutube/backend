@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   cable: Ember.inject.service(),
 
+  reconnecting: false,
+
   model() {
     // fetch all data for user
     return Ember.RSVP.hash({
@@ -19,9 +21,15 @@ export default Ember.Route.extend({
     let feed = cable.subscriptions.create('FeedChannel');
     feed.connected = () => {
       Ember.Logger.debug('[feed] connected');
+      if (this.get('reconnecting')) {
+        // fetch anything we missed
+        this.refresh();
+      }
+      this.set('reconnecting', false);
     };
     feed.disconnected = () => {
       Ember.Logger.debug('[feed] disconnected');
+      this.set('reconnecting', true);
     };
     feed.received = (data) => {
       Ember.Logger.debug('[feed] message', data);
