@@ -12,7 +12,7 @@ class PushController < ApplicationController
     body = request.body.read
 
     signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), channel.secret_key, body)
-    if "sha1=#{signature}" != request.headers['X-Hub-Signature']
+    if request.headers['X-Hub-Signature'] != "sha1=#{signature}"
       head :ok
       return
     end

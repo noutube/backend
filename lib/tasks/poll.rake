@@ -57,16 +57,14 @@ namespace :nou2ube do
     channels = Channel.where(uploads_id: '')
     if channels.count > 0
       puts "filling uploads_id for #{channels.count} channels..."
-      #youtube.batch do |youtube|
-        channels.each do |channel|
-          youtube.list_channels('snippet,contentDetails', id: channel.api_id) do |result, err|
-            next if err
-            item = result.items.first
-            channel.uploads_id = item.content_details.related_playlists.uploads
-            channel.save
-          end
+      channels.each do |channel|
+        youtube.list_channels('snippet,contentDetails', id: channel.api_id) do |result, err|
+          next if err
+          item = result.items.first
+          channel.uploads_id = item.content_details.related_playlists.uploads
+          channel.save
         end
-      #end
+      end
     end
 
     # get new videos
@@ -77,70 +75,66 @@ namespace :nou2ube do
     to_check_token = {}
     to_check_latest = {}
     while to_check.count > 0
-      #youtube.batch do |youtube|
-        to_check.each do |channel|
-          youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, err|
-            print "."
-            if err
-              to_check.delete channel
-              next
-            end
-            to_check_token[channel.api_id] = result.next_page_token
-            to_check_latest[channel.api_id] = channel.checked_at if to_check_latest[channel.api_id].nil?
+      to_check.each do |channel|
+        youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, err|
+          print '.'
+          if err
+            to_check.delete channel
+            next
+          end
+          to_check_token[channel.api_id] = result.next_page_token
+          to_check_latest[channel.api_id] = channel.checked_at if to_check_latest[channel.api_id].nil?
 
-            stop = false
-            result.items.each do |item|
-              published_at = item.snippet.published_at.to_datetime
-              unless published_at > channel.checked_at
-                stop = true
-                break
-              end
-
-              to_check_latest[channel.api_id] = published_at if published_at > to_check_latest[channel.api_id]
-
-              Video.find_or_create_by(api_id: item.snippet.resource_id.video_id) do |video|
-                video.channel = channel
-                video.published_at = published_at
-                video.title = item.snippet.title
-                video.thumbnail = item.snippet.thumbnails.medium.url
-              end
+          stop = false
+          result.items.each do |item|
+            published_at = item.snippet.published_at.to_datetime
+            unless published_at > channel.checked_at
+              stop = true
+              break
             end
 
-            stop = true unless result.next_page_token
+            to_check_latest[channel.api_id] = published_at if published_at > to_check_latest[channel.api_id]
 
-            if stop
-              to_check.delete channel
-              channel.checked_at = to_check_latest[channel.api_id]
-              channel.save
+            Video.find_or_create_by(api_id: item.snippet.resource_id.video_id) do |video|
+              video.channel = channel
+              video.published_at = published_at
+              video.title = item.snippet.title
+              video.thumbnail = item.snippet.thumbnails.medium.url
             end
           end
+
+          stop = true unless result.next_page_token
+
+          if stop
+            to_check.delete channel
+            channel.checked_at = to_check_latest[channel.api_id]
+            channel.save
+          end
         end
-      #end
+      end
     end
-    puts ""
+    puts ''
     puts "added #{Video.count - video_count} videos (#{Item.count - item_count} items)"
 
     # get duration if missing
     videos = Video.where(duration: 0)
     if videos.count > 0
       puts "filling duration for #{videos.count} videos..."
-      #youtube.batch do |youtube|
-        videos.each do |video|
-          youtube.list_videos('contentDetails', id: video.api_id) do |result, err|
-            next if err
-            item = result.items.first
-            captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
-            video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +
-                             (captures[2].nil? ? 0 : captures[3].to_i.minutes) +
-                             (captures[4].nil? ? 0 : captures[5].to_i.seconds)
-            video.save
-          end
+      videos.each do |video|
+        youtube.list_videos('contentDetails', id: video.api_id) do |result, err|
+          next if err
+          item = result.items.first
+          captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
+          video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +
+                           (captures[2].nil? ? 0 : captures[3].to_i.minutes) +
+                           (captures[4].nil? ? 0 : captures[5].to_i.seconds)
+          video.save
         end
-      #end
+      end
     end
 
     # cull leftover records
-    puts "culling leftover records..."
+    puts 'culling leftover records...'
     channel_count = Channel.count
     subscription_count = Subscription.count
     video_count = Video.count

@@ -42,6 +42,6 @@ class Subscription < ApplicationRecord
     FeedChannel.broadcast_to(user,
                              action: :destroy,
                              type: self.class.to_s.underscore,
-                             id: self.id)
+                             id: id)
   end
 end

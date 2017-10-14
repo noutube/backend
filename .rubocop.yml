@@ -12,7 +12,13 @@ Bundler/OrderedGems:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/SymbolArray:
+  Enabled: false
+
 Style/WordArray:
+  Enabled: false
+
+Lint/RescueWithoutErrorClass:
   Enabled: false
 
 Lint/ShadowingOuterLocalVariable:
