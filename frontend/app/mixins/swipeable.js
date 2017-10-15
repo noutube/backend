@@ -1,3 +1,4 @@
+import { get, set } from '@ember/object';
 import Mixin from '@ember/object/mixin';
 
 import computed from 'ember-macro-helpers/computed';
@@ -20,34 +21,34 @@ export default Mixin.create({
   directionX: computed('deltaX', (deltaX) => Math.sign(deltaX)),
 
   panStart(event) {
-    this.set('isSwiping', true);
-    this.set('deltaX', 0);
+    set(this, 'isSwiping', true);
+    set(this, 'deltaX', 0);
     return false;
   },
   panMove(event) {
-    if (this.get('isSwiping')) {
-      this.set('deltaX', event.originalEvent.gesture.deltaX);
-      if (Math.abs(event.originalEvent.gesture.deltaY) > this.get('swipeLimit') / 2) {
+    if (get(this, 'isSwiping')) {
+      set(this, 'deltaX', event.originalEvent.gesture.deltaX);
+      if (Math.abs(event.originalEvent.gesture.deltaY) > get(this, 'swipeLimit') / 2) {
         this.panCancel(event);
       }
       return false;
     }
   },
   panEnd(event) {
-    this.set('isSwiping', false);
-    if (this.get('offsetX') === this.get('swipeLimit')) {
-      if (this.get('directionX') > 0) {
-        this.send(this.get('swipeRight'));
+    set(this, 'isSwiping', false);
+    if (get(this, 'offsetX') === get(this, 'swipeLimit')) {
+      if (get(this, 'directionX') > 0) {
+        this.send(get(this, 'swipeRight'));
       } else {
-        this.send(this.get('swipeLeft'));
+        this.send(get(this, 'swipeLeft'));
       }
     }
-    this.set('deltaX', 0);
+    set(this, 'deltaX', 0);
     return false;
   },
   panCancel(event) {
-    this.set('isSwiping', false);
-    this.set('deltaX', 0);
+    set(this, 'isSwiping', false);
+    set(this, 'deltaX', 0);
     return false;
   }
 });

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { observer } from '@ember/object';
+import { get, observer } from '@ember/object';
 import Component from '@ember/component';
 
 import { array } from 'ember-awesome-macros';
@@ -14,22 +14,21 @@ export default Component.extend(SwipeableMixin, {
 
   subscription: null,
   state: null,
-
+  swipeLeft: 'destroyAll',
+  swipeRight: computed('state', (state) => state === 'new' ? 'markAllLater' : 'destroyAll'),
   items: array.filterBy('subscription.items', 'state'),
-  totalDuration: array.reduce(array.map('items', (item) => item.get('video.duration')), (acc, n) => acc + n, 0),
+  totalDuration: array.reduce(array.map('items', (item) => get(item, 'video.duration')), (acc, n) => acc + n, 0),
+
+  swipePositionObserver: observer('deltaX', function() {
+    $(this.element).css('left', get(this, 'swipePosition'));
+  }),
 
   actions: {
     markAllLater() {
-      this.get('items').invoke('markLater');
+      get(this, 'items').invoke('markLater');
     },
     destroyAll() {
-      this.get('items').invoke('markDeleted');
+      get(this, 'items').invoke('markDeleted');
     }
-  },
-
-  swipeLeft: 'destroyAll',
-  swipeRight: computed('state', (state) => state === 'new' ? 'markAllLater' : 'destroyAll'),
-  swipePositionObserver: observer('deltaX', function() {
-    $(this.element).css('left', this.get('swipePosition'));
-  })
+  }
 });

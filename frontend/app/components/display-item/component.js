@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { observer } from '@ember/object';
+import { get, observer } from '@ember/object';
 import Component from '@ember/component';
 
 import computed from 'ember-macro-helpers/computed';
@@ -13,22 +13,22 @@ export default Component.extend(SwipeableMixin, {
 
   item: null,
   embed: false,
+  swipeLeft: 'destroy',
+  swipeRight: computed('item.state', (state) => state === 'state_new' ? 'markLater' : 'destroy'),
+
+  swipePositionObserver: observer('deltaX', function() {
+    $(this.element).css('left', get(this, 'swipePosition'));
+  }),
 
   actions: {
     markLater() {
-      this.get('item').markLater();
+      get(this, 'item').markLater();
     },
     destroy() {
-      this.get('item').markDeleted();
+      get(this, 'item').markDeleted();
     },
     toggleEmbed() {
       this.toggleProperty('embed');
     }
-  },
-
-  swipeLeft: 'destroy',
-  swipeRight: computed('item.state', (state) => state === 'state_new' ? 'markLater' : 'destroy'),
-  swipePositionObserver: observer('deltaX', function() {
-    $(this.element).css('left', this.get('swipePosition'));
-  })
+  }
 });
