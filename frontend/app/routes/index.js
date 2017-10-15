@@ -23,6 +23,7 @@ export default Ember.Route.extend({
       Ember.Logger.debug('[feed] connected');
       if (this.get('reconnecting')) {
         // fetch anything we missed
+        this.get('store').unloadAll();
         this.refresh();
       }
       this.set('reconnecting', false);
