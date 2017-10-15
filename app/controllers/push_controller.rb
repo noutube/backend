@@ -18,6 +18,13 @@ class PushController < ApplicationController
     end
 
     entry = Hash.from_xml(body)['feed']['entry']
+
+    unless entry
+      # probably a delete, ignore
+      head :ok
+      return
+    end
+
     video = Video.find_or_initialize_by(api_id: entry['videoId']) do |video|
       video.channel = channel
       video.published_at = entry['published']
