@@ -1,13 +1,14 @@
 import DS from 'ember-data';
+const { Model, belongsTo, attr } = DS;
 
 import { and, eq, not } from 'ember-awesome-macros';
 import raw from 'ember-macro-helpers/raw';
 
-export default DS.Model.extend({
-  subscription: DS.belongsTo('subscription'),
-  video: DS.belongsTo('video'),
+export default Model.extend({
+  subscription: belongsTo('subscription'),
+  video: belongsTo('video'),
 
-  state: DS.attr('string'),
+  state: attr('string'),
 
   new: and(eq('state', raw('state_new')), not('isDeleted')),
   later: and(eq('state', raw('state_later')), not('isDeleted')),

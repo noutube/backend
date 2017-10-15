@@ -1,10 +1,11 @@
 import DS from 'ember-data';
+const { Model, hasMany, attr } = DS;
 
-export default DS.Model.extend({
-  videos: DS.hasMany('videos'),
-  subscriptions: DS.hasMany('subscriptions'),
+export default Model.extend({
+  videos: hasMany('videos'),
+  subscriptions: hasMany('subscriptions'),
 
-  apiId: DS.attr('string'),
-  title: DS.attr('string'),
-  thumbnail: DS.attr('string')
+  apiId: attr('string'),
+  title: attr('string'),
+  thumbnail: attr('string')
 });
