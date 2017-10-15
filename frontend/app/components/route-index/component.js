@@ -12,5 +12,5 @@ export default Ember.Component.extend({
   laterSubscriptions: array.sort(array.filterBy('subscriptions', raw('hasLater')), ['sortableTitle']),
   anyItems: array.isAny('items', raw('isDeleted'), false),
 
-  titleNotification: computed('newSubscriptions.length', (newCount) => newCount > 0 ? `(${newCount})` : '')
+  titleNotification: computed(array.filterBy('items', raw('new')), (newItems) => newItems.length > 0 ? `(${newItems.length})` : '')
 });
