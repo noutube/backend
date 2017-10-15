@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
 import { array } from 'ember-awesome-macros';
 import computed from 'ember-macro-helpers/computed';
 import raw from 'ember-macro-helpers/raw';
 
-export default Ember.Component.extend({
+export default Component.extend({
   items: null,
   subscriptions: null,
 

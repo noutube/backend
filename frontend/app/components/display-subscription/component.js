@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { observer } from '@ember/object';
+import Component from '@ember/component';
 
 import { array } from 'ember-awesome-macros';
 import computed from 'ember-macro-helpers/computed';
 
 import SwipeableMixin from 'frontend/mixins/swipeable';
 
-export default Ember.Component.extend(SwipeableMixin, {
+export default Component.extend(SwipeableMixin, {
   classNames: ['subscription'],
 
   classNameBindings: ['swipeClass'],
@@ -27,7 +29,7 @@ export default Ember.Component.extend(SwipeableMixin, {
 
   swipeLeft: 'destroyAll',
   swipeRight: computed('state', (state) => state === 'new' ? 'markAllLater' : 'destroyAll'),
-  swipePositionObserver: Ember.observer('deltaX', function() {
-    Ember.$(this.element).css('left', this.get('swipePosition'));
+  swipePositionObserver: observer('deltaX', function() {
+    $(this.element).css('left', this.get('swipePosition'));
   })
 });

@@ -1,13 +1,15 @@
-import Ember from 'ember';
+import { hash } from 'rsvp';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  cable: Ember.inject.service(),
+export default Route.extend({
+  cable: service(),
 
   reconnecting: false,
 
   model() {
     // fetch all data for user
-    return Ember.RSVP.hash({
+    return hash({
       items: this.get('store').findAll('item'),
       subscriptions: this.get('store').findAll('subscription')
     });
@@ -20,7 +22,7 @@ export default Ember.Route.extend({
 
     let feed = cable.subscriptions.create('FeedChannel');
     feed.connected = () => {
-      Ember.Logger.debug('[feed] connected');
+      console.debug('[feed] connected');
       if (this.get('reconnecting')) {
         // fetch anything we missed
         this.get('store').unloadAll();
@@ -29,11 +31,11 @@ export default Ember.Route.extend({
       this.set('reconnecting', false);
     };
     feed.disconnected = () => {
-      Ember.Logger.debug('[feed] disconnected');
+      console.debug('[feed] disconnected');
       this.set('reconnecting', true);
     };
     feed.received = (data) => {
-      Ember.Logger.debug('[feed] message', data);
+      console.debug('[feed] message', data);
       switch (data.action) {
         case 'create':
         case 'update':

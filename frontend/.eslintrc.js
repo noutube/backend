@@ -16,6 +16,7 @@ module.exports = {
     'semi': ['error', 'always'],
     'indent': ['error', 2, { 'SwitchCase': 1 }],
     'camelcase': 'off', // we need camelcase for API interaction
+    'no-console': 'off', // see https://github.com/emberjs/rfcs/pull/176#issuecomment-272566327
     'ember-suave/no-direct-property-access': 'off',
     'ember-suave/require-access-in-comments': 'off',
     'ember-suave/prefer-destructuring': ['error', { 'array': false }] // array suggests pointlessly replacing foo[0]

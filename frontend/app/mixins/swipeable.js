@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 import computed from 'ember-macro-helpers/computed';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   // configurable properties
   swipeLimit: 50,
   swipeLeft: 'swipeLeft',
