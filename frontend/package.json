@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.0.0",
+  "private": true,
   "description": "Small description for frontend goes here",
   "license": "MIT",
   "author": "",
@@ -21,14 +22,14 @@
     "ember-cable": "^0.6.1",
     "ember-cli": "~2.16.0",
     "ember-cli-app-version": "^3.0.0",
-    "ember-cli-babel": "^6.3.0",
-    "ember-cli-dependency-checker": "^2.0.1",
+    "ember-cli-babel": "^6.6.0",
+    "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-deploy": "^1.0.0",
     "ember-cli-deploy-build": "^1.1.0",
     "ember-cli-deploy-scp": "^1.0.9",
-    "ember-cli-eslint": "^4.2.0",
+    "ember-cli-eslint": "^4.0.0",
     "ember-cli-htmlbars": "^2.0.1",
-    "ember-cli-htmlbars-inline-precompile": "^1.0.2",
+    "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-moment-shim": "^3.0.1",
     "ember-cli-qunit": "^4.0.0",
@@ -58,6 +59,5 @@
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
-  },
-  "private": true
+  }
 }
