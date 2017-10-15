@@ -13,7 +13,7 @@ export default Ember.Component.extend(SwipeableMixin, {
   subscription: null,
   state: null,
 
-  items: array.filterBy('subscription.items', 'state', true),
+  items: array.filterBy('subscription.items', 'state'),
   totalDuration: array.reduce(array.map('items', (item) => item.get('video.duration')), (acc, n) => acc + n, 0),
 
   actions: {

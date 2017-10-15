@@ -9,6 +9,6 @@ export default DS.Model.extend({
   items: DS.hasMany('items'),
 
   sortableTitle: computed('channel.title', (title) => title.toLowerCase()),
-  hasNew: array.isAny('items', raw('new'), raw(true)),
-  hasLater: array.isAny('items', raw('later'), raw(true))
+  hasNew: array.isAny('items', raw('new')),
+  hasLater: array.isAny('items', raw('later'))
 });

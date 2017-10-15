@@ -8,8 +8,8 @@ export default Ember.Component.extend({
   items: null,
   subscriptions: null,
 
-  newSubscriptions: array.sort(array.filterBy('subscriptions', raw('hasNew'), true), ['sortableTitle']),
-  laterSubscriptions: array.sort(array.filterBy('subscriptions', raw('hasLater'), true), ['sortableTitle']),
+  newSubscriptions: array.sort(array.filterBy('subscriptions', raw('hasNew')), ['sortableTitle']),
+  laterSubscriptions: array.sort(array.filterBy('subscriptions', raw('hasLater')), ['sortableTitle']),
   anyItems: array.isAny('items', raw('isDeleted'), false),
 
   titleNotification: computed('newSubscriptions.length', (newCount) => newCount > 0 ? `(${newCount})` : '')
