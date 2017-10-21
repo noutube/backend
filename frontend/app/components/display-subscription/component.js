@@ -16,7 +16,7 @@ export default Component.extend(SwipeableMixin, {
   state: null,
   swipeLeft: 'destroyAll',
   swipeRight: computed('state', (state) => state === 'new' ? 'markAllLater' : 'destroyAll'),
-  items: array.filterBy('subscription.items', 'state'),
+  items: array.sort(array.filterBy('subscription.items', 'state'), ['video.publishedAt:desc']),
   totalDuration: array.reduce(array.map('items', (item) => get(item, 'video.duration')), (acc, n) => acc + n, 0),
 
   swipePositionObserver: observer('deltaX', function() {
