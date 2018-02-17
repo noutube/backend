@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.1.4'
+gem 'rails', '~> 5.1.5'
 
 # backend and database
 gem 'sqlite3'
 gem 'activeadmin'
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'redis', '~> 3.0'
+gem 'redis'
 
 # auth
 gem 'devise'
