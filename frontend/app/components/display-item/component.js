@@ -20,6 +20,14 @@ export default Component.extend(SwipeableMixin, {
     $(this.element).css('left', get(this, 'swipePosition'));
   }),
 
+  formattedDuration: computed('item.video.duration', (duration) => {
+    let result = `${(`00${Math.floor(duration / 60) % 60}`).slice(-2)}:${(`00${duration % 60}`).slice(-2)}`;
+    if (duration >= 60 * 60) {
+      result = `${Math.floor(duration / 60 / 60)}:${result}`;
+    }
+    return result;
+  }),
+
   actions: {
     markLater() {
       get(this, 'item').markLater();
