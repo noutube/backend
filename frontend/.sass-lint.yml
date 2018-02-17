@@ -1,5 +1,7 @@
 rules:
   force-pseudo-nesting: 0
+  mixins-before-declarations:
+    - exclude: ['theme']
   nesting-depth: 0
   property-sort-order:
     - 1

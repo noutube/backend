@@ -1,20 +1,60 @@
-// solarized
-$base03:    #002b36;
-$base02:    #073642;
-$base01:    #586e75;
-$base00:    #657b83;
-$base0:     #839496;
-$base1:     #93a1a1;
-$base2:     #eee8d5;
-$base3:     #fdf6e3;
-$yellow:    #b58900;
-$orange:    #cb4b16;
-$red:       #dc322f;
-$magenta:   #d33682;
-$violet:    #6c71c4;
-$blue:      #268bd2;
-$cyan:      #2aa198;
-$green:     #859900;
+// theming
+
+$solarized: (
+  base03:   #002b36,
+  base02:   #073642,
+  base01:   #586e75,
+  base00:   #657b83,
+  base0:    #839496,
+  base1:    #93a1a1,
+  base2:    #eee8d5,
+  base3:    #fdf6e3,
+  _yellow:  #b58900,
+  _orange:  #cb4b16,
+  _red:     #dc322f,
+  _magenta: #d33682,
+  _violet:  #6c71c4,
+  _blue:    #268bd2,
+  _cyan:    #2aa198,
+  _green:   #859900
+);
+
+$themes: (
+  light: (
+    bg: map-get($solarized, base3),
+    bg-hi: map-get($solarized, base2),
+    sec: map-get($solarized, base1),
+    pri: map-get($solarized, base00),
+    emph: map-get($solarized, base01),
+    link: map-get($solarized, _violet),
+    bar: map-get($solarized, _blue),
+    invert: invert(100%)
+  ),
+  dark: (
+    bg: map-get($solarized, base03),
+    bg-hi: map-get($solarized, base02),
+    sec: map-get($solarized, base01),
+    pri: map-get($solarized, base0),
+    emph: map-get($solarized, base1),
+    link: map-get($solarized, _violet),
+    bar: map-get($solarized, _blue),
+    invert: invert(0%)
+  )
+);
+
+@mixin theme($properties, $self: false) {
+  @each $name, $theme in $themes {
+    #{selector-self($self, '.theme--#{$name}')} {
+      @each $property, $key in $properties {
+        #{$property}: map-get($theme, $key);
+      }
+    }
+  }
+}
+
+@function selector-self($self, $selector) {
+  @return if($self, '&#{$selector}', '#{$selector} &');
+}
 
 // override defaults
 
@@ -29,15 +69,11 @@ p {
 
 a {
   text-decoration: none;
-  color: $violet;
+  @include theme((color: link));
 
   .title & {
-    color: $base01;
+    @include theme((color: emph));
     font-weight: bold;
-
-    .dark & {
-      color: $base1;
-    }
   }
 }
 
@@ -50,24 +86,17 @@ body > div {
 // our styles
 
 .container {
-  background: $base3;
   min-height: 100%;
-  color: $base00;
+  @include theme((background: bg, color: pri), true);
   font-family: sans-serif;
-
-  &.dark {
-    background: $base03;
-    color: $base0;
-  }
 }
 
 .menu-bar {
   position: absolute;
   top: 0;
   right: 0;
-  background: $blue;
   padding: 8px;
-  color: $base3;
+  @include theme((background: bar, color: bg));
   font-size: 20px;
   font-weight: bold;
 
@@ -84,51 +113,28 @@ body > div {
       width: 24px;
       height: 24px;
       vertical-align: middle;
-      filter: invert(100%);
-
-      .dark & {
-        filter: invert(0%);
-      }
+      @include theme((filter: invert));
     }
-  }
-
-  .dark & {
-    color: $base03;
   }
 }
 
 .footer {
   padding: 8px;
   text-align: center;
-  color: $base1;
-
-  .dark & {
-    color: $base01;
-  }
+  @include theme((color: sec));
 }
 
 .section {
   margin: 0;
-  background: $blue;
   padding: 8px 16px;
-  color: $base3;
+  @include theme((background: bar, color: bg));
   font-size: 20px;
   font-weight: bold;
-
-  .dark & {
-    color: $base03;
-  }
 }
 
 .message {
-  background: $base2;
   padding: 8px;
-  color: $base01;
-
-  .dark & {
-    background: $base02;
-    color: $base1;
-  }
+  @include theme((background: bg-hi, color: emph));
 }
 
 .subscription {
@@ -137,12 +143,8 @@ body > div {
   > div:nth-of-type(1) {
     display: flex;
     align-items: center;
-    background: $base2;
+    @include theme((background: bg-hi));
     padding: 8px;
-
-    .dark & {
-      background: $base02;
-    }
   }
 
   img {
