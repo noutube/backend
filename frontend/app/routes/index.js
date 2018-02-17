@@ -6,6 +6,8 @@ import Route from '@ember/routing/route';
 export default Route.extend({
   cable: service(),
 
+  consumer: null,
+  feed: null,
   reconnecting: false,
 
   model() {
@@ -17,11 +19,9 @@ export default Route.extend({
   },
 
   activate() {
-    this._super(...arguments);
+    let consumer = get(this, 'cable').createConsumer(`${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/cable`);
 
-    let cable = get(this, 'cable').createConsumer(`${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/cable`);
-
-    let feed = cable.subscriptions.create('FeedChannel');
+    let feed = consumer.subscriptions.create('FeedChannel');
     feed.connected = () => {
       console.debug('[feed] connected');
       if (get(this, 'reconnecting')) {
@@ -51,5 +51,19 @@ export default Route.extend({
         }
       }
     };
+
+    set(this, 'consumer', consumer);
+    set(this, 'feed', feed);
+  },
+
+  deactivate() {
+    if (get(this, 'consumer')) {
+      get(this, 'feed').unsubscribe();
+      // TODO: pending https://github.com/algonauti/ember-cable/pull/30
+      // get(this, 'consumer').destroy();
+      set(this, 'consumer', null);
+      set(this, 'feed', null);
+      set(this, 'reconnecting', false);
+    }
   }
 });
