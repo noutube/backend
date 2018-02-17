@@ -4,6 +4,10 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module'
   },
+  plugins: [
+    'ember',
+    'ember-suave'
+  ],
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended',
@@ -20,5 +24,24 @@ module.exports = {
     'no-console': 'off', // see https://github.com/emberjs/rfcs/pull/176#issuecomment-272566327
     'ember/named-functions-in-promises': ['error', { allowSimpleArrowFunction: true, }],
     'ember/no-observers': 'off'
-  }
+  },
+  overrides: [
+    // node files
+    {
+      files: [
+        'testem.js',
+        'ember-cli-build.js',
+        'config/**/*.js',
+        'lib/*/index.js',
+      ],
+      parserOptions: {
+        sourceType: 'script',
+        ecmaVersion: 2015
+      },
+      env: {
+        browser: false,
+        node: true
+      }
+    }
+  ]
 };
