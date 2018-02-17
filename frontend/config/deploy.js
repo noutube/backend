@@ -21,9 +21,11 @@ module.exports = function(deployTarget) {
     // configure other plugins for production deploy target here
 
     ENV['scp'] = {
-      username: process.env.SCP_USER,
-      host: process.env.SCP_HOST,
-      path: process.env.SCP_PATH,
+      nodes: [{
+        username: process.env.SCP_USER,
+        host: process.env.SCP_HOST,
+        path: process.env.SCP_PATH,
+      }],
       flags: 'rtvuK'
     };
   }
