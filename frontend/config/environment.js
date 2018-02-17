@@ -13,7 +13,7 @@ module.exports = function(environment) {
       },
       EXTEND_PROTOTYPES: {
       },
-      themes: ['light', 'dark']
+      themes: ['light', 'dark', 'gruvbox-light', 'gruvbox-dark']
     },
 
     APP: {
