@@ -21,9 +21,7 @@ module.exports = {
     'semi': ['error', 'always'],
     'indent': ['error', 2, { SwitchCase: 1 }],
     'camelcase': 'off', // we need camelcase for API interaction
-    'no-console': 'off', // see https://github.com/emberjs/rfcs/pull/176#issuecomment-272566327
-    'ember/named-functions-in-promises': ['error', { allowSimpleArrowFunction: true, }],
-    'ember/no-observers': 'off'
+    'no-console': 'off' // see https://github.com/emberjs/rfcs/pull/176#issuecomment-272566327
   },
   overrides: [
     // node files
