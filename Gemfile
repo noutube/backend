@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 5.1.5'
+ruby '~> 2.5.0'
+
+gem 'rails', '~> 5.2.0'
 
 # backend and database
 gem 'sqlite3'
@@ -42,6 +45,4 @@ end
 # deployment
 gem 'puma'
 gem 'dotenv-rails'
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'bootsnap', '>= 1.1.0', require: false
