@@ -59,8 +59,7 @@ export default Route.extend({
   deactivate() {
     if (get(this, 'consumer')) {
       get(this, 'feed').unsubscribe();
-      // TODO: pending https://github.com/algonauti/ember-cable/pull/30
-      // get(this, 'consumer').destroy();
+      get(this, 'consumer').destroy();
       set(this, 'consumer', null);
       set(this, 'feed', null);
       set(this, 'reconnecting', false);
