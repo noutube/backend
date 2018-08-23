@@ -23,6 +23,8 @@ ActiveAdmin.register Video do
     column :published_at do |video|
       span time_ago_in_words(video.published_at) + ' ago', title: video.published_at
     end
+    column :created_at
+    column :updated_at
     actions
   end
 

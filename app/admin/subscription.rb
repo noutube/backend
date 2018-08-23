@@ -12,6 +12,8 @@ ActiveAdmin.register Subscription do
   index do
     column :user, sortable: 'users.email'
     column :channel, sortable: 'channels.title'
+    column :created_at
+    column :updated_at
     actions
   end
 

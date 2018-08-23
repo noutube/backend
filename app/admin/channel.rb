@@ -13,6 +13,8 @@ ActiveAdmin.register Channel do
     column :checked_at do |channel|
       span time_ago_in_words(channel.checked_at) + ' ago', title: channel.checked_at
     end
+    column :created_at
+    column :updated_at
     actions
   end
 

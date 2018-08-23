@@ -17,6 +17,8 @@ ActiveAdmin.register Item do
     column :state do |item|
       Item::STATE_LABELS[Item.states[item.state]]
     end
+    column :created_at
+    column :updated_at
     actions
   end
 
