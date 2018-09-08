@@ -16,11 +16,7 @@ namespace :nou2ube do
         client_secret: ENV['GOOGLE_CLIENT_SECRET'],
         refresh_token: user.refresh_token
       )
-      begin
-        authorization.refresh!
-      rescue
-        puts "Failed for #{user.email}"
-      end
+      authorization.refresh!
       user.refresh_token = authorization.refresh_token
       user.save
 
@@ -46,6 +42,8 @@ namespace :nou2ube do
                   .where('users.id = ? AND channels.api_id NOT IN (?)', user.id,
                          items.map { |item| item.snippet.resource_id.channel_id })
                   .destroy_all
+    rescue
+      puts "Failed to authorize #{user.email}"
     end
     puts "added #{Channel.count - channel_count} channels (#{Subscription.count - subscription_count} subscriptions)"
 
