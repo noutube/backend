@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import Ember from 'ember';
 import Component from '@ember/component';
 import { get, set } from '@ember/object';
 import { storageFor } from 'ember-local-storage';
+import config from 'frontend/config/environment';
 
-const { ENV: { themes } } = Ember;
+const { themes } = config;
 
 export default Component.extend({
   classNames: ['menu-bar'],

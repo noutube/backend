@@ -21,36 +21,39 @@ export default Route.extend({
   activate() {
     let consumer = get(this, 'cable').createConsumer(`${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/cable`);
 
-    let feed = consumer.subscriptions.create('FeedChannel');
-    feed.connected = () => {
-      console.debug('[feed] connected');
-      if (get(this, 'reconnecting')) {
-        // fetch anything we missed
-        get(this, 'store').unloadAll();
-        this.refresh();
-      }
-      set(this, 'reconnecting', false);
-    };
-    feed.disconnected = () => {
-      console.debug('[feed] disconnected');
-      set(this, 'reconnecting', true);
-    };
-    feed.received = (data) => {
-      console.debug('[feed] message', data);
-      switch (data.action) {
-        case 'create':
-        case 'update':
-          get(this, 'store').pushPayload(data.payload);
-          break;
-        case 'destroy': {
-          let record = get(this, 'store').peekRecord(data.type, data.id);
-          if (record && !get(record, 'isDeleted')) {
-            record.deleteRecord();
+    let store = get(this, 'store');
+    let route = this;
+    let feed = consumer.subscriptions.create('FeedChannel', {
+      connected() {
+        console.debug('[feed] connected');
+        if (get(route, 'reconnecting')) {
+          // fetch anything we missed
+          store.unloadAll();
+          route.refresh();
+        }
+        set(route, 'reconnecting', false);
+      },
+      disconnected() {
+        console.debug('[feed] disconnected');
+        set(route, 'reconnecting', true);
+      },
+      received(data) {
+        console.debug('[feed] message', data);
+        switch (data.action) {
+          case 'create':
+          case 'update':
+            store.pushPayload(data.payload);
+            break;
+          case 'destroy': {
+            let record = store.peekRecord(data.type, data.id);
+            if (record && !get(record, 'isDeleted')) {
+              record.deleteRecord();
+            }
+            break;
           }
-          break;
         }
       }
-    };
+    });
 
     set(this, 'consumer', consumer);
     set(this, 'feed', feed);

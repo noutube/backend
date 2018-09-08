@@ -12,14 +12,15 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       },
       EXTEND_PROTOTYPES: {
-      },
-      themes: ['light', 'dark', 'gruvbox-light', 'gruvbox-dark']
+      }
     },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+
+    themes: ['light', 'dark', 'gruvbox-light', 'gruvbox-dark']
   };
 
   if (environment === 'development') {

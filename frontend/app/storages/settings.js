@@ -1,9 +1,9 @@
-import Ember from 'ember';
 import StorageObject from 'ember-local-storage/local/object';
+import config from 'frontend/config/environment';
 
 let SettingsStorage = StorageObject.extend();
 
-const { ENV: { themes: [defaultTheme] } } = Ember;
+const { themes: [defaultTheme] } = config;
 
 SettingsStorage.reopenClass({
   initialState() {
