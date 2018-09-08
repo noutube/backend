@@ -126,6 +126,8 @@ $themes: (
 body {
   margin: 0;
   padding: 0;
+  @include theme((background: bg, color: pri), true);
+  font-family: sans-serif;
 }
 
 p {
@@ -142,19 +144,7 @@ a {
   }
 }
 
-html,
-body,
-body > div {
-  height: 100%;
-}
-
 // our styles
-
-.container {
-  min-height: 100%;
-  @include theme((background: bg, color: pri), true);
-  font-family: sans-serif;
-}
 
 .menu-bar {
   position: absolute;
