@@ -1,4 +1,9 @@
+@import 'ember-modal-dialog/ember-modal-structure';
+
 // theming
+
+$black: #000;
+$shadow: rgba($black, .5);
 
 $solarized: (
   base03:   #002b36,
@@ -111,7 +116,11 @@ $themes: (
   @each $name, $theme in $themes {
     #{selector-self($self, '.theme--#{$name}')} {
       @each $property, $key in $properties {
-        #{$property}: map-get($theme, $key);
+        @if length($key) == 2 {
+          #{$property}: call(get-function(nth($key, 2)), map-get($theme, nth($key, 1)));
+        } @else {
+          #{$property}: map-get($theme, $key);
+        }
       }
     }
   }
@@ -121,11 +130,17 @@ $themes: (
   @return if($self, '&#{$selector}', '#{$selector} &');
 }
 
+@function half-alpha($value) {
+  @return transparentize($value, .5);
+}
+
 // override defaults
 
 body {
   margin: 0;
   padding: 0;
+  @include theme((background: bg, color: pri), true);
+  font-family: sans-serif;
 }
 
 p {
@@ -137,23 +152,15 @@ a {
   @include theme((color: link));
 
   .title & {
-    @include theme((color: emph));
-    font-weight: bold;
+    color: inherit;
   }
-}
-
-html,
-body,
-body > div {
-  height: 100%;
 }
 
 // our styles
 
-.container {
-  min-height: 100%;
-  @include theme((background: bg, color: pri), true);
-  font-family: sans-serif;
+.title {
+  @include theme((color: emph));
+  font-weight: bold;
 }
 
 .menu-bar {
@@ -249,4 +256,21 @@ body > div {
   width: 100%;
   height: 100%;
   content: ' ';
+}
+
+.ember-modal-overlay {
+  &.translucent {
+    @include theme((background: bg half-alpha));
+  }
+}
+
+.ember-modal-dialog {
+  @include theme((background: bg-hi));
+  border-radius: 8px;
+  box-shadow: 0 0 64px $shadow;
+  padding: 8px;
+
+  .title {
+    margin-bottom: 16px;
+  }
 }

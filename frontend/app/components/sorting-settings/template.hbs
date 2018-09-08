@@ -1,0 +1,34 @@
+<p class="title">Sorting Settings</p>
+
+<p>
+  Sort videos by
+  {{#x-select value=videoKey action=(action "selectVideoKey") as |xs|}}
+    {{#xs.option value="age"}}age{{/xs.option}}
+    {{#xs.option value="sortableTitle"}}title{{/xs.option}}
+    {{#xs.option value="duration"}}duration{{/xs.option}}
+  {{/x-select}}
+  {{#x-select value=videoDir action=(action "selectVideoDir") as |xs|}}
+    {{#xs.option value="asc"}}ascending{{/xs.option}}
+    {{#xs.option value="desc"}}descending{{/xs.option}}
+  {{/x-select}}
+</p>
+
+<p>
+  Sort channels by
+  {{#x-select value=channelKey action=(action "selectChannelKey") as |xs|}}
+    {{#xs.option value="sortableTitle"}}title{{/xs.option}}
+    {{#xs.option value="totalDuration"}}total duration{{/xs.option}}
+    {{#xs.option value="itemCount"}}number of videos{{/xs.option}}
+  {{/x-select}}
+  {{#x-select value=channelDir action=(action "selectChannelDir") as |xs|}}
+    {{#xs.option value="asc"}}ascending{{/xs.option}}
+    {{#xs.option value="desc"}}descending{{/xs.option}}
+  {{/x-select}}
+</p>
+
+<p>
+  <label>
+    {{input type="checkbox" checked=channelGroup}}
+    Group videos by channel
+  </label>
+</p>
