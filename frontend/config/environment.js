@@ -20,7 +20,12 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    themes: ['light', 'dark', 'gruvbox-light', 'gruvbox-dark']
+    themes: ['light', 'dark', 'gruvbox-light', 'gruvbox-dark'],
+    defaultVideoKey: 'published',
+    defaultVideoDir: 'asc',
+    defaultChannelKey: 'sortableTitle',
+    defaultChannelDir: 'asc',
+    defaultChannelGroup: true,
   };
 
   if (environment === 'development') {

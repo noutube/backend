@@ -1,17 +1,41 @@
 {{title titleNotification}}
 
+{{#portal-content for="menu-bar-extras"}}
+  <a href="#" {{action "toggleSorting"}}><img src="/assets/images/sorting.png" alt="Sorting"></a>
+{{/portal-content}}
+
+{{#if showSorting}}
+  {{#modal-dialog onClose="toggleSorting" translucentOverlay=true}}
+    {{sorting-settings}}
+
+    <p><a {{action "toggleSorting"}}>Done</a></p>
+  {{/modal-dialog}}
+{{/if}}
+
 {{#if newSubscriptions}}
   {{#section-header}}New Videos{{/section-header}}
-  {{#each newSubscriptions as |subscription|}}
-    {{display-subscription subscription=subscription state='new'}}
-  {{/each}}
+  {{#if settings.channelGroup}}
+    {{#each newSubscriptions as |subscription|}}
+      {{display-subscription subscription=subscription state='new'}}
+    {{/each}}
+  {{else}}
+    {{#each newItems as |item|}}
+      {{display-item item=item}}
+    {{/each}}
+  {{/if}}
 {{/if}}
 
 {{#if laterSubscriptions}}
   {{#section-header}}Watch Later{{/section-header}}
-  {{#each laterSubscriptions as |subscription|}}
-    {{display-subscription subscription=subscription state='later'}}
-  {{/each}}
+  {{#if settings.channelGroup}}
+    {{#each laterSubscriptions as |subscription|}}
+      {{display-subscription subscription=subscription state='later'}}
+    {{/each}}
+  {{else}}
+    {{#each laterItems as |item|}}
+      {{display-item item=item}}
+    {{/each}}
+  {{/if}}
 {{/if}}
 
 {{#unless anyItems}}

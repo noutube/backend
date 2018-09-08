@@ -1,3 +1,5 @@
+import { get } from '@ember/object';
+import { alias } from '@ember/object/computed';
 import DS from 'ember-data';
 const { Model, belongsTo, hasMany } = DS;
 
@@ -9,7 +11,10 @@ export default Model.extend({
   channel: belongsTo('channel'),
   items: hasMany('items'),
 
-  sortableTitle: computed('channel.title', (title) => title.toLowerCase()),
   hasNew: array.isAny('items', raw('new')),
-  hasLater: array.isAny('items', raw('later'))
+  hasLater: array.isAny('items', raw('later')),
+
+  sortableTitle: computed('channel.title', (title) => title.toLowerCase()),
+  totalDuration: array.reduce(array.map('items', (item) => get(item, 'video.duration')), (acc, n) => acc + n, 0),
+  itemCount: alias('items.length')
 });

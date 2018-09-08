@@ -2520,6 +2520,12 @@ ember-hammertime@^1.1.2:
     ember-get-config "^0.2.4"
     hammer-timejs "^1.1.0"
 
+ember-ignore-children-helper@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ember-ignore-children-helper/-/ember-ignore-children-helper-1.0.1.tgz#f7c4aa17afb9c5685e1d4dcdb61c7b138ca7cdc3"
+  dependencies:
+    ember-cli-babel "^6.8.2"
+
 ember-inflector@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-2.3.0.tgz#94797eba0eea98d902aa1e5da0f0aeef6053317f"
@@ -2578,6 +2584,16 @@ ember-maybe-import-regenerator@^0.1.6:
     broccoli-merge-trees "^1.0.0"
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
+
+ember-modal-dialog@^3.0.0-beta.0:
+  version "3.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/ember-modal-dialog/-/ember-modal-dialog-3.0.0-beta.0.tgz#0d6a566bf5f29fe9923ea3b92107c13c681b61ee"
+  dependencies:
+    ember-cli-babel "^6.12.0"
+    ember-cli-htmlbars "^2.0.1"
+    ember-cli-version-checker "^2.1.0"
+    ember-ignore-children-helper "^1.0.1"
+    ember-wormhole "^0.5.4"
 
 ember-moment@^7.3.0:
   version "7.7.0"
@@ -2699,11 +2715,18 @@ ember-weakmap@^3.0.0:
     debug "^3.1.0"
     ember-cli-babel "^6.6.0"
 
-ember-wormhole@^0.5.1:
+ember-wormhole@^0.5.1, ember-wormhole@^0.5.4:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/ember-wormhole/-/ember-wormhole-0.5.4.tgz#968e80f093494f4aed266e750afa63919c61383d"
   dependencies:
     ember-cli-babel "^6.10.0"
+    ember-cli-htmlbars "^2.0.1"
+
+emberx-select@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/emberx-select/-/emberx-select-3.1.1.tgz#e410bd667c85d8ee43f51cf9a4ceacd4c39167f0"
+  dependencies:
+    ember-cli-babel "^6.6.0"
     ember-cli-htmlbars "^2.0.1"
 
 encodeurl@~1.0.2:
