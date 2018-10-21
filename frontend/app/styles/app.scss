@@ -180,12 +180,25 @@ a {
     padding: 0 8px;
     color: inherit;
 
-    img {
-      margin: -8px 0;
+    &.icon::after {
+      display: inline-block;
+      margin: -4px 0;
       width: 24px;
       height: 24px;
-      vertical-align: middle;
-      @include theme((filter: invert));
+      content: '';
+      @include theme((background: bg));
+      -webkit-mask-size: contain;
+      mask-size: contain;
+    }
+
+    &.theme::after {
+      -webkit-mask-image: url('/assets/images/theme.png');
+      mask-image: url('/assets/images/theme.png');
+    }
+
+    &.sorting::after {
+      -webkit-mask-image: url('/assets/images/sorting.png');
+      mask-image: url('/assets/images/sorting.png');
     }
   }
 }
