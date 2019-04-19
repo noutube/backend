@@ -8,7 +8,7 @@
   {{#modal-dialog onClose="toggleSorting" translucentOverlay=true}}
     {{sorting-settings}}
 
-    <p><a {{action "toggleSorting"}}>Done</a></p>
+    <p><a role="button" {{action "toggleSorting"}}>Done</a></p>
   {{/modal-dialog}}
 {{/if}}
 
@@ -16,7 +16,7 @@
   {{#section-header}}New Videos{{/section-header}}
   {{#if settings.channelGroup}}
     {{#each newSubscriptions as |subscription|}}
-      {{display-subscription subscription=subscription state='new'}}
+      {{display-subscription subscription=subscription state="new"}}
     {{/each}}
   {{else}}
     {{#each newItems as |item|}}
@@ -29,7 +29,7 @@
   {{#section-header}}Watch Later{{/section-header}}
   {{#if settings.channelGroup}}
     {{#each laterSubscriptions as |subscription|}}
-      {{display-subscription subscription=subscription state='later'}}
+      {{display-subscription subscription=subscription state="later"}}
     {{/each}}
   {{else}}
     {{#each laterItems as |item|}}
