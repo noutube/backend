@@ -10,6 +10,8 @@ addons:
   chrome: stable
 
 cache:
+  directories:
+    - $HOME/.npm
   yarn: true
 
 env:
@@ -22,5 +24,6 @@ before_install:
   - npm install -g yarn
 
 script:
+  - npm run lint:hbs
   - npm run lint:js
   - npm test

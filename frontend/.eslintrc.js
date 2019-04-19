@@ -27,10 +27,13 @@ module.exports = {
     // node files
     {
       files: [
+        '.eslintrc.js',
+        '.template-lintrc.js',
         'testem.js',
         'ember-cli-build.js',
         'config/**/*.js',
         'lib/*/index.js',
+        'server/**/*.js'
       ],
       parserOptions: {
         sourceType: 'script',
