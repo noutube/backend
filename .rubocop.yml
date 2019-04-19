@@ -12,13 +12,16 @@ Bundler/OrderedGems:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Style/SymbolArray:
   Enabled: false
 
 Style/WordArray:
   Enabled: false
 
-Lint/RescueWithoutErrorClass:
+Style/RescueStandardError:
   Enabled: false
 
 Lint/ShadowingOuterLocalVariable:

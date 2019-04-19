@@ -11,7 +11,7 @@ namespace :nou2ube do
       # create authorization
       authorization = Signet::OAuth2::Client.new(
         authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-        token_credential_uri: 'https://www.googleapis.com/oauth2/v3/token',
+        token_credential_uri: 'https://oauth2.googleapis.com/token',
         client_id: ENV['GOOGLE_CLIENT_ID'],
         client_secret: ENV['GOOGLE_CLIENT_SECRET'],
         refresh_token: user.refresh_token
@@ -53,11 +53,12 @@ namespace :nou2ube do
 
     # get uploads_id if missing
     channels = Channel.where(uploads_id: '')
-    if channels.count > 0
+    if channels.count.positive?
       puts "filling uploads_id for #{channels.count} channels..."
       channels.each do |channel|
         youtube.list_channels('snippet,contentDetails', id: channel.api_id) do |result, err|
           next if err
+
           item = result.items.first
           channel.uploads_id = item.content_details.related_playlists.uploads
           channel.save
@@ -72,7 +73,7 @@ namespace :nou2ube do
     to_check = Channel.all.to_a.clone
     to_check_token = {}
     to_check_latest = {}
-    while to_check.count > 0
+    while to_check.count.positive?
       to_check.each do |channel|
         youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, err|
           print '.'
@@ -116,11 +117,12 @@ namespace :nou2ube do
 
     # get duration if missing
     videos = Video.where(duration: 0)
-    if videos.count > 0
+    if videos.count.positive?
       puts "filling duration for #{videos.count} videos..."
       videos.each do |video|
         youtube.list_videos('contentDetails', id: video.api_id) do |result, err|
           next if err
+
           item = result.items.first
           captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
           video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +
