@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '~> 2.5.0'
+ruby '~> 2.6.0'
 
 gem 'rails', '~> 5.2.3'
 
@@ -31,6 +31,7 @@ gem 'ember-cli-rails'
 gem 'google-api-client'
 
 # development
+gem 'irb', require: false
 gem 'pry'
 gem 'pry-byebug'
 group :development, :test do
