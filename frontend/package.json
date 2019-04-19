@@ -37,7 +37,7 @@
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-moment-shim": "^3.0.1",
     "ember-cli-rails-addon": "^0.10.0",
-    "ember-cli-sass": "^7.0.0",
+    "ember-cli-sass": "^10.0.0",
     "ember-cli-sass-lint": "^1.0.3",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-template-lint": "^1.0.0-beta.1",
@@ -53,18 +53,18 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-modal-dialog": "^3.0.0-beta.0",
     "ember-moment": "^7.3.0",
-    "ember-page-title": "^4.0.0",
+    "ember-page-title": "^5.0.1",
     "ember-portal": "^0.2.0",
     "ember-qunit": "^3.4.1",
     "ember-resolver": "^5.0.1",
-    "ember-route-action-helper": "^2.0.3",
     "ember-source": "~3.9.0",
     "ember-truth-helpers": "^2.0.0",
     "emberx-select": "^3.1.1",
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-ember-suave": "^1.0.0",
     "loader.js": "^4.7.0",
-    "qunit-dom": "^0.8.0"
+    "qunit-dom": "^0.8.0",
+    "sass": "^1.19.0"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
