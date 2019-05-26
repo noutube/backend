@@ -28,8 +28,8 @@ export default Route.extend({
         console.debug('[feed] connected');
         if (get(route, 'reconnecting')) {
           // fetch anything we missed
-          store.unloadAll();
-          route.refresh();
+          route.reloadFromServer('item');
+          route.reloadFromServer('subscription');
         }
         set(route, 'reconnecting', false);
       },
@@ -67,5 +67,15 @@ export default Route.extend({
       set(this, 'feed', null);
       set(this, 'reconnecting', false);
     }
+  },
+
+  async reloadFromServer(modelName) {
+    let store = get(this, 'store');
+    let before = store.peekAll(modelName);
+    let after = await store.query(modelName, {});
+    // manually remove anything removed on server
+    before
+      .filter((model) => !after.findBy('id', get(model, 'id')))
+      .forEach((model) => model.deleteRecord());
   }
 });
