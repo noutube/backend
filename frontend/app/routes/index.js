@@ -9,6 +9,8 @@ export default Route.extend({
     let me = get(this, 'session.me');
     if (me) {
       this.transitionTo('feed');
+    } else {
+      this.transitionTo('landing');
     }
   }
 });

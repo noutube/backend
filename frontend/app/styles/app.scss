@@ -205,8 +205,14 @@ a {
 }
 
 .message {
-  padding: 8px;
+  padding: 0 8px;
+  // hack to prevent margin collapsing: https://stackoverflow.com/questions/19718634/how-to-disable-margin-collapsing
+  overflow: auto;
   @include theme((background: bg-hi, color: emph));
+
+  > p {
+    margin: 8px 0;
+  }
 }
 
 .subscription {

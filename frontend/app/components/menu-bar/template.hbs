@@ -1,6 +1,7 @@
 {{portal-for name="menu-bar-extras"}}
 <a href="#" {{action "switchTheme"}}>{{svg-icon name="droplet"}}</a>
 {{#if session.me}}
+  {{#link-to "feed"}}{{svg-icon name="inbox"}}{{/link-to}}
   <a href="/users/sign_out">Sign Out</a>
 {{else}}
   <a href="/users/sign_in">Sign In</a>
