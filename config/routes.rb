@@ -9,13 +9,14 @@ Rails.application.routes.draw do
   # admin
   ActiveAdmin.routes(self)
 
-  # frontend
-  get 'frontend', to: redirect('/', status: 302)
-  mount_ember_app :frontend, to: '/', controller: 'frontend'
-
   # API
   resources :subscriptions, only: [:index]
   resources :items, only: [:index, :update, :destroy]
+  get 'users/me', to: 'users#me'
   get 'push/:channel_id', to: 'push#validate'
   post 'push/:channel_id', to: 'push#callback', as: :push_callback
+
+  # frontend
+  get 'frontend', to: redirect('/', status: 302)
+  mount_ember_app :frontend, to: '/'
 end
