@@ -61,12 +61,16 @@ export default Route.extend({
 
   deactivate() {
     if (get(this, 'consumer')) {
-      get(this, 'feed').unsubscribe();
       get(this, 'consumer').destroy();
       set(this, 'consumer', null);
+      get(this, 'feed').unsubscribe();
       set(this, 'feed', null);
       set(this, 'reconnecting', false);
     }
+
+    let store = get(this, 'store');
+    store.unloadAll('item');
+    store.unloadAll('subscription');
   },
 
   async reloadFromServer(modelName) {
