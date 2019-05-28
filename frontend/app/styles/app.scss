@@ -156,6 +156,11 @@ a {
   }
 }
 
+svg {
+  display: inline-block;
+  vertical-align: top;
+}
+
 // our styles
 
 .title {
@@ -168,25 +173,19 @@ a {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 8px;
+  align-items: center;
   @include theme((background: bar, color: bg));
   font-size: 20px;
   font-weight: bold;
 
   > div > div {
     display: flex;
+    align-items: center;
   }
 
   a {
-    display: inline-block;
-    padding: 0 8px;
-    vertical-align: top;
+    padding: 8px;
     color: inherit;
-
-    > svg {
-      display: inline-block;
-      vertical-align: top;
-    }
   }
 }
 
@@ -197,11 +196,17 @@ a {
 }
 
 .section {
+  display: flex;
+  align-items: center;
   margin: 0;
   padding: 8px 16px;
   @include theme((background: bar, color: bg));
   font-size: 20px;
   font-weight: bold;
+
+  > svg {
+    margin-right: 8px;
+  }
 }
 
 .message {

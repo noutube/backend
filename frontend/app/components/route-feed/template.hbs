@@ -2,7 +2,7 @@
 {{title titleNotification " NoUTube" replace=true}}
 
 {{#portal-content for="menu-bar-extras"}}
-  <a href="#" {{action "toggleSorting"}}>{{svg-icon name="sliders"}}</a>
+  <a href="#" {{action "toggleSorting"}} title="Sorting Settings">{{svg-icon name="sliders"}}</a>
 {{/portal-content}}
 
 {{#if showSorting}}
@@ -14,7 +14,7 @@
 {{/if}}
 
 {{#if newSubscriptions}}
-  {{#section-header}}New Videos{{/section-header}}
+  {{#section-header}}{{svg-icon name="gift"}} New Videos{{/section-header}}
   {{#if settings.channelGroup}}
     {{#each newSubscriptions as |subscription|}}
       {{display-subscription subscription=subscription state="new"}}
@@ -27,7 +27,7 @@
 {{/if}}
 
 {{#if laterSubscriptions}}
-  {{#section-header}}Watch Later{{/section-header}}
+  {{#section-header}}{{svg-icon name="bookmark"}} Watch Later{{/section-header}}
   {{#if settings.channelGroup}}
     {{#each laterSubscriptions as |subscription|}}
       {{display-subscription subscription=subscription state="later"}}
@@ -40,7 +40,7 @@
 {{/if}}
 
 {{#unless anyItems}}
-  {{#section-header}}No Videos{{/section-header}}
+  {{#section-header}}{{svg-icon name="slash"}} No Videos{{/section-header}}
   <div class="message">
     <p>You've watched everything for now, check again later.</p>
   </div>
