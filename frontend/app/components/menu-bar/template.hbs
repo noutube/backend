@@ -1,3 +1,7 @@
 {{portal-for name="menu-bar-extras"}}
 <a href="#" {{action "switchTheme"}} class="icon theme"></a>
-<a href="/users/sign_out">Sign Out</a>
+{{#if session.me}}
+  <a href="/users/sign_out">Sign Out</a>
+{{else}}
+  <a href="/users/sign_in">Sign In</a>
+{{/if}}
