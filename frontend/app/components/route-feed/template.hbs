@@ -1,4 +1,5 @@
-{{title titleNotification}}
+{{!-- can't override parent's separator, have to just replace whole title --}}
+{{title titleNotification " NoUTube" replace=true}}
 
 {{#portal-content for="menu-bar-extras"}}
   <a href="#" {{action "toggleSorting"}}>{{svg-icon name="sliders"}}</a>
