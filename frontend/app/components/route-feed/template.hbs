@@ -5,7 +5,7 @@
 {{/portal-content}}
 
 {{#if showSorting}}
-  {{#modal-dialog onClose="toggleSorting" translucentOverlay=true}}
+  {{#modal-dialog onClose=(action "toggleSorting") translucentOverlay=true}}
     {{sorting-settings}}
 
     <p><a role="button" {{action "toggleSorting"}}>Done</a></p>
