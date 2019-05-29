@@ -1,6 +1,6 @@
-import $ from 'jquery';
-import { get, observer } from '@ember/object';
+import { get } from '@ember/object';
 import Component from '@ember/component';
+import { htmlSafe } from '@ember/template';
 
 import computed from 'ember-macro-helpers/computed';
 
@@ -11,14 +11,13 @@ export default Component.extend(SwipeableMixin, {
 
   classNameBindings: ['swipeClass'],
 
+  attributeBindings: ['style'],
+  style: computed('swipePosition', (swipePosition) => htmlSafe(`left: ${swipePosition}px;`)),
+
   item: null,
   embed: false,
   swipeLeft: 'destroy',
   swipeRight: computed('item.state', (state) => state === 'state_new' ? 'markLater' : 'destroy'),
-
-  swipePositionObserver: observer('deltaX', function() {
-    $(this.element).css('left', get(this, 'swipePosition'));
-  }),
 
   formattedDuration: computed('item.video.duration', (duration) => {
     let result = `${(`00${Math.floor(duration / 60) % 60}`).slice(-2)}:${(`00${duration % 60}`).slice(-2)}`;

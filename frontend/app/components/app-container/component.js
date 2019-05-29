@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Component from '@ember/component';
 import { get, getProperties, observer, set } from '@ember/object';
 
@@ -24,11 +23,11 @@ export default Component.extend(RecognizerMixin, {
     }
   }),
   removeThemeClass() {
-    $('body').removeClass(get(this, '_themeClass'));
+    document.querySelector('body').classList.remove(get(this, '_themeClass'));
   },
   addThemeClass() {
     let themeClass = get(this, 'themeClass');
-    $('body').addClass(themeClass);
+    document.querySelector('body').classList.add(themeClass);
     set(this, '_themeClass', themeClass);
   },
 

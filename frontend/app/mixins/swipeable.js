@@ -1,7 +1,6 @@
 import { get, set } from '@ember/object';
 import Mixin from '@ember/object/mixin';
 
-import { normalizeEvent } from 'ember-jquery-legacy';
 import computed from 'ember-macro-helpers/computed';
 
 export default Mixin.create({
@@ -28,8 +27,8 @@ export default Mixin.create({
   },
   panMove(event) {
     if (get(this, 'isSwiping')) {
-      set(this, 'deltaX', normalizeEvent(event).gesture.deltaX);
-      if (Math.abs(normalizeEvent(event).gesture.deltaY) > get(this, 'swipeLimit') / 2) {
+      set(this, 'deltaX', event.gesture.deltaX);
+      if (Math.abs(event.gesture.deltaY) > get(this, 'swipeLimit') / 2) {
         this.panCancel(event);
       }
       return false;

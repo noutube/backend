@@ -1,6 +1,6 @@
-import $ from 'jquery';
-import { get, observer } from '@ember/object';
+import { get } from '@ember/object';
 import Component from '@ember/component';
+import { htmlSafe } from '@ember/template';
 
 import { array } from 'ember-awesome-macros';
 import computed from 'ember-macro-helpers/computed';
@@ -16,6 +16,9 @@ export default Component.extend(SwipeableMixin, {
 
   classNameBindings: ['swipeClass'],
 
+  attributeBindings: ['style'],
+  style: computed('swipePosition', (swipePosition) => htmlSafe(`left: ${swipePosition}px;`)),
+
   videoSort: computed('settings.{videoKey,videoDir}', (key, dir) => [`${key}:${dir}`]),
 
   subscription: null,
@@ -24,10 +27,6 @@ export default Component.extend(SwipeableMixin, {
   swipeRight: computed('state', (state) => state === 'new' ? 'markAllLater' : 'destroyAll'),
   items: array.sort(array.filterBy('subscription.items', 'state'), 'videoSort'),
   totalDuration: array.reduce(array.map('items', (item) => get(item, 'video.duration')), (acc, n) => acc + n, 0),
-
-  swipePositionObserver: observer('deltaX', function() {
-    $(this.element).css('left', get(this, 'swipePosition'));
-  }),
 
   actions: {
     markAllLater() {
