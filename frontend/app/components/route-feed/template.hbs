@@ -1,46 +1,46 @@
 {{!-- can't override parent's separator, have to just replace whole title --}}
 {{title titleNotification " NoUTube" replace=true}}
 
-{{#portal-content for="menu-bar-extras"}}
-  <a href="#" {{action "toggleSorting"}} title="Sorting settings">{{svg-icon name="sliders"}}</a>
-{{/portal-content}}
+<PortalContent @for="menu-bar-extras">
+  <a href="#" {{action "toggleSorting"}} title="Sorting settings"><SvgIcon @name="sliders" /></a>
+</PortalContent>
 
 {{#if showSorting}}
-  {{#modal-dialog onClose=(action "toggleSorting") translucentOverlay=true}}
-    {{sorting-settings}}
+  <ModalDialog @onClose={{action "toggleSorting"}} @translucentOverlay={{true}}>
+    <SortingSettings />
 
     <p><a role="button" {{action "toggleSorting"}}>Done</a></p>
-  {{/modal-dialog}}
+  </ModalDialog>
 {{/if}}
 
 {{#if newSubscriptions}}
-  {{#section-header}}{{svg-icon name="gift"}} New Videos{{/section-header}}
+  <SectionHeader><SvgIcon @name="gift" /> New Videos</SectionHeader>
   {{#if settings.channelGroup}}
     {{#each newSubscriptions as |subscription|}}
-      {{display-subscription subscription=subscription state="new"}}
+      <DisplaySubscription @subscription={{subscription}} @state="new" />
     {{/each}}
   {{else}}
     {{#each newItems as |item|}}
-      {{display-item item=item}}
+      <DisplayItem @item={{item}} />
     {{/each}}
   {{/if}}
 {{/if}}
 
 {{#if laterSubscriptions}}
-  {{#section-header}}{{svg-icon name="bookmark"}} Watch Later{{/section-header}}
+  <SectionHeader><SvgIcon @name="bookmark" /> Watch Later</SectionHeader>
   {{#if settings.channelGroup}}
     {{#each laterSubscriptions as |subscription|}}
-      {{display-subscription subscription=subscription state="later"}}
+      <DisplaySubscription @subscription={{subscription}} @state="later" />
     {{/each}}
   {{else}}
     {{#each laterItems as |item|}}
-      {{display-item item=item}}
+      <DisplayItem @item={{item}} />
     {{/each}}
   {{/if}}
 {{/if}}
 
 {{#unless anyItems}}
-  {{#section-header}}{{svg-icon name="slash"}} No Videos{{/section-header}}
+  <SectionHeader><SvgIcon @name="slash" /> No Videos</SectionHeader>
   <div class="message">
     <p>You've watched everything for now, check again later.</p>
   </div>

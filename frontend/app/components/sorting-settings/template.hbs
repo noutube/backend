@@ -2,33 +2,33 @@
 
 <p>
   Sort videos by
-  {{#x-select value=videoKey action=(action "selectVideoKey") as |xs|}}
-    {{#xs.option value="age"}}age{{/xs.option}}
-    {{#xs.option value="sortableTitle"}}title{{/xs.option}}
-    {{#xs.option value="duration"}}duration{{/xs.option}}
-  {{/x-select}}
-  {{#x-select value=videoDir action=(action "selectVideoDir") as |xs|}}
-    {{#xs.option value="asc"}}ascending{{/xs.option}}
-    {{#xs.option value="desc"}}descending{{/xs.option}}
-  {{/x-select}}
+  <XSelect @value={{videoKey}} @action={{action "selectVideoKey"}} as |xs|>
+    <xs.option @value="age">age</xs.option>
+    <xs.option @value="sortableTitle">title</xs.option>
+    <xs.option @value="duration">duration</xs.option>
+  </XSelect>
+  <XSelect @value={{videoDir}} @action={{action "selectVideoDir"}} as |xs|>
+    <xs.option @value="asc">ascending</xs.option>
+    <xs.option @value="desc">descending</xs.option>
+  </XSelect>
 </p>
 
 <p>
   Sort channels by
-  {{#x-select value=channelKey action=(action "selectChannelKey") as |xs|}}
-    {{#xs.option value="sortableTitle"}}title{{/xs.option}}
-    {{#xs.option value="totalDuration"}}total duration{{/xs.option}}
-    {{#xs.option value="itemCount"}}number of videos{{/xs.option}}
-  {{/x-select}}
-  {{#x-select value=channelDir action=(action "selectChannelDir") as |xs|}}
-    {{#xs.option value="asc"}}ascending{{/xs.option}}
-    {{#xs.option value="desc"}}descending{{/xs.option}}
-  {{/x-select}}
+  <XSelect @value={{channelKey}} @action={{action "selectChannelKey"}} as |xs|>
+    <xs.option @value="sortableTitle">title</xs.option>
+    <xs.option @value="totalDuration">total duration</xs.option>
+    <xs.option @value="itemCount">number of videos</xs.option>
+  </XSelect>
+  <XSelect @value={{channelDir}} @action={{action "selectChannelDir"}} as |xs|>
+    <xs.option @value="asc">ascending</xs.option>
+    <xs.option @value="desc">descending</xs.option>
+  </XSelect>
 </p>
 
 <p>
   <label>
-    {{input type="checkbox" checked=channelGroup}}
+    <Input @type="checkbox" @checked={{channelGroup}} />
     Group videos by channel
   </label>
 </p>
