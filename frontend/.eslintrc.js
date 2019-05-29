@@ -22,7 +22,8 @@ module.exports = {
     'indent': ['error', 2, { SwitchCase: 1 }],
     'camelcase': 'off', // we need camelcase for API interaction
     'no-console': 'off', // see https://github.com/emberjs/rfcs/pull/176#issuecomment-272566327
-    'keyword-spacing': ['error', { 'overrides': { 'catch': { 'after': true } } }]
+    'keyword-spacing': ['error', { 'overrides': { 'catch': { 'after': true } } }],
+    'ember/no-observers': 'off'
   },
   overrides: [
     // node files
@@ -43,7 +44,15 @@ module.exports = {
       env: {
         browser: false,
         node: true
-      }
+      },
+      plugins: ['node'],
+      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
+        // add your custom rules and overrides for node files here
+
+        // this can be removed once the following is fixed
+        // https://github.com/mysticatea/eslint-plugin-node/issues/77
+        'node/no-unpublished-require': 'off'
+      })
     }
   ]
 };
