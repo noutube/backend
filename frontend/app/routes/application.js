@@ -12,7 +12,7 @@ export default Route.extend({
 
     try {
       let store = get(this, 'store');
-      let me = await store.findRecord('user', 'me');
+      let me = await store.queryRecord('user', { me: true });
       set(this, 'session.me', me);
     } catch (e) {
       // not logged in, swallow
