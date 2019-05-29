@@ -8,6 +8,7 @@ const { themes } = config;
 
 export default Component.extend({
   session: service(),
+  theme: service(),
 
   classNames: ['menu-bar'],
 
@@ -17,6 +18,9 @@ export default Component.extend({
     switchTheme() {
       let index = themes.indexOf(get(this, 'settings.theme'));
       set(this, 'settings.theme', themes[(index + 1) % themes.length]);
+
+      let theme = get(this, 'theme');
+      theme.applyTheme();
     }
   }
 });
