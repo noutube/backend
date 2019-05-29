@@ -1,7 +1,8 @@
-import { hash } from 'rsvp';
 import { get, set } from '@ember/object';
-import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+
+import { hash } from 'rsvp';
 
 export default Route.extend({
   cable: service(),

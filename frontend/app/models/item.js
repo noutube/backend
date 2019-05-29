@@ -1,5 +1,6 @@
 import { set } from '@ember/object';
 import { alias } from '@ember/object/computed';
+
 import DS from 'ember-data';
 const { Model, belongsTo, attr } = DS;
 

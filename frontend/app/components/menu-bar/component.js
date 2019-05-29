@@ -1,9 +1,10 @@
 import Component from '@ember/component';
 import { get, set } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { storageFor } from 'ember-local-storage';
-import config from 'frontend/config/environment';
 
+import { storageFor } from 'ember-local-storage';
+
+import config from 'frontend/config/environment';
 const { themes } = config;
 
 export default Component.extend({

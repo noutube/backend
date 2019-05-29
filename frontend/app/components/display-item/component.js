@@ -1,5 +1,5 @@
-import { get } from '@ember/object';
 import Component from '@ember/component';
+import { get } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 
 import computed from 'ember-macro-helpers/computed';
