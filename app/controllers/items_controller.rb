@@ -1,5 +1,5 @@
 class ItemsController < ApiController
-  acts_as_token_authentication_handler_for User
+  acts_as_token_authentication_handler_for User, fallback: :exception
 
   def index
     render json: Item.includes(:video).joins(:subscription).where(subscriptions: { user_id: current_user.id }).order('videos.published_at DESC'),

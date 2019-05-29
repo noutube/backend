@@ -7,6 +7,9 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('feed');
+  this.route('landing');
+  this.route('privacy');
 });
 
 export default Router;

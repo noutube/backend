@@ -1,11 +1,12 @@
-{{title titleNotification}}
+{{!-- can't override parent's separator, have to just replace whole title --}}
+{{title titleNotification " NoUTube" replace=true}}
 
 {{#portal-content for="menu-bar-extras"}}
-  <a href="#" {{action "toggleSorting"}} class="icon sorting"></a>
+  <a href="#" {{action "toggleSorting"}} title="Sorting settings">{{svg-icon name="sliders"}}</a>
 {{/portal-content}}
 
 {{#if showSorting}}
-  {{#modal-dialog onClose="toggleSorting" translucentOverlay=true}}
+  {{#modal-dialog onClose=(action "toggleSorting") translucentOverlay=true}}
     {{sorting-settings}}
 
     <p><a role="button" {{action "toggleSorting"}}>Done</a></p>
@@ -13,7 +14,7 @@
 {{/if}}
 
 {{#if newSubscriptions}}
-  {{#section-header}}New Videos{{/section-header}}
+  {{#section-header}}{{svg-icon name="gift"}} New Videos{{/section-header}}
   {{#if settings.channelGroup}}
     {{#each newSubscriptions as |subscription|}}
       {{display-subscription subscription=subscription state="new"}}
@@ -26,7 +27,7 @@
 {{/if}}
 
 {{#if laterSubscriptions}}
-  {{#section-header}}Watch Later{{/section-header}}
+  {{#section-header}}{{svg-icon name="bookmark"}} Watch Later{{/section-header}}
   {{#if settings.channelGroup}}
     {{#each laterSubscriptions as |subscription|}}
       {{display-subscription subscription=subscription state="later"}}
@@ -39,7 +40,7 @@
 {{/if}}
 
 {{#unless anyItems}}
-  {{#section-header}}No Videos{{/section-header}}
+  {{#section-header}}{{svg-icon name="slash"}} No Videos{{/section-header}}
   <div class="message">
     <p>You've watched everything for now, check again later.</p>
   </div>
