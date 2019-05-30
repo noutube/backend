@@ -4,9 +4,9 @@
     <p class="title"><a href="https://www.youtube.com/channel/{{subscription.channel.apiId}}">{{subscription.channel.title}}</a></p>
     <p>{{pluralize items.length "video"}}, <span title={{totalDuration}}>{{moment-duration totalDuration "seconds"}}</span></p>
     {{#if (eq state "new")}}
-      <p><a href="#" {{action "markAllLater"}}>Watch All Later</a> &middot; <a href="#" {{action "destroyAll"}}>Ignore All</a></p>
+      <p><a href="#" {{action "markAllLater"}}>Watch All Later</a> &middot; <a href="#" {{action "ignoreAll"}}>Ignore All</a></p>
     {{else}}
-      <p><a href="#" {{action "destroyAll"}}>Watched All</a></p>
+      <p><a href="#" {{action "ignoreAll"}}>Watched All</a></p>
     {{/if}}
   </div>
 </div>

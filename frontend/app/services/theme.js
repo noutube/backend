@@ -3,22 +3,31 @@ import Service from '@ember/service';
 
 import { storageFor } from 'ember-local-storage';
 
-export default Service.extend({
-  settings: storageFor('settings'),
+import config from 'frontend/config/environment';
+const { themes } = config;
 
-  themeClass: '',
+export default class ThemeService extends Service {
+  @storageFor('settings') settings;
+
+  #themeClass = '';
 
   applyTheme() {
-    let oldThemeClass = get(this, 'themeClass');
     let newThemeClass = `theme--${get(this, 'settings.theme')}`;
-    if (newThemeClass !== oldThemeClass) {
-      if (oldThemeClass) {
-        document.querySelector('body').classList.remove(oldThemeClass);
+    if (newThemeClass !== this.#themeClass) {
+      if (this.#themeClass) {
+        document.querySelector('body').classList.remove(this.#themeClass);
       }
       if (newThemeClass) {
         document.querySelector('body').classList.add(newThemeClass);
       }
-      set(this, 'themeClass', newThemeClass);
+      this.#themeClass = newThemeClass;
     }
   }
-});
+
+  switchTheme() {
+    let currentThemeIndex = themes.indexOf(get(this, 'settings.theme'));
+    let newThemeIndex = (currentThemeIndex + 1) % themes.length;
+    set(this, 'settings.theme', themes[newThemeIndex]);
+    this.applyTheme();
+  }
+}

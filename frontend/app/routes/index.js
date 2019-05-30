@@ -1,16 +1,14 @@
-import { get } from '@ember/object';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  session: service(),
+export default class IndexRoute extends Route {
+  @service session;
 
   async beforeModel(transition) {
-    let me = get(this, 'session.me');
-    if (me) {
+    if (this.session.me) {
       this.transitionTo('feed');
     } else {
       this.transitionTo('landing');
     }
   }
-});
+}

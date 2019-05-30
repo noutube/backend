@@ -1,21 +1,17 @@
-import { get, set } from '@ember/object';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  session: service(),
-  theme: service(),
+export default class ApplicationRoute extends Route {
+  @service session;
+  @service theme;
 
   async beforeModel(transition) {
-    let theme = get(this, 'theme');
-    theme.applyTheme();
+    this.theme.applyTheme();
 
     try {
-      let store = get(this, 'store');
-      let me = await store.queryRecord('user', { me: true });
-      set(this, 'session.me', me);
+      this.session.me = await this.store.queryRecord('user', { me: true });
     } catch (e) {
       // not logged in, swallow
     }
   }
-});
+}

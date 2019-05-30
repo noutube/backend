@@ -1,32 +1,44 @@
-import { set } from '@ember/object';
+import { get, set } from '@ember/object';
+import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 
 import DS from 'ember-data';
 const { Model, belongsTo, attr } = DS;
 
-import { and, eq, not } from 'ember-awesome-macros';
-import computed from 'ember-macro-helpers/computed';
-import raw from 'ember-macro-helpers/raw';
+export default class ItemModel extends Model {
+  @attr('string') state;
 
-export default Model.extend({
-  state: attr('string'),
+  @belongsTo('subscription') subscription;
+  @belongsTo('video') video;
 
-  subscription: belongsTo('subscription'),
-  video: belongsTo('video'),
+  @computed('state', 'isDeleted')
+  get new() {
+    return this.state === 'state_new' && !this.isDeleted;
+  }
 
-  new: and(eq('state', raw('state_new')), not('isDeleted')),
-  later: and(eq('state', raw('state_later')), not('isDeleted')),
+  @computed('state', 'isDeleted')
+  get later() {
+    return this.state === 'state_later' && !this.isDeleted;
+  }
 
-  age: computed('video.publishedAt', (publishedAt) => Date.now() - publishedAt.getTime()),
-  sortableTitle: computed('video.title', (title) => title.toLowerCase()),
-  duration: alias('video.duration'),
+  @computed('video.publishedAt')
+  get age() {
+    return Date.now() - this.video.publishedAt.getTime();
+  }
+
+  @computed('video.title')
+  get sortableTitle() {
+    return get(this.video, 'title').toLowerCase();
+  }
+
+  @alias('video.duration') duration;
 
   markLater() {
     set(this, 'state', 'state_later');
     this.save().catch(() => this.rollbackAttributes());
-  },
+  }
   markDeleted() {
     this.deleteRecord();
     this.save().catch(() => this.rollbackAttributes());
   }
-});
+}

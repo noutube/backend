@@ -1,5 +1,8 @@
 import Component from '@ember/component';
 
-export default Component.extend({
-  classNames: ['footer']
-});
+import { classNames } from '@ember-decorators/component';
+
+export default
+@classNames('footer')
+class AppFooterComponent extends Component {
+}

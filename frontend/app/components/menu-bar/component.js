@@ -1,27 +1,17 @@
 import Component from '@ember/component';
-import { get, set } from '@ember/object';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-import { storageFor } from 'ember-local-storage';
+import { classNames } from '@ember-decorators/component';
 
-import config from 'frontend/config/environment';
-const { themes } = config;
+export default
+@classNames('menu-bar')
+class MenuBarComponent extends Component {
+  @service session;
+  @service theme;
 
-export default Component.extend({
-  session: service(),
-  theme: service(),
-
-  classNames: ['menu-bar'],
-
-  settings: storageFor('settings'),
-
-  actions: {
-    switchTheme() {
-      let index = themes.indexOf(get(this, 'settings.theme'));
-      set(this, 'settings.theme', themes[(index + 1) % themes.length]);
-
-      let theme = get(this, 'theme');
-      theme.applyTheme();
-    }
+  @action
+  switchTheme() {
+    this.theme.switchTheme();
   }
-});
+}

@@ -1,41 +1,41 @@
-import Component from '@ember/component';
-import { get } from '@ember/object';
-import { htmlSafe } from '@ember/template';
+import { action, computed, get } from '@ember/object';
 
-import computed from 'ember-macro-helpers/computed';
+import { classNames } from '@ember-decorators/component';
 
-import SwipeableMixin from 'frontend/mixins/swipeable';
+import SwipeableComponent from 'frontend/components/swipeable/component';
 
-export default Component.extend(SwipeableMixin, {
-  classNames: ['item'],
+export default
+@classNames('item')
+class DisplayItemComponent extends SwipeableComponent {
+  item = null;
+  embed = false;
 
-  classNameBindings: ['swipeClass'],
+  swipeLeft = 'markWatched';
+  @computed('item.state')
+  get swipeRight() {
+    return this.item.state === 'state_new' ? 'markLater' : 'markWatched';
+  }
 
-  attributeBindings: ['style'],
-  style: computed('swipePosition', (swipePosition) => htmlSafe(`left: ${swipePosition}px;`)),
-
-  item: null,
-  embed: false,
-  swipeLeft: 'destroy',
-  swipeRight: computed('item.state', (state) => state === 'state_new' ? 'markLater' : 'destroy'),
-
-  formattedDuration: computed('item.video.duration', (duration) => {
+  @computed('item.video.duration')
+  get formattedDuration() {
+    let duration = get(this.item.video, 'duration');
     let result = `${(`00${Math.floor(duration / 60) % 60}`).slice(-2)}:${(`00${duration % 60}`).slice(-2)}`;
     if (duration >= 60 * 60) {
       result = `${Math.floor(duration / 60 / 60)}:${result}`;
     }
     return result;
-  }),
-
-  actions: {
-    markLater() {
-      get(this, 'item').markLater();
-    },
-    destroy() {
-      get(this, 'item').markDeleted();
-    },
-    toggleEmbed() {
-      this.toggleProperty('embed');
-    }
   }
-});
+
+  @action
+  markLater() {
+    this.item.markLater();
+  }
+  @action
+  markWatched() {
+    this.item.markDeleted();
+  }
+  @action
+  toggleEmbed() {
+    this.toggleProperty('embed');
+  }
+}

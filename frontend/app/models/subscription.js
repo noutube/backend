@@ -1,21 +1,35 @@
 import { get } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import { alias, filterBy } from '@ember/object/computed';
 
 import DS from 'ember-data';
 const { Model, belongsTo, hasMany } = DS;
 
-import { array } from 'ember-awesome-macros';
-import computed from 'ember-macro-helpers/computed';
-import raw from 'ember-macro-helpers/raw';
+export default class SubscriptionModel extends Model {
+  @belongsTo('channel') channel;
+  @hasMany('items') items;
 
-export default Model.extend({
-  channel: belongsTo('channel'),
-  items: hasMany('items'),
+  @filterBy('items', 'new') newItems;
+  @computed('newItems')
+  get hasNew() {
+    return this.newItems.length > 0;
+  }
 
-  hasNew: array.isAny('items', raw('new')),
-  hasLater: array.isAny('items', raw('later')),
+  @filterBy('items', 'later') laterItems;
+  @computed('laterItems')
+  get hasLater() {
+    return this.laterItems.length > 0;
+  }
 
-  sortableTitle: computed('channel.title', (title) => title.toLowerCase()),
-  totalDuration: array.reduce(array.map('items', (item) => get(item, 'video.duration')), (acc, n) => acc + n, 0),
-  itemCount: alias('items.length')
-});
+  @computed('channel.title')
+  get sortableTitle() {
+    return this.channel.title.toLowerCase();
+  }
+
+  @computed('items')
+  get totalDuration() {
+    return this.items.map((item) => get(item.video, 'duration')).reduce((acc, n) => acc + n, 0);
+  }
+
+  @alias('items.length') itemCount;
+}
