@@ -275,13 +275,28 @@ svg {
   }
 }
 
-.ember-modal-dialog {
-  @include theme((background: bg-hi));
+.app-dialog {
   border-radius: 8px;
   box-shadow: 0 0 64px $shadow;
-  padding: 8px;
 
-  .title {
-    margin-bottom: 16px;
+  > .top {
+    @include theme((background: bar, color: bg));
+    border-radius: 8px 8px 0 0;
+    padding: 12px;
+    font-weight: bold;
   }
+
+  > .middle {
+    margin: 12px;
+  }
+
+  > .bottom {
+    @include theme((background: bg-hi));
+    border-radius:  0 0 8px 8px;
+    padding: 12px;
+  }
+}
+
+.sorting-settings > .row {
+  margin: 12px 0;
 }

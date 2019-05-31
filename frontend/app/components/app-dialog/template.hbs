@@ -1,0 +1,13 @@
+<ModalDialog @onClose={{@close}} @translucentOverlay={{true}} @containerClass="app-dialog">
+  <div class="top">
+    {{@title}}
+  </div>
+
+  <div class="middle">
+    {{yield}}
+  </div>
+
+  <div class="bottom">
+    <a role="button" {{action @close}}>Done</a>
+  </div>
+</ModalDialog>

@@ -6,11 +6,9 @@
 </PortalContent>
 
 {{#if showSorting}}
-  <ModalDialog @onClose={{action "toggleSorting"}} @translucentOverlay={{true}}>
+  <AppDialog @title="Sorting Settings" @close={{action "toggleSorting"}}>
     <SortingSettings />
-
-    <p><a role="button" {{action "toggleSorting"}}>Done</a></p>
-  </ModalDialog>
+  </AppDialog>
 {{/if}}
 
 {{#if newSubscriptions}}
