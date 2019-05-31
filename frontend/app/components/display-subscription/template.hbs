@@ -1,15 +1,15 @@
 <div>
-  <img src={{subscription.channel.thumbnail}} alt={{subscription.channel.title}}>
+  <img src={{this.subscription.channel.thumbnail}} alt={{this.subscription.channel.title}}>
   <div>
-    <p class="title"><a href="https://www.youtube.com/channel/{{subscription.channel.apiId}}">{{subscription.channel.title}}</a></p>
-    <p>{{pluralize items.length "video"}}, <span title={{totalDuration}}>{{moment-duration totalDuration "seconds"}}</span></p>
-    {{#if (eq state "new")}}
+    <p class="title"><a href="https://www.youtube.com/channel/{{this.subscription.channel.apiId}}">{{this.subscription.channel.title}}</a></p>
+    <p>{{pluralize this.items.length "video"}}, <span title={{this.totalDuration}}>{{moment-duration this.totalDuration "seconds"}}</span></p>
+    {{#if (eq this.state "new")}}
       <p><a href="#" {{action "markAllLater"}}>Watch All Later</a> &middot; <a href="#" {{action "ignoreAll"}}>Ignore All</a></p>
     {{else}}
       <p><a href="#" {{action "ignoreAll"}}>Watched All</a></p>
     {{/if}}
   </div>
 </div>
-{{#each items as |item|}}
+{{#each this.items as |item|}}
   <DisplayItem @item={{item}} />
 {{/each}}

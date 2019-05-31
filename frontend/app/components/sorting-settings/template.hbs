@@ -1,11 +1,11 @@
 <div class="row">
   Sort videos by
-  <XSelect @value={{videoKey}} @onChange={{action "selectVideoKey"}} as |xs|>
+  <XSelect @value={{this.videoKey}} @onChange={{action "selectVideoKey"}} as |xs|>
     <xs.option @value="age">age</xs.option>
     <xs.option @value="sortableTitle">title</xs.option>
     <xs.option @value="duration">duration</xs.option>
   </XSelect>
-  <XSelect @value={{videoDir}} @onChange={{action "selectVideoDir"}} as |xs|>
+  <XSelect @value={{this.videoDir}} @onChange={{action "selectVideoDir"}} as |xs|>
     <xs.option @value="asc">ascending</xs.option>
     <xs.option @value="desc">descending</xs.option>
   </XSelect>
@@ -13,19 +13,19 @@
 
 <div class="row">
   <label>
-    <Input @type="checkbox" @checked={{channelGroup}} />
+    <Input @type="checkbox" @checked={{this.channelGroup}} />
     Group videos by channel
   </label>
 </div>
 
 <div class="row">
   Sort channels by
-  <XSelect @value={{channelKey}} @onChange={{action "selectChannelKey"}} @disabled={{not channelGroup}} as |xs|>
+  <XSelect @value={{this.channelKey}} @onChange={{action "selectChannelKey"}} @disabled={{not this.channelGroup}} as |xs|>
     <xs.option @value="sortableTitle">title</xs.option>
     <xs.option @value="totalDuration">total duration</xs.option>
     <xs.option @value="itemCount">number of videos</xs.option>
   </XSelect>
-  <XSelect @value={{channelDir}} @onChange={{action "selectChannelDir"}} @disabled={{not channelGroup}} as |xs|>
+  <XSelect @value={{this.channelDir}} @onChange={{action "selectChannelDir"}} @disabled={{not this.channelGroup}} as |xs|>
     <xs.option @value="asc">ascending</xs.option>
     <xs.option @value="desc">descending</xs.option>
   </XSelect>

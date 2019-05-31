@@ -1,23 +1,23 @@
 <div>
-  <a href="#" {{action "toggleEmbed"}}><img src={{item.video.thumbnail}} alt={{item.video.title}}></a>
+  <a href="#" {{action "toggleEmbed"}}><img src={{this.item.video.thumbnail}} alt={{this.item.video.title}}></a>
   <div>
-    <p class="title"><a href="https://www.youtube.com/watch?v={{item.video.apiId}}">{{item.video.title}}</a></p>
+    <p class="title"><a href="https://www.youtube.com/watch?v={{this.item.video.apiId}}">{{this.item.video.title}}</a></p>
     <p>
-      <span title={{item.video.duration}}>{{formattedDuration}}</span>,
-      published <span title={{moment item.video.publishedAt}}>{{moment-from-now item.video.publishedAt interval=60000}}</span>
-      {{#unless settings.channelGroup}}
-        by <a href="https://www.youtube.com/channel/{{item.subscription.channel.apiId}}">{{item.subscription.channel.title}}</a>
+      <span title={{this.item.video.duration}}>{{this.formattedDuration}}</span>,
+      published <span title={{moment this.item.video.publishedAt}}>{{moment-from-now this.item.video.publishedAt interval=60000}}</span>
+      {{#unless this.settings.channelGroup}}
+        by <a href="https://www.youtube.com/channel/{{this.item.subscription.channel.apiId}}">{{this.item.subscription.channel.title}}</a>
       {{/unless}}
     </p>
-    {{#if item.new}}
+    {{#if this.item.new}}
       <p><a href="#" {{action "markLater"}}>Watch Later</a> &middot; <a href="#" {{action "markWatched"}}>Ignore</a></p>
     {{else}}
       <p><a href="#" {{action "markWatched"}}>Watched</a></p>
     {{/if}}
   </div>
 </div>
-{{#if embed}}
+{{#if this.embed}}
   <div>
-    <iframe width="640" height="360" src="https://www.youtube.com/embed/{{item.video.apiId}}?version=3&amp;rel=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
+    <iframe width="640" height="360" src="https://www.youtube.com/embed/{{this.item.video.apiId}}?version=3&amp;rel=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
   </div>
 {{/if}}

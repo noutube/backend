@@ -1,43 +1,43 @@
 {{!-- can't override parent's separator, have to just replace whole title --}}
-{{title titleNotification " NoUTube" replace=true}}
+{{title this.titleNotification " NoUTube" replace=true}}
 
 <PortalContent @for="menu-bar-extras">
   <a href="#" {{action "toggleSorting"}} title="Sorting settings"><SvgIcon @name="sliders" /></a>
 </PortalContent>
 
-{{#if showSorting}}
+{{#if this.showSorting}}
   <AppDialog @title="Sorting Settings" @close={{action "toggleSorting"}}>
     <SortingSettings />
   </AppDialog>
 {{/if}}
 
-{{#if newSubscriptions}}
+{{#if this.newSubscriptions}}
   <SectionHeader><SvgIcon @name="gift" /> New Videos</SectionHeader>
-  {{#if settings.channelGroup}}
-    {{#each newSubscriptions as |subscription|}}
+  {{#if this.settings.channelGroup}}
+    {{#each this.newSubscriptions as |subscription|}}
       <DisplaySubscription @subscription={{subscription}} @state="new" />
     {{/each}}
   {{else}}
-    {{#each newItems as |item|}}
+    {{#each this.newItems as |item|}}
       <DisplayItem @item={{item}} />
     {{/each}}
   {{/if}}
 {{/if}}
 
-{{#if laterSubscriptions}}
+{{#if this.laterSubscriptions}}
   <SectionHeader><SvgIcon @name="bookmark" /> Watch Later</SectionHeader>
-  {{#if settings.channelGroup}}
-    {{#each laterSubscriptions as |subscription|}}
+  {{#if this.settings.channelGroup}}
+    {{#each this.laterSubscriptions as |subscription|}}
       <DisplaySubscription @subscription={{subscription}} @state="later" />
     {{/each}}
   {{else}}
-    {{#each laterItems as |item|}}
+    {{#each this.laterItems as |item|}}
       <DisplayItem @item={{item}} />
     {{/each}}
   {{/if}}
 {{/if}}
 
-{{#unless anyItems}}
+{{#unless this.anyItems}}
   <SectionHeader><SvgIcon @name="slash" /> No Videos</SectionHeader>
   <div class="message">
     <p>You've watched everything for now, check again later.</p>
