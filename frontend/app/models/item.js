@@ -23,7 +23,7 @@ export default class ItemModel extends Model {
 
   @computed('video.publishedAt')
   get age() {
-    return Date.now() - this.video.publishedAt.getTime();
+    return Date.now() - get(this.video, 'publishedAt').getTime();
   }
 
   @computed('video.title')
