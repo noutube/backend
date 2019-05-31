@@ -2,9 +2,13 @@ import Component from '@ember/component';
 import { action, set } from '@ember/object';
 import { alias, oneWay } from '@ember/object/computed';
 
+import { classNames } from '@ember-decorators/component';
+
 import { storageFor } from 'ember-local-storage';
 
-export default class SortingSettingsComponent extends Component {
+export default
+@classNames('sorting-settings')
+class SortingSettingsComponent extends Component {
   @storageFor('settings') settings;
 
   @oneWay('settings.videoKey') videoKey;
