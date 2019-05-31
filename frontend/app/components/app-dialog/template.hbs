@@ -1,7 +1,9 @@
 <ModalDialog @onClose={{@close}} @translucentOverlay={{true}} @containerClass="app-dialog">
-  <div class="top">
-    {{@title}}
-  </div>
+  {{#if @title}}
+    <div class="top">
+      {{@title}}
+    </div>
+  {{/if}}
 
   <div class="middle">
     {{yield}}

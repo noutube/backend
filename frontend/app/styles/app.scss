@@ -276,6 +276,7 @@ svg {
 }
 
 .app-dialog {
+  @include theme((background: bg));
   border-radius: 8px;
   box-shadow: 0 0 64px $shadow;
 
