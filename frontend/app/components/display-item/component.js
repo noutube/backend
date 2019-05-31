@@ -2,11 +2,15 @@ import { action, computed, get } from '@ember/object';
 
 import { classNames } from '@ember-decorators/component';
 
+import { storageFor } from 'ember-local-storage';
+
 import SwipeableComponent from 'frontend/components/swipeable/component';
 
 export default
 @classNames('item')
 class DisplayItemComponent extends SwipeableComponent {
+  @storageFor('settings') settings;
+
   item = null;
   embed = false;
 
