@@ -23,7 +23,7 @@ export default class SubscriptionModel extends Model {
 
   @computed('channel.title')
   get sortableTitle() {
-    return this.channel.title.toLowerCase();
+    return get(this.channel, 'title').toLowerCase();
   }
 
   @computed('items')

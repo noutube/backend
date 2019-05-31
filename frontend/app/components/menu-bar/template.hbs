@@ -1,5 +1,5 @@
 <PortalFor @name="menu-bar-extras" />
-<a href="#" {{action "switchTheme"}} title="Switch theme"><SvgIcon @name="droplet" /></a>
+<a role="button" {{action this.switchTheme}} title="Switch theme"><SvgIcon @name="droplet" /></a>
 {{#if this.session.me}}
   <LinkTo @route="feed" title="Go to feed"><SvgIcon @name="inbox" /></LinkTo>
   <a href="/users/sign_out" title="Sign out {{this.session.me.email}}"><SvgIcon @name="log-out" /></a>

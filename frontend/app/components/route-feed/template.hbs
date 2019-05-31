@@ -2,11 +2,11 @@
 {{title this.titleNotification " NoUTube" replace=true}}
 
 <PortalContent @for="menu-bar-extras">
-  <a href="#" {{action "toggleSorting"}} title="Sorting settings"><SvgIcon @name="sliders" /></a>
+  <a role="button" {{action this.toggleSorting}} title="Sorting settings"><SvgIcon @name="sliders" /></a>
 </PortalContent>
 
 {{#if this.showSorting}}
-  <AppDialog @title="Sorting Settings" @close={{action "toggleSorting"}}>
+  <AppDialog @title="Sorting Settings" @close={{this.toggleSorting}}>
     <SortingSettings />
   </AppDialog>
 {{/if}}

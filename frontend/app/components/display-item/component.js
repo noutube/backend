@@ -14,12 +14,6 @@ class DisplayItemComponent extends SwipeableComponent {
   item = null;
   embed = false;
 
-  swipeLeft = 'markWatched';
-  @computed('item.state')
-  get swipeRight() {
-    return this.item.state === 'state_new' ? 'markLater' : 'markWatched';
-  }
-
   @computed('item.video.duration')
   get formattedDuration() {
     let duration = get(this.item.video, 'duration');
@@ -41,5 +35,16 @@ class DisplayItemComponent extends SwipeableComponent {
   @action
   toggleEmbed() {
     this.toggleProperty('embed');
+  }
+
+  swipeLeft() {
+    this.markWatched();
+  }
+  swipeRight() {
+    if (this.item.state === 'state_new') {
+      this.markLater();
+    } else {
+      this.markWatched();
+    }
   }
 }

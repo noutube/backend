@@ -15,12 +15,6 @@ class DisplaySubscriptionComponent extends SwipeableComponent {
   subscription = null;
   state = null;
 
-  swipeLeft = 'ignoreAll';
-  @computed('state')
-  get swipeRight() {
-    return this.state === 'new' ? 'markAllLater' : 'ignoreAll';
-  }
-
   // can't filterBy a bound key, do it manually
   @computed('subscription.items.@each.{new,later}', 'state')
   get itemsUnsorted() {
@@ -40,5 +34,16 @@ class DisplaySubscriptionComponent extends SwipeableComponent {
   @action
   ignoreAll() {
     this.items.invoke('markDeleted');
+  }
+
+  swipeLeft() {
+    this.ignoreAll();
+  }
+  swipeRight() {
+    if (this.state === 'new') {
+      this.markAllLater();
+    } else {
+      this.ignoreAll();
+    }
   }
 }
