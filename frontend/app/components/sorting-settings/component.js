@@ -1,30 +1,32 @@
 import Component from '@ember/component';
-import { set } from '@ember/object';
+import { action, set } from '@ember/object';
 import { alias, oneWay } from '@ember/object/computed';
 
 import { storageFor } from 'ember-local-storage';
 
-export default Component.extend({
-  settings: storageFor('settings'),
+export default class SortingSettingsComponent extends Component {
+  @storageFor('settings') settings;
 
-  videoKey: oneWay('settings.videoKey'),
-  videoDir: oneWay('settings.videoDir'),
-  channelKey: oneWay('settings.channelKey'),
-  channelDir: oneWay('settings.channelDir'),
-  channelGroup: alias('settings.channelGroup'),
+  @oneWay('settings.videoKey') videoKey;
+  @oneWay('settings.videoDir') videoDir;
+  @oneWay('settings.channelKey') channelKey;
+  @oneWay('settings.channelDir') channelDir;
+  @alias('settings.channelGroup') channelGroup;
 
-  actions: {
-    selectVideoKey(videoKey) {
-      set(this, 'settings.videoKey', videoKey);
-    },
-    selectVideoDir(videoDir) {
-      set(this, 'settings.videoDir', videoDir);
-    },
-    selectChannelKey(channelKey) {
-      set(this, 'settings.channelKey', channelKey);
-    },
-    selectChannelDir(channelDir) {
-      set(this, 'settings.channelDir', channelDir);
-    }
+  @action
+  selectVideoKey(videoKey) {
+    set(this, 'settings.videoKey', videoKey);
   }
-});
+  @action
+  selectVideoDir(videoDir) {
+    set(this, 'settings.videoDir', videoDir);
+  }
+  @action
+  selectChannelKey(channelKey) {
+    set(this, 'settings.channelKey', channelKey);
+  }
+  @action
+  selectChannelDir(channelDir) {
+    set(this, 'settings.channelDir', channelDir);
+  }
+}

@@ -1,8 +1,8 @@
-{{portal-for name="menu-bar-extras"}}
-<a href="#" {{action "switchTheme"}} title="Switch theme">{{svg-icon name="droplet"}}</a>
+<PortalFor @name="menu-bar-extras" />
+<a href="#" {{action "switchTheme"}} title="Switch theme"><SvgIcon @name="droplet" /></a>
 {{#if session.me}}
-  {{#link-to "feed" title="Go to feed"}}{{svg-icon name="inbox"}}{{/link-to}}
-  <a href="/users/sign_out" title="Sign out {{session.me.email}}">{{svg-icon name="log-out"}}</a>
+  <LinkTo @route="feed" title="Go to feed"><SvgIcon @name="inbox" /></LinkTo>
+  <a href="/users/sign_out" title="Sign out {{session.me.email}}"><SvgIcon @name="log-out" /></a>
 {{else}}
-  <a href="/users/sign_in" title="Sign in">{{svg-icon name="log-in"}}</a>
+  <a href="/users/sign_in" title="Sign in"><SvgIcon @name="log-in" /></a>
 {{/if}}

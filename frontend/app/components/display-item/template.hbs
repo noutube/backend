@@ -4,9 +4,9 @@
     <p class="title"><a href="https://www.youtube.com/watch?v={{item.video.apiId}}">{{item.video.title}}</a></p>
     <p><span title={{item.video.duration}}>{{formattedDuration}}</span>, published <span title={{moment item.video.publishedAt}}>{{moment-from-now item.video.publishedAt interval=60000}}</span></p>
     {{#if item.new}}
-      <p><a href="#" {{action "markLater"}}>Watch Later</a> &middot; <a href="#" {{action "destroy"}}>Ignore</a></p>
+      <p><a href="#" {{action "markLater"}}>Watch Later</a> &middot; <a href="#" {{action "markWatched"}}>Ignore</a></p>
     {{else}}
-      <p><a href="#" {{action "destroy"}}>Watched</a></p>
+      <p><a href="#" {{action "markWatched"}}>Watched</a></p>
     {{/if}}
   </div>
 </div>

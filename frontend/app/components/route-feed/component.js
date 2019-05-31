@@ -1,33 +1,42 @@
 import Component from '@ember/component';
-
-import { array } from 'ember-awesome-macros';
-import computed from 'ember-macro-helpers/computed';
-import raw from 'ember-macro-helpers/raw';
+import { action, computed } from '@ember/object';
+import { filterBy, sort } from '@ember/object/computed';
 
 import { storageFor } from 'ember-local-storage';
 
-export default Component.extend({
-  settings: storageFor('settings'),
+export default class RouteFeedComponent extends Component {
+  @storageFor('settings') settings;
 
-  items: null,
-  subscriptions: null,
+  items = null;
+  subscriptions = null;
 
-  channelSort: computed('settings.{channelKey,channelDir}', (key, dir) => [`${key}:${dir}`]),
-  videoSort: computed('settings.{videoKey,videoDir}', (key, dir) => [`${key}:${dir}`]),
+  @filterBy('subscriptions', 'hasNew') newSubscriptionsUnsorted;
+  @sort('newSubscriptionsUnsorted', 'settings.channelSort') newSubscriptions;
 
-  newSubscriptions: array.sort(array.filterBy('subscriptions', raw('hasNew')), 'channelSort'),
-  laterSubscriptions: array.sort(array.filterBy('subscriptions', raw('hasLater')), 'channelSort'),
-  newItems: array.sort(array.filterBy('items', raw('new')), 'videoSort'),
-  laterItems: array.sort(array.filterBy('items', raw('later')), 'videoSort'),
-  anyItems: array.isAny('items', raw('isDeleted'), false),
+  @filterBy('subscriptions', 'hasLater') laterSubscriptionsUnsorted;
+  @sort('laterSubscriptionsUnsorted', 'settings.channelSort') laterSubscriptions;
 
-  titleNotification: computed(array.filterBy('items', raw('new')), (newItems) => newItems.length > 0 ? `(${newItems.length})` : ''),
+  @filterBy('items', 'new') newItemsUnsorted;
+  @sort('newItemsUnsorted', 'settings.videoSort') newItems;
 
-  showSorting: false,
+  @filterBy('items', 'later') laterItemsUnsorted;
+  @sort('laterItemsUnsorted', 'settings.videoSort') laterItems;
 
-  actions: {
-    toggleSorting() {
-      this.toggleProperty('showSorting');
-    }
+  @filterBy('items', 'isDeleted', false) allItems;
+  @computed('allItems')
+  get anyItems() {
+    return this.allItems.length > 0;
   }
-});
+
+  @computed('newItems')
+  get titleNotification() {
+    return this.newItems.length > 0 ? `(${this.newItems.length})` : '';
+  }
+
+  showSorting = false;
+
+  @action
+  toggleSorting() {
+    this.toggleProperty('showSorting');
+  }
+}

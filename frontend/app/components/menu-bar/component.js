@@ -1,36 +1,17 @@
-import $ from 'jquery';
 import Component from '@ember/component';
-import { get, set } from '@ember/object';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { storageFor } from 'ember-local-storage';
-import config from 'frontend/config/environment';
 
-const { themes } = config;
+import { classNames } from '@ember-decorators/component';
 
-export default Component.extend({
-  session: service(),
+export default
+@classNames('menu-bar')
+class MenuBarComponent extends Component {
+  @service session;
+  @service theme;
 
-  classNames: ['menu-bar'],
-
-  settings: storageFor('settings'),
-
-  didInsertElement() {
-    $(document).on('keyup', this.onKeyUp.bind(this));
-  },
-  willDestroyElement() {
-    $(document).off('keyup', this.onKeyUp.bind(this));
-  },
-
-  actions: {
-    switchTheme() {
-      let index = themes.indexOf(get(this, 'settings.theme'));
-      set(this, 'settings.theme', themes[(index + 1) % themes.length]);
-    }
-  },
-
-  onKeyUp(e) {
-    if (e.keyCode === 84) {
-      this.send('switchTheme');
-    }
+  @action
+  switchTheme() {
+    this.theme.switchTheme();
   }
-});
+}

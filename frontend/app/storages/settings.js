@@ -1,12 +1,12 @@
+import { computed, get } from '@ember/object';
+
 import StorageObject from 'ember-local-storage/local/object';
+
 import config from 'frontend/config/environment';
-
-let SettingsStorage = StorageObject.extend();
-
 const { themes: [defaultTheme], defaultVideoKey, defaultVideoDir, defaultChannelKey, defaultChannelDir, defaultChannelGroup } = config;
 
-SettingsStorage.reopenClass({
-  initialState() {
+export default class SettingsStorage extends StorageObject {
+  static initialState() {
     return {
       theme: defaultTheme,
       videoKey: defaultVideoKey,
@@ -16,6 +16,15 @@ SettingsStorage.reopenClass({
       channelGroup: defaultChannelGroup
     };
   }
-});
 
-export default SettingsStorage;
+  @computed('channelKey', 'channelDir')
+  get channelSort() {
+    return [`${get(this, 'channelKey')}:${get(this, 'channelDir')}`];
+  }
+
+  @computed('videoKey', 'videoDir')
+  get videoSort() {
+    return [`${get(this, 'videoKey')}:${get(this, 'videoDir')}`];
+  }
+
+}

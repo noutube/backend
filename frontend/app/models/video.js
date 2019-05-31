@@ -1,13 +1,13 @@
 import DS from 'ember-data';
 const { Model, belongsTo, hasMany, attr } = DS;
 
-export default Model.extend({
-  apiId: attr('string'),
-  title: attr('string'),
-  thumbnail: attr('string'),
-  duration: attr('number'),
-  publishedAt: attr('date'),
+export default class VideoModel extends Model {
+  @attr('string') apiId;
+  @attr('string') title;
+  @attr('string') thumbnail;
+  @attr('number') duration;
+  @attr('date') publishedAt;
 
-  channel: belongsTo('channel'),
-  items: hasMany('items')
-});
+  @belongsTo('channel') channel;
+  @hasMany('items') items;
+}

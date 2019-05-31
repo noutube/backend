@@ -1,5 +1,5 @@
 import Service from '@ember/service';
 
-export default Service.extend({
-  me: null
-});
+export default class SessionService extends Service {
+  me = null;
+}

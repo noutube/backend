@@ -1,8 +1,10 @@
 import Component from '@ember/component';
 
-export default Component.extend({
-  tagName: '',
+import { tagName } from '@ember-decorators/component';
 
-  name: '',
-  size: 24
-});
+export default
+@tagName('')
+class SvgIconComponent extends Component {
+  name = '';
+  size = 24;
+}
