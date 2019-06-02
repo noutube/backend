@@ -11,12 +11,9 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'redis'
 
 # auth
-gem 'devise'
 gem 'simple_token_authentication'
 gem 'cancancan'
 gem 'rolify'
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
 gem 'signet'
 
 # frontend and assets
