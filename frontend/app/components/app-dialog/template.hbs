@@ -10,6 +10,11 @@
   </div>
 
   <div class="bottom">
-    <a role="button" {{action @close}}>Done</a>
+    {{#if @accept}}
+      <a role="button" {{action @accept}}>{{if @acceptLabel @acceptLabel "Yes"}}</a>
+      <a role="button" {{action (if @cancel @cancel @close)}}>{{if @cancelLabel @cancelLabel "No"}}</a>
+    {{else}}
+      <a role="button" {{action @close}}>Close</a>
+    {{/if}}
   </div>
 </ModalDialog>

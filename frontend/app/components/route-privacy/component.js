@@ -6,6 +6,13 @@ export default class RoutePrivacyComponent extends Component {
   @service session;
   @service router;
 
+  showDestroyMe = false;
+
+  @action
+  toggleDestroyMe() {
+    this.toggleProperty('showDestroyMe');
+  }
+
   @action
   async destroyMe() {
     let { me } = this.session;
