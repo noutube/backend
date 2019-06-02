@@ -2,7 +2,7 @@ import { computed, get } from '@ember/object';
 
 import StorageObject from 'ember-local-storage/local/object';
 
-import config from 'frontend/config/environment';
+import config from 'nou2ube/config/environment';
 const { themes: [defaultTheme], defaultVideoKey, defaultVideoDir, defaultChannelKey, defaultChannelDir, defaultChannelGroup } = config;
 
 export default class SettingsStorage extends StorageObject {

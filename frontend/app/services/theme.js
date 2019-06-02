@@ -3,7 +3,7 @@ import Service from '@ember/service';
 
 import { storageFor } from 'ember-local-storage';
 
-import config from 'frontend/config/environment';
+import config from 'nou2ube/config/environment';
 const { themes } = config;
 
 export default class ThemeService extends Service {

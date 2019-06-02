@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   let ENV = {
-    modulePrefix: 'frontend',
+    modulePrefix: 'nou2ube',
     environment,
     rootURL: '/',
     locationType: 'auto',
