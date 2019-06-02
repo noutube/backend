@@ -2,7 +2,7 @@
 <a role="button" {{action this.switchTheme}} title="Switch theme"><SvgIcon @name="droplet" /></a>
 {{#if this.session.me}}
   <LinkTo @route="feed" title="Go to feed"><SvgIcon @name="inbox" /></LinkTo>
-  <a href="/users/sign_out" title="Sign out {{this.session.me.email}}"><SvgIcon @name="log-out" /></a>
+  <a role="button" {{action this.session.signOut}} title="Sign out {{this.session.me.email}}"><SvgIcon @name="log-out" /></a>
 {{else}}
-  <a href="/users/sign_in" title="Sign in"><SvgIcon @name="log-in" /></a>
+  <a role="button" {{action this.session.signIn}} title="Sign in"><SvgIcon @name="log-in" /></a>
 {{/if}}

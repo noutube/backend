@@ -1,5 +1,5 @@
 class SubscriptionsController < ApiController
-  acts_as_token_authentication_handler_for User, fallback: :exception
+  before_action :authenticate_user
 
   def index
     authorize! :read, Subscription

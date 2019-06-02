@@ -12,7 +12,7 @@
 </div>
 
 {{#if this.showDestroyMe}}
-  <AppDialog @title="Delete Account" @close={{action this.toggleDestroyMe}} @accept={{action this.destroyMe}}>
+  <AppDialog @title="Delete Account" @close={{action this.toggleDestroyMe}} @accept={{action this.session.destroyMe}}>
     <p>Are you sure?</p>
   </AppDialog>
 {{/if}}

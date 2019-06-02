@@ -1,13 +1,9 @@
 class UsersController < ApiController
-  acts_as_token_authentication_handler_for User, fallback: :exception
+  before_action :authenticate_user
 
   def show
     authorize! :read, User
-    user = if params[:id] == 'me'
-             current_user
-           else
-             User.find(params[:id])
-           end
+    user = User.find(params[:id])
     authorize! :read, user
     render json: current_user
   end

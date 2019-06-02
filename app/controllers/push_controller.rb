@@ -1,8 +1,6 @@
 require 'google/apis/youtube_v3'
 
 class PushController < ApplicationController
-  protect_from_forgery except: :callback
-
   def validate
     render plain: params['hub.challenge'].chomp
   end
