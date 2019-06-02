@@ -2,6 +2,10 @@ require 'google/apis/oauth2_v2'
 require 'signet/oauth_2/client'
 
 class AuthController < ApplicationController
+  # needed for callback to render
+  include ActionController::ImplicitRender
+  include ActionView::Rendering
+
   rescue_from Signet::AuthorizationError do
     head :unauthorized
   end
