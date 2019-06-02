@@ -3,11 +3,11 @@
 # Table name: users
 #
 #  id                   :integer          not null, primary key
-#  email                :string           default(""), not null
+#  email                :string           not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  authentication_token :string
-#  refresh_token        :string
+#  authentication_token :string           not null
+#  refresh_token        :string           not null
 #
 # Indexes
 #
@@ -16,7 +16,6 @@
 #
 
 class User < ApplicationRecord
-  acts_as_token_authenticatable
   rolify
 
   has_many :subscriptions, dependent: :destroy

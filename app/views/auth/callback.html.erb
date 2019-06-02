@@ -2,8 +2,8 @@
 (function () {
   // get data as a JSON encoded string
   var message = {
-    name: <%= @name.to_json.html_safe %>,
-    data: <%= @data.to_json.html_safe %>
+    name: <%= name.to_json.html_safe %>,
+    data: <%= data.to_json.html_safe %>
   };
 
   var origin = location.origin;

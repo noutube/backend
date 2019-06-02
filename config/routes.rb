@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # auth
   get 'auth', to: 'auth#new'
   get 'auth/callback', to: 'auth#callback', as: :auth_callback
-  post 'auth/sign_in', to: 'auth#sign_in'
+  get 'auth/sign_in', to: 'auth#sign_in'
 
   # client
   resources :users, only: [:show, :destroy]

@@ -11,7 +11,6 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'redis'
 
 # auth
-gem 'simple_token_authentication'
 gem 'cancancan'
 gem 'rolify'
 gem 'signet'

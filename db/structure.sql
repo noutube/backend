@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS "items" ("id" integer NOT NULL PRIMARY KEY, "subscrip
 CREATE UNIQUE INDEX "index_items_on_id" ON "items" ("id");
 CREATE INDEX "index_items_on_subscription_id" ON "items" ("subscription_id");
 CREATE INDEX "index_items_on_video_id" ON "items" ("video_id");
-CREATE TABLE IF NOT EXISTS "users" ("id" integer NOT NULL PRIMARY KEY, "email" varchar DEFAULT '' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "authentication_token" varchar DEFAULT NULL, "refresh_token" varchar DEFAULT NULL);
+CREATE TABLE IF NOT EXISTS "users" ("id" integer NOT NULL PRIMARY KEY, "email" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "authentication_token" varchar NOT NULL, "refresh_token" varchar NOT NULL);
 CREATE UNIQUE INDEX "index_users_on_id" ON "users" ("id");
 CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email");
 INSERT INTO "schema_migrations" (version) VALUES
@@ -36,6 +36,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20160817162932'),
 ('20160817173237'),
 ('20170401020551'),
-('20190602061347');
+('20190602061347'),
+('20190602102525');
 
 
