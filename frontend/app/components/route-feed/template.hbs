@@ -6,7 +6,7 @@
 </PortalContent>
 
 {{#if this.showSorting}}
-  <AppDialog @title="Sorting Settings" @close={{this.toggleSorting}}>
+  <AppDialog @title="Sorting Settings" @close={{action this.toggleSorting}}>
     <SortingSettings />
   </AppDialog>
 {{/if}}

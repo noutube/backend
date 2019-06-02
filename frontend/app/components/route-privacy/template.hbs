@@ -1,0 +1,18 @@
+{{title "Privacy"}}
+
+<SectionHeader>Privacy</SectionHeader>
+
+<div class="message">
+  <p>Your Google account's email address is stored for account management.</p>
+  <p>Read-only access to your YouTube data is maintained only in order to keep your subscriptions in sync.</p>
+  <p>Otherwise, the only data stored about you is which videos are currently in your feed.</p>
+  {{#if this.session.me}}
+    <p>To have your account and all related data deleted, <a role="button" {{action this.toggleDestroyMe}}>click here</a>.</p>
+  {{/if}}
+</div>
+
+{{#if this.showDestroyMe}}
+  <AppDialog @title="Delete Account" @close={{action this.toggleDestroyMe}} @accept={{action this.destroyMe}}>
+    <p>Are you sure?</p>
+  </AppDialog>
+{{/if}}
