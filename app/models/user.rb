@@ -43,8 +43,4 @@ class User < ApplicationRecord
     user.save
     user
   end
-
-  def display_name
-    email
-  end
 end

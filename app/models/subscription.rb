@@ -23,10 +23,6 @@ class Subscription < ApplicationRecord
   # convenience
   has_many :videos, through: :items
 
-  def display_name
-    "#{user.email} - #{channel.title}"
-  end
-
   after_create :broadcast_create
   before_destroy :broadcast_destroy
 

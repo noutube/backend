@@ -7,7 +7,6 @@ gem 'rails', '~> 5.2.3'
 
 # backend and database
 gem 'sqlite3'
-gem 'activeadmin'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'redis'
 

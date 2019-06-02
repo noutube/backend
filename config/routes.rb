@@ -6,13 +6,10 @@ Rails.application.routes.draw do
     get 'users/sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  # admin
-  ActiveAdmin.routes(self)
-
   # API
+  resources :users, only: [:show, :destroy]
   resources :subscriptions, only: [:index]
   resources :items, only: [:index, :update, :destroy]
-  resources :users, only: [:show, :destroy]
   get 'push/:channel_id', to: 'push#validate'
   post 'push/:channel_id', to: 'push#callback', as: :push_callback
 
