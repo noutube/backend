@@ -7,11 +7,6 @@ export default class ApplicationRoute extends Route {
 
   async beforeModel(transition) {
     this.theme.applyTheme();
-
-    try {
-      this.session.me = await this.store.queryRecord('user', { me: true });
-    } catch (e) {
-      // not logged in, swallow
-    }
+    await this.session.restore();
   }
 }

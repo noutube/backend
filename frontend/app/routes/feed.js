@@ -1,16 +1,21 @@
+import { computed } from '@ember/object';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
 import { hash } from 'rsvp';
 
-const cableAddress = `${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/cable`;
-
 export default class FeedRoute extends Route {
   @service cable;
+  @service session;
 
   #consumer = null;
   #feed = null;
   #reconnecting = false;
+
+  @computed('session.me')
+  get cableAddress() {
+    return `${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/cable/?user_email=${this.session.me.email}&user_token=${this.session.me.authenticationToken}`;
+  }
 
   model() {
     // fetch all data for user
@@ -21,7 +26,7 @@ export default class FeedRoute extends Route {
   }
 
   activate() {
-    this.#consumer = this.cable.createConsumer(cableAddress);
+    this.#consumer = this.cable.createConsumer(this.cableAddress);
 
     let route = this;
     this.#feed = this.#consumer.subscriptions.create('FeedChannel', {
@@ -66,6 +71,7 @@ export default class FeedRoute extends Route {
       this.#feed.unsubscribe();
       this.#feed = null;
       this.#reconnecting = false;
+      console.debug('[feed] destroyed');
     }
 
     this.store.unloadAll('item');
