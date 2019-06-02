@@ -4011,12 +4011,6 @@ ember-cli-preprocess-registry@^3.3.0:
     debug "^3.0.1"
     process-relative-require "^1.0.0"
 
-ember-cli-rails-addon@DuBistKomisch/ember-cli-rails-addon#adbb5ae992a36af52e909baf02b06c3ff63e84bd:
-  version "0.10.0"
-  resolved "https://codeload.github.com/DuBistKomisch/ember-cli-rails-addon/tar.gz/adbb5ae992a36af52e909baf02b06c3ff63e84bd"
-  dependencies:
-    ember-cli-babel "^7.7.3"
-
 ember-cli-sass-lint@^1.0.3:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/ember-cli-sass-lint/-/ember-cli-sass-lint-1.0.5.tgz#f8e914721ca4ad2341a7fb684423663d4209f33b"

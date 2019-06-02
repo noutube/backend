@@ -12,8 +12,4 @@ Rails.application.routes.draw do
   # pubsub
   get 'push/:channel_id', to: 'push#validate'
   post 'push/:channel_id', to: 'push#callback', as: :push_callback
-
-  # frontend
-  get 'frontend', to: redirect('/', status: 302)
-  mount_ember_app :frontend, to: '/'
 end

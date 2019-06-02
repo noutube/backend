@@ -15,9 +15,6 @@ gem 'cancancan'
 gem 'rolify'
 gem 'signet'
 
-# frontend and assets
-gem 'ember-cli-rails'
-
 # other
 gem 'google-api-client'
 

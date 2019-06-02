@@ -67,9 +67,6 @@ GEM
     cancancan (3.0.1)
     case_transform (0.2)
       activesupport
-    climate_control (0.2.0)
-    cocaine (0.5.8)
-      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
@@ -80,12 +77,6 @@ GEM
     dotenv-rails (2.7.2)
       dotenv (= 2.7.2)
       railties (>= 3.2, < 6.1)
-    ember-cli-rails (0.10.0)
-      cocaine (~> 0.5.8)
-      ember-cli-rails-assets (~> 0.6.2)
-      html_page (~> 0.1.0)
-      railties (>= 3.2)
-    ember-cli-rails-assets (0.6.2)
     erubi (1.8.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
@@ -107,7 +98,6 @@ GEM
       multi_json (~> 1.11)
       os (>= 0.9, < 2.0)
       signet (~> 0.7)
-    html_page (0.1.0)
     httpclient (2.8.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
@@ -237,7 +227,6 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   cancancan
   dotenv-rails
-  ember-cli-rails
   google-api-client
   irb
   listen (>= 3.0.5, < 3.2)

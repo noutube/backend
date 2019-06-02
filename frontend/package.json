@@ -35,7 +35,6 @@
     "ember-cli-htmlbars-inline-precompile": "^2.1.0",
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-moment-shim": "^3.0.1",
-    "ember-cli-rails-addon": "DuBistKomisch/ember-cli-rails-addon#adbb5ae992a36af52e909baf02b06c3ff63e84bd",
     "ember-cli-sass": "^10.0.0",
     "ember-cli-sass-lint": "^1.0.3",
     "ember-cli-sri": "^2.1.1",
