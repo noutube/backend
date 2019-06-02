@@ -14,6 +14,7 @@ gem 'redis'
 gem 'cancancan'
 gem 'rolify'
 gem 'signet'
+gem 'rack-cors'
 
 # other
 gem 'google-api-client'
