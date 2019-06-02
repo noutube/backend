@@ -3,6 +3,8 @@ import Service, { inject as service } from '@ember/service';
 
 import { storageFor } from 'ember-local-storage';
 
+import config from 'nou2ube/config/environment';
+
 export default class SessionService extends Service {
   @service store;
   @service router;
@@ -34,19 +36,19 @@ export default class SessionService extends Service {
   @action
   signIn() {
     this.closePopup();
-    this.#popup = window.open('/auth');
+    this.#popup = window.open(`${config.backendOrigin}/auth`);
   }
 
   @action
   async authMessage(event) {
-    if (event.origin !== window.origin) {
+    if (event.origin !== config.backendOrigin) {
       return;
     }
 
     if (event.data.name === 'login') {
       this.closePopup();
       try {
-        let response = await fetch(`/auth/sign_in?code=${event.data.data.code}`);
+        let response = await fetch(`${config.backendOrigin}/auth/sign_in?code=${event.data.data.code}`);
         let payload = await response.json();
         this.store.pushPayload(payload);
         let me = this.store.peekRecord('user', payload.data.id);

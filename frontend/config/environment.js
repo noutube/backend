@@ -20,12 +20,14 @@ module.exports = function(environment) {
       // when it is created
     },
 
+    backendOrigin: 'http://localhost:9292',
+
     themes: ['light', 'dark', 'gruvbox-light', 'gruvbox-dark'],
     defaultVideoKey: 'published',
     defaultVideoDir: 'asc',
     defaultChannelKey: 'sortableTitle',
     defaultChannelDir: 'asc',
-    defaultChannelGroup: true,
+    defaultChannelGroup: true
   };
 
   if (environment === 'development') {
@@ -50,6 +52,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
+    ENV.backendOrigin = 'https://api.noutu.be';
   }
 
   return ENV;
