@@ -14,9 +14,7 @@ gem 'redis'
 gem 'cancancan'
 gem 'rolify'
 gem 'signet'
-
-# frontend and assets
-gem 'ember-cli-rails'
+gem 'rack-cors'
 
 # other
 gem 'google-api-client'

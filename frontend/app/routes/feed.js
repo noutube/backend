@@ -4,6 +4,8 @@ import { inject as service } from '@ember/service';
 
 import { hash } from 'rsvp';
 
+import config from 'nou2ube/config/environment';
+
 export default class FeedRoute extends Route {
   @service cable;
   @service session;
@@ -14,7 +16,7 @@ export default class FeedRoute extends Route {
 
   @computed('session.me')
   get cableAddress() {
-    return `${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/cable/?user_email=${this.session.me.email}&user_token=${this.session.me.authenticationToken}`;
+    return `${config.backendOrigin.replace(/^http/, 'ws')}/cable/?user_email=${this.session.me.email}&user_token=${this.session.me.authenticationToken}`;
   }
 
   model() {

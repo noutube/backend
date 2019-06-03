@@ -5,7 +5,7 @@ import { classNames } from '@ember-decorators/component';
 
 import { storageFor } from 'ember-local-storage';
 
-import SwipeableComponent from 'frontend/components/swipeable/component';
+import SwipeableComponent from 'nou2ube/components/swipeable/component';
 
 export default
 @classNames('subscription')
