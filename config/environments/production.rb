@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  Rails.application.routes.default_url_options = { host: 'noutu.be', protocol: 'https' }
-  config.action_mailer.default_url_options = { host: 'noutu.be', protocol: 'https' }
+  Rails.application.routes.default_url_options = { host: 'api.noutu.be', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'api.noutu.be', protocol: 'https' }
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -45,7 +45,7 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
-  config.action_cable.url = 'wss://noutu.be/cable'
+  config.action_cable.url = 'wss://api.noutu.be/cable'
   config.action_cable.allowed_request_origins = ['https://noutu.be']
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
