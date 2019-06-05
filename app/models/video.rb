@@ -35,4 +35,8 @@ class Video < ApplicationRecord
       Item.find_or_create_by(subscription: Subscription.find_by(user: user, channel: channel), video: self)
     end
   end
+
+  after_update do
+    items.each(&:broadcast_update)
+  end
 end

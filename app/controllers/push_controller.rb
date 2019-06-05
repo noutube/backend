@@ -25,9 +25,9 @@ class PushController < ApplicationController
 
     video = Video.find_or_initialize_by(api_id: entry['videoId']) do |video|
       video.channel = channel
-      video.published_at = entry['published']
-      video.title = entry['title']
     end
+    video.published_at = entry['published']
+    video.title = entry['title']
 
     if video.published_at < 1.hour.ago
       # ignore, just someone updating an ancient video
