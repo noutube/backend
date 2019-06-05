@@ -26,7 +26,7 @@ export default class SubscriptionModel extends Model {
     return get(this.channel, 'title').toLowerCase();
   }
 
-  @computed('items')
+  @computed('items.@each.video.duration')
   get totalDuration() {
     return this.items.map((item) => get(item.video, 'duration')).reduce((acc, n) => acc + n, 0);
   }
