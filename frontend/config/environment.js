@@ -23,10 +23,20 @@ module.exports = function(environment) {
     backendOrigin: 'http://localhost:9292',
 
     themes: ['light', 'dark', 'gruvbox-light', 'gruvbox-dark'],
-    defaultVideoKey: 'age',
-    defaultVideoDir: 'asc',
-    defaultChannelKey: 'sortableTitle',
-    defaultChannelDir: 'asc',
+    videoKeys: [
+      { value: 'age', label: 'age' },
+      { value: 'sortableTitle', label: 'title' },
+      { value: 'duration', label: 'duration' }
+    ],
+    channelKeys: [
+      { value: 'sortableTitle', label: 'title' },
+      { value: 'totalDuration', label: 'total duration' },
+      { value: 'itemCount', label: 'number of videos' }
+    ],
+    dirs: [
+      { value: 'asc', label: 'ascending' },
+      { value: 'desc', label: 'descending' }
+    ],
     defaultChannelGroup: true
   };
 

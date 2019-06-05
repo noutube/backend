@@ -1,13 +1,14 @@
 <div class="row">
   Sort videos by
   <XSelect @value={{this.videoKey}} @onChange={{action this.selectVideoKey}} as |xs|>
-    <xs.option @value="age">age</xs.option>
-    <xs.option @value="sortableTitle">title</xs.option>
-    <xs.option @value="duration">duration</xs.option>
+    {{#each videoKeys as |videoKey|}}
+      <xs.option @value={{videoKey.value}}>{{videoKey.label}}</xs.option>
+    {{/each}}
   </XSelect>
   <XSelect @value={{this.videoDir}} @onChange={{action this.selectVideoDir}} as |xs|>
-    <xs.option @value="asc">ascending</xs.option>
-    <xs.option @value="desc">descending</xs.option>
+    {{#each dirs as |dir|}}
+      <xs.option @value={{dir.value}}>{{dir.label}}</xs.option>
+    {{/each}}
   </XSelect>
 </div>
 
@@ -21,12 +22,13 @@
 <div class="row">
   Sort channels by
   <XSelect @value={{this.channelKey}} @onChange={{action this.selectChannelKey}} @disabled={{not this.channelGroup}} as |xs|>
-    <xs.option @value="sortableTitle">title</xs.option>
-    <xs.option @value="totalDuration">total duration</xs.option>
-    <xs.option @value="itemCount">number of videos</xs.option>
+    {{#each channelKeys as |channelKey|}}
+      <xs.option @value={{channelKey.value}}>{{channelKey.label}}</xs.option>
+    {{/each}}
   </XSelect>
   <XSelect @value={{this.channelDir}} @onChange={{action this.selectChannelDir}} @disabled={{not this.channelGroup}} as |xs|>
-    <xs.option @value="asc">ascending</xs.option>
-    <xs.option @value="desc">descending</xs.option>
+    {{#each dirs as |dir|}}
+      <xs.option @value={{dir.value}}>{{dir.label}}</xs.option>
+    {{/each}}
   </XSelect>
 </div>

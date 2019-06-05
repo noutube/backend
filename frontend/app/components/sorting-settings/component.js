@@ -6,10 +6,22 @@ import { classNames } from '@ember-decorators/component';
 
 import { storageFor } from 'ember-local-storage';
 
+import config from 'nou2ube/config/environment';
+
+const {
+  videoKeys,
+  channelKeys,
+  dirs
+} = config;
+
 export default
 @classNames('sorting-settings')
 class SortingSettingsComponent extends Component {
   @storageFor('settings') settings;
+
+  videoKeys = videoKeys;
+  channelKeys = channelKeys;
+  dirs = dirs;
 
   @oneWay('settings.videoKey') videoKey;
   @oneWay('settings.videoDir') videoDir;
