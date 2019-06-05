@@ -2,7 +2,7 @@ import { computed } from '@ember/object';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-import { hash } from 'rsvp';
+import { Promise, hash } from 'rsvp';
 
 import config from 'nou2ube/config/environment';
 
@@ -19,15 +19,30 @@ export default class FeedRoute extends Route {
     return `${config.backendOrigin.replace(/^http/, 'ws')}/cable/?user_email=${this.session.me.email}&user_token=${this.session.me.authenticationToken}`;
   }
 
+  async beforeModel(transition) {
+    if (!this.session.me && !this.session.down) {
+      this.transitionTo('landing');
+    }
+  }
+
   model() {
-    // fetch all data for user
-    return hash({
-      items: this.store.findAll('item'),
-      subscriptions: this.store.findAll('subscription')
-    });
+    if (this.session.down) {
+      // load indefinitely
+      return new Promise(() => {});
+    } else {
+      // fetch all data for user
+      return hash({
+        items: this.store.findAll('item'),
+        subscriptions: this.store.findAll('subscription')
+      });
+    }
   }
 
   activate() {
+    if (this.session.down) {
+      return;
+    }
+
     this.#consumer = this.cable.createConsumer(this.cableAddress);
 
     let route = this;

@@ -6,6 +6,8 @@ class AuthController < ApplicationController
     head :unauthorized
   end
 
+  before_action :authenticate_user, only: [:restore]
+
   def new
     client = build_client \
       scope: ['email', 'https://www.googleapis.com/auth/youtube.readonly'],
@@ -43,6 +45,11 @@ class AuthController < ApplicationController
     user.save!
 
     render json: user,
+           serializer: UserAuthSerializer
+  end
+
+  def restore
+    render json: current_user,
            serializer: UserAuthSerializer
   end
 

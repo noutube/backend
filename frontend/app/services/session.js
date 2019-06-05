@@ -1,4 +1,4 @@
-import { action, getProperties, set, setProperties } from '@ember/object';
+import { action, get, getProperties, set, setProperties } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 
 import { storageFor } from 'ember-local-storage';
@@ -12,6 +12,7 @@ export default class SessionService extends Service {
   @storageFor('session') session;
 
   me = null;
+  down = false;
   #popup = null;
 
   init() {
@@ -21,14 +22,25 @@ export default class SessionService extends Service {
   async restore() {
     if (!this.session.isInitialContent()) {
       try {
-        let me = this.store.createRecord('user', getProperties(this.session, ['id', 'email', 'authenticationToken']));
-        set(this, 'me', me);
-        await me.reload();
-        this.persist();
-        console.debug('[session] restored');
+        let response = await fetch(`${config.backendOrigin}/auth/restore`, {
+          headers: {
+            'X-User-Email': get(this.session, 'email'),
+            'X-User-Token': get(this.session, 'authenticationToken')
+          }
+        });
+        if (response.status > 500) {
+          throw response.status;
+        } else if (response.ok) {
+          let payload = await response.json();
+          this.pushMe(payload);
+          console.debug('[session] restored');
+        } else {
+          console.warn('[session] restore failed: rejected', response.status);
+          this.clear();
+        }
       } catch (e) {
-        console.warn('[session] restore failed', e);
-        this.clear();
+        console.warn('[session] restore failed: down', e);
+        set(this, 'down', true);
       }
     }
   }
@@ -50,10 +62,7 @@ export default class SessionService extends Service {
       try {
         let response = await fetch(`${config.backendOrigin}/auth/sign_in?code=${event.data.data.code}`);
         let payload = await response.json();
-        this.store.pushPayload(payload);
-        let me = this.store.peekRecord('user', payload.data.id);
-        set(this, 'me', me);
-        this.persist();
+        this.pushMe(payload);
         console.debug('[session] signed in');
         this.router.transitionTo('feed');
       } catch (e) {
@@ -62,11 +71,17 @@ export default class SessionService extends Service {
     }
   }
 
+  pushMe(payload) {
+    this.store.pushPayload(payload);
+    let me = this.store.peekRecord('user', payload.data.id);
+    set(this, 'me', me);
+    this.persist();
+  }
+
   @action
   signOut() {
-    this.clear();
     console.debug('[session] signed out');
-    this.router.transitionTo('landing');
+    this.clear();
   }
 
   @action
@@ -75,7 +90,7 @@ export default class SessionService extends Service {
       this.me.deleteRecord();
       await this.me.save();
       console.debug('[session] user destroyed');
-      this.signOut();
+      this.clear();
     } catch (e) {
       console.warn('[session] user destroy failed', e);
       this.me.rollbackAttributes();
@@ -88,6 +103,7 @@ export default class SessionService extends Service {
       set(this, 'me', null);
     }
     this.persist();
+    this.router.transitionTo('landing');
   }
 
   persist() {

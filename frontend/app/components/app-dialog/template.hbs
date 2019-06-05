@@ -9,12 +9,14 @@
     {{yield}}
   </div>
 
-  <div class="bottom">
-    {{#if @accept}}
+  {{#if @accept}}
+    <div class="bottom">
       <a role="button" {{action @accept}}>{{if @acceptLabel @acceptLabel "Yes"}}</a>
       <a role="button" {{action (if @cancel @cancel @close)}}>{{if @cancelLabel @cancelLabel "No"}}</a>
-    {{else}}
+    </div>
+  {{else if @close}}
+    <div class="bottom">
       <a role="button" {{action @close}}>Close</a>
-    {{/if}}
-  </div>
+    </div>
+  {{/if}}
 </ModalDialog>

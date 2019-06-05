@@ -1,5 +1,11 @@
 <MenuBar />
 
+{{#if session.down}}
+  <AppDialog @title="NoUTube Down">
+    <p>Sorry, NoUTube seems to be down, please wait a bit and try again.</p>
+  </AppDialog>
+{{/if}}
+
 {{outlet}}
 
 <AppFooter />
