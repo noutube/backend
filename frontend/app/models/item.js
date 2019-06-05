@@ -21,7 +21,6 @@ export default class ItemModel extends Model {
     return this.state === 'state_later' && !this.isDeleted;
   }
 
-  @computed('video.publishedAt')
   get age() {
     return Date.now() - get(this.video, 'publishedAt').getTime();
   }

@@ -23,7 +23,7 @@ module.exports = function(environment) {
     backendOrigin: 'http://localhost:9292',
 
     themes: ['light', 'dark', 'gruvbox-light', 'gruvbox-dark'],
-    defaultVideoKey: 'published',
+    defaultVideoKey: 'age',
     defaultVideoDir: 'asc',
     defaultChannelKey: 'sortableTitle',
     defaultChannelDir: 'asc',
