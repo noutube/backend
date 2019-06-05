@@ -30,8 +30,6 @@ class Item < ApplicationRecord
   after_update :broadcast_update
   before_destroy :broadcast_destroy
 
-  private
-
   def broadcast_create
     FeedChannel.broadcast_to(user,
                              action: :create,
@@ -41,7 +39,7 @@ class Item < ApplicationRecord
   def broadcast_update
     FeedChannel.broadcast_to(user,
                              action: :update,
-                             payload: ActiveModelSerializers::SerializableResource.new(self))
+                             payload: ActiveModelSerializers::SerializableResource.new(self, include: [:video]))
   end
 
   def broadcast_destroy

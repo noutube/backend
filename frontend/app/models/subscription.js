@@ -1,6 +1,6 @@
 import { get } from '@ember/object';
 import { computed } from '@ember/object';
-import { alias, filterBy } from '@ember/object/computed';
+import { alias, filterBy, map } from '@ember/object/computed';
 
 import DS from 'ember-data';
 const { Model, belongsTo, hasMany } = DS;
@@ -26,9 +26,10 @@ export default class SubscriptionModel extends Model {
     return get(this.channel, 'title').toLowerCase();
   }
 
-  @computed('items.@each.video.duration')
+  @map('items.@each.video', (item) => item.video) videos;
+  @computed('videos.@each.duration')
   get totalDuration() {
-    return this.items.map((item) => get(item.video, 'duration')).reduce((acc, n) => acc + n, 0);
+    return this.videos.map((video) => get(video, 'duration')).reduce((acc, n) => acc + n, 0);
   }
 
   @alias('items.length') itemCount;
