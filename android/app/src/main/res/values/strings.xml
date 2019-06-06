@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">NoUTube</string>
+    <string name="server_client_id">103536443745-a2p1tg8job9orvpbf4pdh030uqefuhvi.apps.googleusercontent.com</string>
+    <string name="scope_youtube_readonly">https://www.googleapis.com/auth/youtube.readonly</string>
+    <string name="server_origin">https://api.noutu.be</string>
+    <string name="session_preference_name">session</string>
+    <string name="session_id_key">id</string>
+    <string name="session_email_key">email</string>
+    <string name="session_authentication_token_key">authenticationToken</string>
 </resources>
