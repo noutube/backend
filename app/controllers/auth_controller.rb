@@ -26,7 +26,7 @@ class AuthController < ApplicationController
         name: 'login',
         data: params.slice(:code)
       }
-      render html: html
+    render html: html
   end
 
   def sign_in
@@ -63,6 +63,6 @@ class AuthController < ApplicationController
       client_id: ENV['GOOGLE_CLIENT_ID'],
       client_secret: ENV['GOOGLE_CLIENT_SECRET']
     }
-    client = Signet::OAuth2::Client.new(default_options.merge(options))
+    Signet::OAuth2::Client.new(default_options.merge(options))
   end
 end
