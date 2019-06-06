@@ -32,7 +32,7 @@ namespace :nou2ube do
         channel = Channel.find_or_initialize_by(api_id: item.snippet.resource_id.channel_id)
         channel.title = item.snippet.title
         channel.thumbnail = item.snippet.thumbnails.default.url
-        channel.checked_at = DateTime.now if channel.new_record?
+        channel.checked_at = DateTime.current if channel.new_record?
         channel.save
 
         Subscription.find_or_create_by(user: user, channel: channel)

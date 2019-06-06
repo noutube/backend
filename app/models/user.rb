@@ -16,8 +16,6 @@
 #
 
 class User < ApplicationRecord
-  rolify
-
   has_many :subscriptions, dependent: :destroy
   has_many :channels, through: :subscriptions
   # convenience

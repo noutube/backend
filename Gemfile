@@ -5,19 +5,13 @@ ruby '~> 2.6.0'
 
 gem 'rails', '~> 5.2.3'
 
-# backend and database
-gem 'sqlite3'
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'redis'
-
-# auth
 gem 'cancancan'
-gem 'rolify'
-gem 'signet'
-gem 'rack-cors'
-
-# other
 gem 'google-api-client'
+gem 'rack-cors'
+gem 'redis'
+gem 'signet'
+gem 'sqlite3'
 
 # development
 gem 'irb', require: false
@@ -26,6 +20,7 @@ gem 'pry-byebug'
 group :development, :test do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop'
+  gem 'rubocop-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate'

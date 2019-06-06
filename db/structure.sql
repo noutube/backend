@@ -1,11 +1,5 @@
 CREATE TABLE IF NOT EXISTS "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY);
 CREATE TABLE IF NOT EXISTS "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
-CREATE TABLE IF NOT EXISTS "roles" ("id" integer NOT NULL PRIMARY KEY, "name" varchar, "resource_id" integer, "resource_type" varchar, "created_at" datetime, "updated_at" datetime);
-CREATE TABLE IF NOT EXISTS "users_roles" ("user_id" integer, "role_id" integer);
-CREATE UNIQUE INDEX "index_roles_on_id" ON "roles" ("id");
-CREATE UNIQUE INDEX "index_roles_on_name" ON "roles" ("name");
-CREATE INDEX "index_roles_on_name_and_resource_type_and_resource_id" ON "roles" ("name", "resource_type", "resource_id");
-CREATE UNIQUE INDEX "index_users_roles_on_user_id_and_role_id" ON "users_roles" ("user_id", "role_id");
 CREATE TABLE IF NOT EXISTS "channels" ("id" integer NOT NULL PRIMARY KEY, "api_id" varchar NOT NULL, "title" varchar NOT NULL, "thumbnail" varchar NOT NULL, "uploads_id" varchar DEFAULT '' NOT NULL, "checked_at" datetime NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "secret_key" varchar DEFAULT '' NOT NULL);
 CREATE UNIQUE INDEX "index_channels_on_id" ON "channels" ("id");
 CREATE UNIQUE INDEX "index_channels_on_api_id" ON "channels" ("api_id");
@@ -37,6 +31,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20160817173237'),
 ('20170401020551'),
 ('20190602061347'),
-('20190602102525');
+('20190602102525'),
+('20190606115220');
 
 

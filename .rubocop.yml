@@ -1,3 +1,5 @@
+require: rubocop-rails
+
 AllCops:
   Exclude:
     - 'bin/**/*'
@@ -8,6 +10,9 @@ AllCops:
 Bundler/OrderedGems:
   Exclude:
     - 'Gemfile'
+
+Rails/CreateTableWithTimestamps:
+  Enabled: false
 
 Style/ClassAndModuleChildren:
   Enabled: false
