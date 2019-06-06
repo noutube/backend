@@ -12,8 +12,7 @@ class AuthController < ApplicationController
     client = build_client \
       scope: ['email', 'https://www.googleapis.com/auth/youtube.readonly'],
       additional_parameters: {
-        access_type: :offline,
-        prompt: :consent
+        access_type: :offline
       }
     redirect_to client.authorization_uri.to_s
   end
@@ -41,7 +40,7 @@ class AuthController < ApplicationController
     user = User.find_or_initialize_by(email: userinfo.email) do |user|
       user.authentication_token = SecureRandom.hex
     end
-    user.refresh_token = client.refresh_token
+    user.refresh_token = client.refresh_token if client.refresh_token
     user.save!
 
     render json: user,
