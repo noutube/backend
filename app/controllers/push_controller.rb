@@ -36,12 +36,16 @@ class PushController < ApplicationController
       youtube.key = ENV['GOOGLE_API_KEY']
       youtube.list_videos('snippet,contentDetails', id: video.api_id) do |result, _err|
         item = result.items.first
-        captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
-        video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +
-                         (captures[2].nil? ? 0 : captures[3].to_i.minutes) +
-                         (captures[4].nil? ? 0 : captures[5].to_i.seconds)
-        video.thumbnail = item.snippet.thumbnails.medium.url
-        video.save
+
+        # ignore if livestream
+        if item.snippet.live_broadcast_content == 'none'
+          captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
+          video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +
+                           (captures[2].nil? ? 0 : captures[3].to_i.minutes) +
+                           (captures[4].nil? ? 0 : captures[5].to_i.seconds)
+          video.thumbnail = item.snippet.thumbnails.medium.url
+          video.save
+        end
       end
     else
       # just an update
