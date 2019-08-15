@@ -38,7 +38,7 @@ class PushController < ApplicationController
         item = result.items.first
 
         # ignore if livestream
-        if item.snippet.live_broadcast_content == 'none'
+        if item.snippet.live_broadcast_content == 'none' && item.snippet.thumbnails.to_h.values.pluck(:url).none? { |url| url.include?('_live') }
           captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
           video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +
                            (captures[2].nil? ? 0 : captures[3].to_i.minutes) +
