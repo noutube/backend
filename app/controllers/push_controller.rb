@@ -29,7 +29,7 @@ class PushController < ApplicationController
     video.published_at = entry['published']
     video.title = entry['title']
 
-    if video.published_at < 1.hour.ago
+    if video.published_at < 1.day.ago
       # ignore, just someone updating an ancient video
     elsif video.new_record?
       youtube = Google::Apis::YoutubeV3::YouTubeService.new
