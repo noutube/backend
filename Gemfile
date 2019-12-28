@@ -12,6 +12,7 @@ gem 'rack-cors'
 gem 'redis'
 gem 'signet'
 gem 'sqlite3'
+gem 'yaml_db'
 
 # development
 gem 'irb', require: false
