@@ -8,10 +8,10 @@ gem 'rails', '~> 5.2.3'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'cancancan'
 gem 'google-api-client'
+gem 'pg'
 gem 'rack-cors'
 gem 'redis'
 gem 'signet'
-gem 'sqlite3'
 gem 'yaml_db'
 
 # development

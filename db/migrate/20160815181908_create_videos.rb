@@ -8,7 +8,7 @@ class CreateVideos < ActiveRecord::Migration[4.2]
       t.string :title, null: false
       t.string :thumbnail, null: false
       t.integer :duration, default: 0, null: false
-      t.datetime :published_at, null: false
+      t.timestamp :published_at, null: false
 
       t.timestamps null: false
     end
