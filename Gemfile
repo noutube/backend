@@ -12,7 +12,6 @@ gem 'pg'
 gem 'rack-cors'
 gem 'redis'
 gem 'signet'
-gem 'yaml_db'
 
 # development
 gem 'irb', require: false
