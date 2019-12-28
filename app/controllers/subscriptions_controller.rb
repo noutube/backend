@@ -8,10 +8,9 @@ class SubscriptionsController < ApiController
   end
 
   private
-
-  def collection
-    Subscription.includes(:channel)
-                .accessible_by(current_ability)
-                .where(user_id: current_user.id)
-  end
+    def collection
+      Subscription.includes(:channel)
+                  .accessible_by(current_ability)
+                  .where(user_id: current_user.id)
+    end
 end

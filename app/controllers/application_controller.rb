@@ -16,6 +16,5 @@ class ApplicationController < ActionController::API
   end
 
   private
-
-  attr_writer :current_user
+    attr_writer :current_user
 end

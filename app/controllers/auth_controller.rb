@@ -37,8 +37,8 @@ class AuthController < ApplicationController
     oauth2.authorization = client
     userinfo = oauth2.get_userinfo_v2
 
-    user = User.find_or_initialize_by(email: userinfo.email) do |user|
-      user.authentication_token = SecureRandom.hex
+    user = User.find_or_initialize_by(email: userinfo.email) do |new_user|
+      new_user.authentication_token = SecureRandom.hex
     end
     user.refresh_token = client.refresh_token if client.refresh_token
     user.save!
@@ -53,15 +53,14 @@ class AuthController < ApplicationController
   end
 
   private
-
-  def build_client(**options)
-    default_options = {
-      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-      token_credential_uri: 'https://oauth2.googleapis.com/token',
-      redirect_uri: auth_callback_url,
-      client_id: ENV['GOOGLE_CLIENT_ID'],
-      client_secret: ENV['GOOGLE_CLIENT_SECRET']
-    }
-    Signet::OAuth2::Client.new(default_options.merge(options))
-  end
+    def build_client(**options)
+      default_options = {
+        authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+        token_credential_uri: 'https://oauth2.googleapis.com/token',
+        redirect_uri: auth_callback_url,
+        client_id: ENV['GOOGLE_CLIENT_ID'],
+        client_secret: ENV['GOOGLE_CLIENT_SECRET']
+      }
+      Signet::OAuth2::Client.new(default_options.merge(options))
+    end
 end

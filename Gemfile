@@ -20,7 +20,7 @@ gem 'pry-byebug'
 group :development, :test do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop'
-  gem 'rubocop-rails'
+  gem 'rubocop-rails_config'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate'

@@ -7,14 +7,13 @@ module ApplicationCable
     end
 
     private
-
-    def find_verified_user
-      verified_user = User.find_by(email: request.params[:user_email])
-      if verified_user && verified_user.authentication_token == request.params[:user_token]
-        verified_user
-      else
-        reject_unauthorized_connection
+      def find_verified_user
+        verified_user = User.find_by(email: request.params[:user_email])
+        if verified_user && verified_user.authentication_token == request.params[:user_token]
+          verified_user
+        else
+          reject_unauthorized_connection
+        end
       end
-    end
   end
 end

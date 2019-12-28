@@ -23,8 +23,8 @@ class PushController < ApplicationController
       return
     end
 
-    video = Video.find_or_initialize_by(api_id: entry['videoId']) do |video|
-      video.channel = channel
+    video = Video.find_or_initialize_by(api_id: entry['videoId']) do |new_video|
+      new_video.channel = channel
     end
     video.published_at = entry['published']
     video.title = entry['title']
