@@ -3,14 +3,14 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '~> 2.6.0'
 
-gem 'rails', '~> 5.2.4', '>= 5.2.4.1'
+gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'cancancan'
 gem 'google-api-client'
 gem 'pg'
 gem 'rack-cors'
-gem 'redis'
+gem 'redis', '~> 4.0'
 gem 'signet'
 
 # development
@@ -27,6 +27,6 @@ group :development, :test do
 end
 
 # deployment
-gem 'puma'
+gem 'puma', '~> 4.1'
 gem 'dotenv-rails'
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.4.2', require: false
