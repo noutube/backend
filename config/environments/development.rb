@@ -51,10 +51,10 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.action_cable.allowed_request_origins = ['http://localhost:4200', 'http://192.168.1.100:4200']
+  config.action_cable.disable_request_forgery_protection = true
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins 'http://localhost:4200', 'http://192.168.1.100:4200'
+      origins 'http://localhost:4200'
       resource '*', headers: :any, methods: :any
     end
   end
