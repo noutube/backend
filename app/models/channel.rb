@@ -42,6 +42,10 @@ class Channel < ApplicationRecord
 
   after_create :subscribe
 
+  after_update do
+    subscriptions.each(&:broadcast_update)
+  end
+
   before_destroy do
     subscribe('unsubscribe')
   end
