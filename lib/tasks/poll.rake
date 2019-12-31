@@ -4,6 +4,9 @@ require 'google/apis/youtube_v3'
 namespace :nou2ube do
   desc 'Poll for new videos'
   task poll: :environment do
+    # force sync output under systemd
+    $stdout.sync = true
+
     puts "getting subscriptions for #{User.count} users..."
     channel_count = Channel.count
     subscription_count = Subscription.count
@@ -55,8 +58,12 @@ namespace :nou2ube do
     channels = Channel.where(uploads_id: '')
     if channels.count.positive?
       puts "filling uploads_id for #{channels.count} channels..."
+      channels_count = 0
       channels.each do |channel|
         youtube.list_channels('snippet,contentDetails', id: channel.api_id) do |result, err|
+          channels_count += 1
+          puts "#{channels_count}..." if channels_count % 50 == 0
+
           next if err
 
           item = result.items.first
@@ -67,16 +74,19 @@ namespace :nou2ube do
     end
 
     # get new videos
-    print "getting new videos for #{Channel.count} channels"
+    puts "getting new videos for #{Channel.count} channels..."
     video_count = Video.count
     item_count = Item.count
     to_check = Channel.all.to_a.clone
     to_check_token = {}
     to_check_latest = {}
+    to_check_count = 0
     while to_check.count.positive?
       to_check.each do |channel|
         youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, err|
-          print '.'
+          to_check_count += 1
+          puts "#{to_check_count}..." if to_check_count % 50 == 0
+
           if err
             to_check.delete channel
             next
@@ -112,15 +122,18 @@ namespace :nou2ube do
         end
       end
     end
-    puts ''
     puts "added #{Video.count - video_count} videos (#{Item.count - item_count} items)"
 
     # get duration if missing
     videos = Video.where(duration: 0)
     if videos.count.positive?
       puts "filling duration for #{videos.count} videos..."
+      videos_count = 0
       videos.each do |video|
         youtube.list_videos('snippet,contentDetails', id: video.api_id) do |result, err|
+          videos_count += 1
+          puts "#{videos_count}..." if videos_count % 50 == 0
+
           next if err
 
           item = result.items.first
