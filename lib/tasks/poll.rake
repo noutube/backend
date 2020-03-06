@@ -32,6 +32,9 @@ namespace :nou2ube do
         youtube.list_subscriptions('snippet', mine: true, max_results: 50, page_token: token)
       end
       items.each do |item|
+        # exclude gigantic topic channels
+        next if item.snippet.title.end_with?(' - Topic')
+
         channel = Channel.find_or_initialize_by(api_id: item.snippet.resource_id.channel_id)
         channel.title = item.snippet.title
         channel.thumbnail = item.snippet.thumbnails.default.url
