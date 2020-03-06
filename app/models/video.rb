@@ -7,7 +7,7 @@
 #  channel_id   :integer          not null
 #  title        :string           not null
 #  thumbnail    :string           not null
-#  duration     :integer          default(0), not null
+#  duration     :integer          default("0"), not null
 #  published_at :datetime         not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

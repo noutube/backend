@@ -8,6 +8,8 @@
 #  updated_at           :datetime         not null
 #  authentication_token :string           not null
 #  refresh_token        :string           not null
+#  access_token         :string
+#  expires_at           :datetime
 #
 # Indexes
 #

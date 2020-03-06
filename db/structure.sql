@@ -158,7 +158,9 @@ CREATE TABLE public.users (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     authentication_token character varying NOT NULL,
-    refresh_token character varying NOT NULL
+    refresh_token character varying NOT NULL,
+    access_token character varying,
+    expires_at timestamp without time zone
 );
 
 
@@ -425,6 +427,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170401020551'),
 ('20190602061347'),
 ('20190602102525'),
-('20190606115220');
+('20190606115220'),
+('20200306231156');
 
 
