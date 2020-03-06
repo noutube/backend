@@ -1,5 +1,5 @@
-require 'signet/oauth_2/client'
 require 'google/apis/youtube_v3'
+require 'modules/auth'
 
 namespace :nou2ube do
   desc 'Poll for new videos'
@@ -11,21 +11,22 @@ namespace :nou2ube do
     channel_count = Channel.count
     subscription_count = Subscription.count
     User.all.each do |user|
-      # create authorization
-      authorization = Signet::OAuth2::Client.new(
-        authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-        token_credential_uri: 'https://oauth2.googleapis.com/token',
-        client_id: ENV['GOOGLE_CLIENT_ID'],
-        client_secret: ENV['GOOGLE_CLIENT_SECRET'],
-        refresh_token: user.refresh_token
-      )
-      authorization.refresh!
-      user.refresh_token = authorization.refresh_token
-      user.save
+      # create client
+      client = Auth.build_client \
+        access_token: user.access_token,
+        refresh_token: user.refresh_token,
+        expires_at: user.expires_at
+      if user.expires_at.nil? || client.expires_within?(1.day)
+        client.refresh!
+        user.update! \
+          access_token: client.access_token,
+          refresh_token: client.refresh_token,
+          expires_at: client.expires_at
+      end
 
       # create authorized service
       youtube = Google::Apis::YoutubeV3::YouTubeService.new
-      youtube.authorization = authorization
+      youtube.authorization = client
 
       # get subscriptions
       items = youtube.fetch_all do |token|
@@ -48,8 +49,8 @@ namespace :nou2ube do
                   .where('users.id = ? AND channels.api_id NOT IN (?)', user.id,
                          items.map { |item| item.snippet.resource_id.channel_id })
                   .destroy_all
-    rescue
-      puts "Failed to authorize #{user.email}"
+    rescue Exception => e
+      puts "Failed to authorize #{user.email}: #{e}"
     end
     puts "added #{Channel.count - channel_count} channels (#{Subscription.count - subscription_count} subscriptions)"
 
