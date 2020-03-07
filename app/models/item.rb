@@ -5,7 +5,7 @@
 #  id              :integer          not null, primary key
 #  subscription_id :integer          not null
 #  video_id        :integer          not null
-#  state           :integer          default("state_new"), not null
+#  state           :integer          default("0"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

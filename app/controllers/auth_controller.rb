@@ -1,5 +1,5 @@
 require 'google/apis/oauth2_v2'
-require 'signet/oauth_2/client'
+require 'modules/auth'
 
 class AuthController < ApplicationController
   rescue_from Signet::AuthorizationError do
@@ -9,7 +9,8 @@ class AuthController < ApplicationController
   before_action :authenticate_user, only: [:restore]
 
   def new
-    client = build_client \
+    client = Auth.build_client \
+      redirect_uri: auth_callback_url,
       scope: ['email', 'https://www.googleapis.com/auth/youtube.readonly'],
       additional_parameters: {
         access_type: :offline
@@ -29,7 +30,8 @@ class AuthController < ApplicationController
   end
 
   def sign_in
-    client = build_client \
+    client = Auth.build_client \
+      redirect_uri: auth_callback_url,
       code: params[:code]
     client.fetch_access_token!
 
@@ -40,7 +42,9 @@ class AuthController < ApplicationController
     user = User.find_or_initialize_by(email: userinfo.email) do |new_user|
       new_user.authentication_token = SecureRandom.hex
     end
-    user.refresh_token = client.refresh_token if client.refresh_token
+    user.access_token = client.access_token
+    user.refresh_token = client.refresh_token
+    user.expires_at = client.expires_at
     user.save!
 
     render json: user,
@@ -51,16 +55,4 @@ class AuthController < ApplicationController
     render json: current_user,
            serializer: UserAuthSerializer
   end
-
-  private
-    def build_client(**options)
-      default_options = {
-        authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-        token_credential_uri: 'https://oauth2.googleapis.com/token',
-        redirect_uri: auth_callback_url,
-        client_id: ENV['GOOGLE_CLIENT_ID'],
-        client_secret: ENV['GOOGLE_CLIENT_SECRET']
-      }
-      Signet::OAuth2::Client.new(default_options.merge(options))
-    end
 end
