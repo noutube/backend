@@ -87,7 +87,7 @@ namespace :nou2ube do
     to_check_count = 0
     while to_check.count.positive?
       to_check.each do |channel|
-        youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 2, page_token: to_check_token[channel.api_id]) do |result, err|
+        youtube.list_playlist_items('snippet', playlist_id: channel.uploads_id, max_results: 1, page_token: to_check_token[channel.api_id]) do |result, err|
           to_check_count += 1
           puts "#{to_check_count}..." if to_check_count % 50 == 0
 
