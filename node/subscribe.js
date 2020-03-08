@@ -32,11 +32,13 @@ const subscribeChannel = async ({ id, api_id, title, secret_key }) => {
       'hub.mode': 'subscribe',
       'hub.secret': secret_key,
       'hub.verify': 'async'
-    }));
+    }), {
+      timeout: 15_000
+    });
+    return [true, elapsed(start)];
   } catch (error) {
     console.error(`${title} (${id}) error:`, error);
-  } finally {
-    return elapsed(start);
+    return [false, elapsed(start)];
   }
 };
 
@@ -52,14 +54,18 @@ const main = async () => {
   console.log('concurrency', CONCURRENCY);
 
   const start = hrtime();
-  const times = await Promise.all(channels.map(throat(CONCURRENCY, subscribeChannel)));
+  const stats = await Promise.all(channels.map(throat(CONCURRENCY, subscribeChannel)));
   const overall = elapsed(start);
-
   console.log('overall', overall);
+
+  const times = stats.map(([result, time]) => time);
   console.log('sum', sum(times));
   console.log('mean', mean(times));
   console.log('min', min(times));
   console.log('max', max(times));
+
+  const results = stats.map(([result, time]) => result);
+  console.log('failed', results.filter((result) => !result).length);
 };
 
 main();
