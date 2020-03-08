@@ -27,7 +27,7 @@ const subscribeChannel = async ({ id, api_id, title, secret_key }) => {
   const start = hrtime();
   try {
     await axios.post('https://pubsubhubbub.appspot.com/subscribe', querystring.stringify({
-      'hub.callback': `${RAILS_ORIGIN}/push/api_id`,
+      'hub.callback': `${RAILS_ORIGIN}/push/${api_id}`,
       'hub.topic': `https://www.youtube.com/xml/feeds/videos.xml?channel_id=${api_id}`,
       'hub.mode': 'subscribe',
       'hub.secret': secret_key,
