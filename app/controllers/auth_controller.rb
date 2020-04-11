@@ -9,12 +9,7 @@ class AuthController < ApplicationController
   before_action :authenticate_user, only: [:restore]
 
   def new
-    client = Auth.build_client \
-      redirect_uri: auth_callback_url,
-      scope: ['email', 'https://www.googleapis.com/auth/youtube.readonly'],
-      additional_parameters: {
-        access_type: :offline
-      }
+    client = build_client
     redirect_to client.authorization_uri.to_s
   end
 
@@ -30,8 +25,7 @@ class AuthController < ApplicationController
   end
 
   def sign_in
-    client = Auth.build_client \
-      redirect_uri: auth_callback_url,
+    client = build_client \
       code: params[:code]
     client.fetch_access_token!
 
@@ -55,4 +49,16 @@ class AuthController < ApplicationController
     render json: current_user,
            serializer: UserAuthSerializer
   end
+
+  private
+    def build_client(**options)
+      Auth.build_client({
+        redirect_uri: auth_callback_url,
+        scope: ['email', 'https://www.googleapis.com/auth/youtube.readonly'],
+        additional_parameters: {
+          access_type: :offline,
+          prompt: :consent
+        }
+      }.merge(options))
+    end
 end
