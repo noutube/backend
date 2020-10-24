@@ -1,5 +1,3 @@
-require 'google/apis/youtube_v3'
-
 class PushController < ApplicationController
   def validate
     render plain: params['hub.challenge'].chomp
@@ -35,26 +33,8 @@ class PushController < ApplicationController
       return
     end
 
-    if video.new_record?
-      youtube = Google::Apis::YoutubeV3::YouTubeService.new
-      youtube.key = ENV['GOOGLE_API_KEY']
-      youtube.list_videos('snippet,contentDetails', id: video.api_id) do |result, _err|
-        item = result.items.first
-
-        # ignore if livestream
-        if item.snippet.live_broadcast_content == 'none' && item.snippet.thumbnails.to_h.values.pluck(:url).none? { |url| url.include?('_live') }
-          captures = item.content_details.duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/).captures
-          video.duration = (captures[0].nil? ? 0 : captures[1].to_i.hours) +
-                           (captures[2].nil? ? 0 : captures[3].to_i.minutes) +
-                           (captures[4].nil? ? 0 : captures[5].to_i.seconds)
-          video.thumbnail = item.snippet.thumbnails.medium.url
-          video.save
-        end
-      end
-    else
-      # just an update
-      video.save
-    end
+    # TODO fetch duration
+    video.save
 
     head :ok
   end

@@ -6,7 +6,6 @@
 #  api_id     :string           not null
 #  title      :string           not null
 #  thumbnail  :string           not null
-#  uploads_id :string           default(""), not null
 #  checked_at :datetime         not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

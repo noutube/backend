@@ -6,7 +6,6 @@
 #  api_id       :string           not null
 #  channel_id   :integer          not null
 #  title        :string           not null
-#  thumbnail    :string           not null
 #  duration     :integer          default("0"), not null
 #  published_at :datetime         not null
 #  created_at   :datetime         not null
@@ -28,7 +27,6 @@ class Video < ApplicationRecord
 
   validates :api_id, presence: true
   validates :title, presence: true
-  validates :thumbnail, presence: true
 
   after_create do
     channel.users.each do |user|
@@ -38,5 +36,9 @@ class Video < ApplicationRecord
 
   after_update do
     items.each(&:broadcast_update)
+  end
+
+  def thumbnail
+    "https://i.ytimg.com/vi/#{api_id}/mqdefault.jpg"
   end
 end

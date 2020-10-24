@@ -36,9 +36,6 @@ class AuthController < ApplicationController
     user = User.find_or_initialize_by(email: userinfo.email) do |new_user|
       new_user.authentication_token = SecureRandom.hex
     end
-    user.access_token = client.access_token
-    user.refresh_token = client.refresh_token
-    user.expires_at = client.expires_at
     user.save!
 
     render json: user,
@@ -54,11 +51,7 @@ class AuthController < ApplicationController
     def build_client(**options)
       Auth.build_client({
         redirect_uri: auth_callback_url,
-        scope: ['email', 'https://www.googleapis.com/auth/youtube.readonly'],
-        additional_parameters: {
-          access_type: :offline,
-          prompt: :consent
-        }
+        scope: ['email']
       }.merge(options))
     end
 end

@@ -47,7 +47,6 @@ CREATE TABLE public.channels (
     api_id character varying NOT NULL,
     title character varying NOT NULL,
     thumbnail character varying NOT NULL,
-    uploads_id character varying DEFAULT ''::character varying NOT NULL,
     checked_at timestamp without time zone NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -157,10 +156,7 @@ CREATE TABLE public.users (
     email character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    authentication_token character varying NOT NULL,
-    refresh_token character varying NOT NULL,
-    access_token character varying,
-    expires_at timestamp without time zone
+    authentication_token character varying NOT NULL
 );
 
 
@@ -192,7 +188,6 @@ CREATE TABLE public.videos (
     api_id character varying NOT NULL,
     channel_id integer NOT NULL,
     title character varying NOT NULL,
-    thumbnail character varying NOT NULL,
     duration integer DEFAULT 0 NOT NULL,
     published_at timestamp without time zone NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -428,6 +423,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190602061347'),
 ('20190602102525'),
 ('20190606115220'),
-('20200306231156');
+('20200306231156'),
+('20200916115413');
 
 
