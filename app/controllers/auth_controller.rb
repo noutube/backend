@@ -33,10 +33,12 @@ class AuthController < ApplicationController
     oauth2.authorization = client
     userinfo = oauth2.get_userinfo_v2
 
-    user = User.find_or_initialize_by(email: userinfo.email) do |new_user|
-      new_user.authentication_token = SecureRandom.hex
-    end
-    user.save!
+    # TODO don't allow registration
+    #user = User.find_or_initialize_by(email: userinfo.email) do |new_user|
+    #  new_user.authentication_token = SecureRandom.hex
+    #end
+    #user.save!
+    user = User.find_by!(email: userinfo.email)
 
     render json: user,
            serializer: UserAuthSerializer
