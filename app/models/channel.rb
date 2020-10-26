@@ -31,7 +31,8 @@ class Channel < ApplicationRecord
 
   validates :api_id, presence: true
   validates :title, presence: true
-  validates :thumbnail, presence: true
+  # TODO
+  #validates :thumbnail, presence: true
 
   before_create :generate_secret_key
 
