@@ -18,6 +18,8 @@
 #  index_videos_on_id          (id) UNIQUE
 #
 
+require 'net/http'
+
 class Video < ApplicationRecord
   belongs_to :channel
   has_many :items, dependent: :destroy
@@ -40,5 +42,13 @@ class Video < ApplicationRecord
 
   def thumbnail
     "https://i.ytimg.com/vi/#{api_id}/mqdefault.jpg"
+  end
+
+  def fetch_duration
+    return unless duration.zero?
+    response = Net::HTTP.get_response(URI("https://scrape.noutu.be/duration?token=#{ENV['SCRAPE_TOKEN']}&videoId=#{api_id}"))
+    return unless response.code == '200'
+    body = JSON.parse(response.body)
+    self.duration = body['duration']
   end
 end
