@@ -5,7 +5,7 @@
 #  id         :integer          not null, primary key
 #  api_id     :string           not null
 #  title      :string           not null
-#  thumbnail  :string           not null
+#  thumbnail  :string           default(""), not null
 #  checked_at :datetime         not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -31,8 +31,6 @@ class Channel < ApplicationRecord
 
   validates :api_id, presence: true
   validates :title, presence: true
-  # TODO
-  #validates :thumbnail, presence: true
 
   before_create :generate_secret_key
 
@@ -58,5 +56,13 @@ class Channel < ApplicationRecord
       'hub.mode' => mode,
       'hub.secret' => secret_key,
       'hub.verify' => 'async'
+  end
+
+  def fetch_thumbnail
+    return unless thumbnail.blank?
+    response = Net::HTTP.get_response(URI("https://scrape.noutu.be/thumbnail?token=#{ENV['SCRAPE_TOKEN']}&channelId=#{api_id}"))
+    return unless response.code == '200'
+    body = JSON.parse(response.body)
+    self.thumbnail = body['thumbnail']
   end
 end

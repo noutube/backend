@@ -16,13 +16,6 @@ namespace :nou2ube do
     # end
     # puts "added #{Video.count - video_count} videos (#{Item.count - item_count} items)"
 
-    # get duration if missing
-    videos = Video.where(duration: 0)
-    videos.each do |video|
-      video.fetch_duration
-      video.save
-    end
-
     # cull leftover records
     puts 'culling leftover records...'
     channel_count = Channel.count
@@ -34,5 +27,17 @@ namespace :nou2ube do
     Video.where('(SELECT COUNT(*) FROM items WHERE items.video_id = videos.id) = 0 AND videos.published_at < ?', 1.day.ago).destroy_all
     puts "culled #{channel_count - Channel.count} channels (#{subscription_count - Subscription.count} subscriptions)"
     puts "culled #{video_count - Video.count} videos (#{item_count - Item.count} items)"
+
+    # get thumbnail if missing
+    Channel.where(thumbnail: '').find_each do |channel|
+      channel.fetch_thumbnail
+      channel.save
+    end
+
+    # get duration if missing
+    Video.where(duration: 0).find_each do |video|
+      video.fetch_duration
+      video.save
+    end
   end
 end

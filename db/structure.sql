@@ -46,7 +46,7 @@ CREATE TABLE public.channels (
     id integer NOT NULL,
     api_id character varying NOT NULL,
     title character varying NOT NULL,
-    thumbnail character varying NOT NULL,
+    thumbnail character varying DEFAULT ''::character varying NOT NULL,
     checked_at timestamp without time zone NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -424,6 +424,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190602102525'),
 ('20190606115220'),
 ('20200306231156'),
-('20200916115413');
+('20200916115413'),
+('20201108043801');
 
 
