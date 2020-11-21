@@ -7,11 +7,12 @@ class SubscriptionsController < ApiController
            include: [:channel]
   end
 
-  def opml
-    subscription_xmls = Hash.from_xml(request.body.read).dig('opml', 'body', 'outline', 'outline')
-    subscription_ids = subscription_xmls.map do |subscription_xml|
-      channel = Channel.find_or_initialize_by(api_id: subscription_xml['xmlUrl'].last(24))
-      channel.title = subscription_xml['title']
+  def takeout
+    subscription_jsons = JSON.parse(request.body.string)
+    subscription_ids = subscription_jsons.map do |subscription_json|
+      channel = Channel.find_or_initialize_by(api_id: subscription_json.dig('snippet', 'resourceId', 'channelId'))
+      channel.title = subscription_json.dig('snippet', 'title')
+      channel.thumbnail = subscription_json.dig('snippet', 'thumbnails', 'default', 'url')
       channel.fetch_thumbnail
       channel.checked_at = DateTime.current if channel.new_record?
       channel.save!
