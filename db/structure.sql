@@ -178,7 +178,11 @@ CREATE TABLE public.videos (
     duration integer DEFAULT 0 NOT NULL,
     published_at timestamp without time zone NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    is_live boolean DEFAULT false NOT NULL,
+    is_live_content boolean DEFAULT false NOT NULL,
+    is_upcoming boolean DEFAULT false NOT NULL,
+    scheduled_at timestamp without time zone
 );
 
 
@@ -412,6 +416,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190606115220'),
 ('20200306231156'),
 ('20200916115413'),
-('20201108043801');
+('20201108043801'),
+('20210127124541');
 
 
