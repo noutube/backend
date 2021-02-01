@@ -34,7 +34,7 @@ class PushController < ApplicationController
     end
 
     video.scrape
-    video.save
+    video.save unless video.expired_live_content?
 
     head :ok
   end

@@ -37,7 +37,11 @@ namespace :nou2ube do
     # get duration if missing
     Video.where(duration: 0).find_each do |video|
       video.scrape
-      video.save
+      if video.expired_live_content?
+        video.destroy
+      else
+        video.save
+      end
     end
   end
 end

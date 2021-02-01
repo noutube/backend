@@ -57,6 +57,14 @@ class Video < ApplicationRecord
     self.is_live = body['isLive']
     self.is_live_content = body['isLiveContent']
     self.is_upcoming = body['isUpcoming']
-    self.scheduled_at = Time.at(body['scheduledAt'].to_i).to_datetime if body['scheduledAt']
+    if body['scheduledAt']
+      self.scheduled_at = Time.at(body['scheduledAt'].to_i).to_datetime
+    elsif self.is_live_content # don't clear for premieres
+      self.scheduled_at = nil
+    end
+  end
+
+  def expired_live_content?
+    is_live_content && is_upcoming && scheduled_at.nil?
   end
 end
