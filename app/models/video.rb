@@ -6,7 +6,6 @@
 #  api_id       :string           not null
 #  channel_id   :integer          not null
 #  title        :string           not null
-#  thumbnail    :string           not null
 #  duration     :integer          default("0"), not null
 #  published_at :datetime         not null
 #  created_at   :datetime         not null
@@ -19,6 +18,8 @@
 #  index_videos_on_id          (id) UNIQUE
 #
 
+require 'net/http'
+
 class Video < ApplicationRecord
   belongs_to :channel
   has_many :items, dependent: :destroy
@@ -28,7 +29,6 @@ class Video < ApplicationRecord
 
   validates :api_id, presence: true
   validates :title, presence: true
-  validates :thumbnail, presence: true
 
   after_create do
     channel.users.each do |user|
@@ -38,5 +38,17 @@ class Video < ApplicationRecord
 
   after_update do
     items.each(&:broadcast_update)
+  end
+
+  def thumbnail
+    "https://i.ytimg.com/vi/#{api_id}/mqdefault.jpg"
+  end
+
+  def scrape
+    return unless duration.zero?
+    response = Net::HTTP.get_response(URI("https://scrape.noutu.be/video?token=#{ENV['SCRAPE_TOKEN']}&videoId=#{api_id}"))
+    return unless response.code == '200'
+    body = JSON.parse(response.body)
+    self.duration = body['duration']
   end
 end
