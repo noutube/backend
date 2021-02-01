@@ -13,7 +13,7 @@ class SubscriptionsController < ApiController
       channel = Channel.find_or_initialize_by(api_id: subscription_json.dig('snippet', 'resourceId', 'channelId'))
       channel.title = subscription_json.dig('snippet', 'title')
       channel.thumbnail = subscription_json.dig('snippet', 'thumbnails', 'default', 'url')
-      channel.fetch_thumbnail
+      channel.scrape
       channel.checked_at = DateTime.current if channel.new_record?
       channel.save!
 

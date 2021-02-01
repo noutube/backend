@@ -30,13 +30,13 @@ namespace :nou2ube do
 
     # get thumbnail if missing
     Channel.where(thumbnail: '').find_each do |channel|
-      channel.fetch_thumbnail
+      channel.scrape
       channel.save
     end
 
     # get duration if missing
     Video.where(duration: 0).find_each do |video|
-      video.fetch_duration
+      video.scrape
       video.save
     end
   end

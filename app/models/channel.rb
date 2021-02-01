@@ -58,9 +58,9 @@ class Channel < ApplicationRecord
       'hub.verify' => 'async'
   end
 
-  def fetch_thumbnail
+  def scrape
     return unless thumbnail.blank?
-    response = Net::HTTP.get_response(URI("https://scrape.noutu.be/thumbnail?token=#{ENV['SCRAPE_TOKEN']}&channelId=#{api_id}"))
+    response = Net::HTTP.get_response(URI("https://scrape.noutu.be/channel?token=#{ENV['SCRAPE_TOKEN']}&channelId=#{api_id}"))
     return unless response.code == '200'
     body = JSON.parse(response.body)
     self.thumbnail = body['thumbnail']

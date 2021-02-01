@@ -44,9 +44,9 @@ class Video < ApplicationRecord
     "https://i.ytimg.com/vi/#{api_id}/mqdefault.jpg"
   end
 
-  def fetch_duration
+  def scrape
     return unless duration.zero?
-    response = Net::HTTP.get_response(URI("https://scrape.noutu.be/duration?token=#{ENV['SCRAPE_TOKEN']}&videoId=#{api_id}"))
+    response = Net::HTTP.get_response(URI("https://scrape.noutu.be/video?token=#{ENV['SCRAPE_TOKEN']}&videoId=#{api_id}"))
     return unless response.code == '200'
     body = JSON.parse(response.body)
     self.duration = body['duration']

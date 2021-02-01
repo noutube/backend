@@ -33,7 +33,7 @@ class PushController < ApplicationController
       return
     end
 
-    video.fetch_duration
+    video.scrape
     video.save
 
     head :ok
