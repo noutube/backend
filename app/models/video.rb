@@ -6,13 +6,13 @@
 #  api_id          :string           not null
 #  channel_id      :integer          not null
 #  title           :string           not null
-#  duration        :integer          default("0"), not null
+#  duration        :integer          default(0), not null
 #  published_at    :datetime         not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  is_live         :boolean          default("false"), not null
-#  is_live_content :boolean          default("false"), not null
-#  is_upcoming     :boolean          default("false"), not null
+#  is_live         :boolean          default(FALSE), not null
+#  is_live_content :boolean          default(FALSE), not null
+#  is_upcoming     :boolean          default(FALSE), not null
 #  scheduled_at    :datetime
 #
 # Indexes
