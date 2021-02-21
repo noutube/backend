@@ -1,0 +1,13 @@
+[Unit]
+Description=noutube
+After=network.target
+
+[Service]
+Type=simple
+ExecStartPre=-/usr/bin/docker stop noutube
+ExecStartPre=-/usr/bin/docker rm noutube
+ExecStart=/usr/bin/docker run --network host --name noutube --rm noutube
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
