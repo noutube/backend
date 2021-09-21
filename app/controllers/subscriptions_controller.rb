@@ -1,3 +1,5 @@
+require 'csv'
+
 class SubscriptionsController < ApiController
   before_action :authenticate_user
 
@@ -8,17 +10,16 @@ class SubscriptionsController < ApiController
   end
 
   def takeout
-    subscription_jsons = JSON.parse(request.body.string)
-    subscription_ids = subscription_jsons.map do |subscription_json|
-      channel = Channel.find_or_initialize_by(api_id: subscription_json.dig('snippet', 'resourceId', 'channelId'))
-      channel.title = subscription_json.dig('snippet', 'title')
-      channel.thumbnail = subscription_json.dig('snippet', 'thumbnails', 'default', 'url')
+    subscription_ids = []
+    CSV.parse(request.body.string.force_encoding(Encoding::UTF_8), headers: true, skip_blanks: true).each do |row|
+      channel = Channel.find_or_initialize_by(api_id: row['Channel ID'])
+      channel.title = row['Channel title']
       channel.scrape
       channel.checked_at = DateTime.current if channel.new_record?
       channel.save!
 
       subscription = Subscription.find_or_create_by!(user: current_user, channel: channel)
-      subscription.id
+      subscription_ids << subscription.id
     end
 
     Subscription.where(user: current_user).where.not(id: subscription_ids).destroy_all
