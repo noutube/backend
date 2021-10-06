@@ -11,10 +11,11 @@ class ItemsController < ApiController
     authorize! :update, Item
     item = Item.find(params[:id])
     authorize! :update, item
-    if item.update(params[:data][:attributes].permit(:state))
+    attributes = params.require(:data).require(:attributes).permit(:state)
+    if item.update(attributes)
       head :no_content
     else
-      render json: item.errors, status: :unprocessable_entity
+      render json: item.errors, status: :bad_request
     end
   end
 
