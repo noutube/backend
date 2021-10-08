@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # auth
-  post 'auth', to: 'auth#new'
-  get 'auth/restore', to: 'auth#restore'
+  post 'tokens', to: 'tokens#create'
+  get 'tokens/valid', to: 'tokens#valid'
 
   # client
   resources :users, only: [:create, :show, :update, :destroy]

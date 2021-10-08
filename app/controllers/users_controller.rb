@@ -6,8 +6,7 @@ class UsersController < ApiController
     attributes = params.require(:data).require(:attributes).permit(:email, :password)
     user = User.new(attributes)
     if user.save
-      render json: user, status: :created,
-             serializer: UserAuthSerializer
+      render json: user, status: :created
     else
       render json: user.errors, status: :bad_request
     end

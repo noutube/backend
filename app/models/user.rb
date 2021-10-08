@@ -2,12 +2,11 @@
 #
 # Table name: users
 #
-#  id                   :integer          not null, primary key
-#  email                :string           not null
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  authentication_token :string           not null
-#  password_digest      :string           not null
+#  id              :integer          not null, primary key
+#  email           :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  password_digest :string           not null
 #
 # Indexes
 #
@@ -28,8 +27,4 @@ class User < ApplicationRecord
             presence: true,
             uniqueness: true,
             format: { with: URI::MailTo::EMAIL_REGEXP }
-
-  before_create do
-    self.authentication_token = SecureRandom.hex
-  end
 end
