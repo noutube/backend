@@ -2,11 +2,11 @@
 #
 # Table name: users
 #
-#  id                   :integer          not null, primary key
-#  email                :string           not null
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  authentication_token :string           not null
+#  id              :integer          not null, primary key
+#  email           :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  password_digest :string           not null
 #
 # Indexes
 #
@@ -15,11 +15,19 @@
 #
 
 class User < ApplicationRecord
+  has_secure_password
+
   has_many :subscriptions, dependent: :destroy
   has_many :channels, through: :subscriptions
   # convenience
   has_many :items, through: :subscriptions
   has_many :videos, through: :subscriptions
 
-  validates :email, presence: true, uniqueness: true
+  validates :email,
+            presence: true,
+            uniqueness: true,
+            format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be an email address' }
+
+  validates :password,
+            length: { minimum: 8 }
 end

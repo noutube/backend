@@ -1,3 +1,5 @@
+require 'modules/auth'
+
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
     identified_by :current_user
@@ -8,12 +10,12 @@ module ApplicationCable
 
     private
       def find_verified_user
-        verified_user = User.find_by(email: request.params[:user_email])
-        if verified_user && verified_user.authentication_token == request.params[:user_token]
-          verified_user
-        else
-          reject_unauthorized_connection
-        end
+        payload = Auth.decode(request.params[:token])
+        verified_user = User.find(payload['id'])
+        raise unless verified_user
+        verified_user
+      rescue
+        reject_unauthorized_connection
       end
   end
 end

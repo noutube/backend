@@ -18,7 +18,6 @@
 
 class Item < ApplicationRecord
   enum state: [:state_new, :state_later]
-  STATE_LABELS = ['New', 'Later'].freeze
 
   belongs_to :subscription
   belongs_to :video
@@ -29,6 +28,8 @@ class Item < ApplicationRecord
   after_create :broadcast_create
   after_update :broadcast_update
   before_destroy :broadcast_destroy
+
+  validate_enum_attribute :state
 
   def broadcast_create
     FeedChannel.broadcast_to(user,

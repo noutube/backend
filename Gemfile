@@ -6,12 +6,13 @@ ruby '~> 2.7.0'
 gem 'rails', '~> 6.1.4'
 
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'bcrypt'
 gem 'cancancan'
-gem 'google-apis-oauth2_v2'
+gem 'enum_attributes_validation'
+gem 'jwt'
 gem 'pg'
 gem 'rack-cors'
 gem 'redis'
-gem 'signet'
 
 # development
 gem 'irb', require: false

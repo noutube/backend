@@ -32,9 +32,7 @@ class Channel < ApplicationRecord
   validates :api_id, presence: true
   validates :title, presence: true
 
-  before_create :generate_secret_key
-
-  def generate_secret_key
+  before_create do
     self.secret_key = SecureRandom.hex
   end
 

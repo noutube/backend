@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
   # auth
-  get 'auth', to: 'auth#new'
-  get 'auth/callback', to: 'auth#callback', as: :auth_callback
-  get 'auth/sign_in', to: 'auth#sign_in'
-  get 'auth/restore', to: 'auth#restore'
+  post 'tokens', to: 'tokens#create'
+  get 'tokens/valid', to: 'tokens#valid'
 
   # client
-  resources :users, only: [:show, :destroy]
+  resources :users, only: [:create, :show, :update, :destroy]
   resources :subscriptions, only: [:index]
   resources :items, only: [:index, :update, :destroy]
   post 'subscriptions/takeout', to: 'subscriptions#takeout', format: 'application/json'

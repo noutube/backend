@@ -1,3 +1,5 @@
+require 'modules/auth'
+
 class ApplicationController < ActionController::API
   attr_reader :current_user
 
@@ -7,8 +9,15 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_user
-    self.current_user = User.find_by(email: request.headers['X-User-Email'])
-    raise NotAuthorizedError unless current_user && current_user.authentication_token == request.headers['X-User-Token']
+    header = request.headers['Authorization'].split
+    raise NotAuthorizedError unless header[0] == 'Bearer' && header.length == 2
+    begin
+      payload = Auth.decode(header[1])
+    rescue
+      raise NotAuthorizedError
+    end
+    self.current_user = User.find(payload['id'])
+    raise NotAuthorizedError unless current_user
   end
 
   def current_ability
