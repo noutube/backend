@@ -1,4 +1,4 @@
-namespace :nou2ube do
+namespace :noutube do
   desc 'Subscribe for push notifications'
   task subscribe: :environment do
     # force sync output under systemd

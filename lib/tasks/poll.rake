@@ -1,20 +1,8 @@
-namespace :nou2ube do
+namespace :noutube do
   desc 'Poll for new videos'
   task poll: :environment do
     # force sync output under systemd
     $stdout.sync = true
-
-    # TODO get new videos
-    # puts "getting new videos for #{Channel.count} channels..."
-    # video_count = Video.count
-    # item_count = Item.count
-    # to_check = Channel.all.to_a.clone
-    # while to_check.count.positive?
-    #   to_check.each do |channel|
-    #     # TODO
-    #   end
-    # end
-    # puts "added #{Video.count - video_count} videos (#{Item.count - item_count} items)"
 
     # cull leftover records
     puts 'culling leftover records...'
