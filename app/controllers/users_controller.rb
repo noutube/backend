@@ -8,7 +8,8 @@ class UsersController < ApiController
     if user.save
       render json: user, status: :created
     else
-      render json: user.errors, status: :bad_request
+      render json: user, status: :unprocessable_entity,
+             serializer: ActiveModel::Serializer::ErrorSerializer
     end
   end
 
@@ -27,7 +28,8 @@ class UsersController < ApiController
     if user.update(attributes)
       head :no_content
     else
-      render json: user.errors, status: :bad_request
+      render json: user, status: :unprocessable_entity,
+             serializer: ActiveModel::Serializer::ErrorSerializer
     end
   end
 

@@ -15,7 +15,8 @@ class ItemsController < ApiController
     if item.update(attributes)
       head :no_content
     else
-      render json: item.errors, status: :bad_request
+      render json: item, status: :unprocessable_entity,
+             serializer: ActiveModel::Serializer::ErrorSerializer
     end
   end
 
