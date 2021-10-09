@@ -12,12 +12,12 @@ default: &default
 
 development:
   <<: *default
-  database: nou2ube_db_development
+  database: noutube_db_development
 
 test:
   <<: *default
-  database: nou2ube_db_test
+  database: noutube_db_test
 
 production:
   <<: *default
-  database: nou2ube_db_production
+  database: noutube_db_production

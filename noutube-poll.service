@@ -3,4 +3,4 @@ Description=noutube poll
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/docker run --network host --rm noutube bundle exec rake nou2ube:poll
+ExecStart=/usr/bin/docker run --network host --rm noutube bundle exec rake noutube:poll

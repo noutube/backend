@@ -6,7 +6,7 @@ const { Client } = require('pg');
 const throat = require('throat');
 
 const RAILS_ENV = process.env.RAILS_ENV || 'development';
-const POSTGRESQL_DATABASE = process.env.POSTGRESQL_DATABASE || `nou2ube_db_${RAILS_ENV}`;
+const POSTGRESQL_DATABASE = process.env.POSTGRESQL_DATABASE || `noutube_db_${RAILS_ENV}`;
 const RAILS_ORIGIN = RAILS_ENV === 'production' ? 'https://api.noutu.be' : 'http://localhost:9292';
 const CONCURRENCY = 5;
 
