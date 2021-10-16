@@ -2,13 +2,13 @@
 #
 # Table name: channels
 #
-#  id         :integer          not null, primary key
 #  api_id     :string           not null
 #  title      :string           not null
 #  thumbnail  :string           default(""), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  secret_key :string           default(""), not null
+#  id         :uuid             not null, primary key
 #
 # Indexes
 #

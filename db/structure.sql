@@ -9,6 +9,20 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -30,34 +44,14 @@ CREATE TABLE public.ar_internal_metadata (
 --
 
 CREATE TABLE public.channels (
-    id integer NOT NULL,
     api_id character varying NOT NULL,
     title character varying NOT NULL,
     thumbnail character varying DEFAULT ''::character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    secret_key character varying DEFAULT ''::character varying NOT NULL
+    secret_key character varying DEFAULT ''::character varying NOT NULL,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL
 );
-
-
---
--- Name: channels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.channels_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: channels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.channels_id_seq OWNED BY public.channels.id;
 
 
 --
@@ -65,33 +59,13 @@ ALTER SEQUENCE public.channels_id_seq OWNED BY public.channels.id;
 --
 
 CREATE TABLE public.items (
-    id integer NOT NULL,
-    subscription_id integer NOT NULL,
-    video_id integer NOT NULL,
     state integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    subscription_id uuid NOT NULL,
+    video_id uuid NOT NULL
 );
-
-
---
--- Name: items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.items_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.items_id_seq OWNED BY public.items.id;
 
 
 --
@@ -108,32 +82,12 @@ CREATE TABLE public.schema_migrations (
 --
 
 CREATE TABLE public.subscriptions (
-    id integer NOT NULL,
-    user_id integer NOT NULL,
-    channel_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    channel_id uuid NOT NULL,
+    user_id uuid NOT NULL
 );
-
-
---
--- Name: subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.subscriptions_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.subscriptions_id_seq OWNED BY public.subscriptions.id;
 
 
 --
@@ -141,32 +95,12 @@ ALTER SEQUENCE public.subscriptions_id_seq OWNED BY public.subscriptions.id;
 --
 
 CREATE TABLE public.users (
-    id integer NOT NULL,
     email character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    password_digest character varying NOT NULL
+    password_digest character varying NOT NULL,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL
 );
-
-
---
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.users_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
@@ -174,9 +108,7 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 --
 
 CREATE TABLE public.videos (
-    id integer NOT NULL,
     api_id character varying NOT NULL,
-    channel_id integer NOT NULL,
     title character varying NOT NULL,
     duration integer DEFAULT 0 NOT NULL,
     published_at timestamp without time zone NOT NULL,
@@ -185,63 +117,10 @@ CREATE TABLE public.videos (
     is_live boolean DEFAULT false NOT NULL,
     is_live_content boolean DEFAULT false NOT NULL,
     is_upcoming boolean DEFAULT false NOT NULL,
-    scheduled_at timestamp without time zone
+    scheduled_at timestamp without time zone,
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    channel_id uuid NOT NULL
 );
-
-
---
--- Name: videos_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.videos_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: videos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.videos_id_seq OWNED BY public.videos.id;
-
-
---
--- Name: channels id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.channels ALTER COLUMN id SET DEFAULT nextval('public.channels_id_seq'::regclass);
-
-
---
--- Name: items id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.items ALTER COLUMN id SET DEFAULT nextval('public.items_id_seq'::regclass);
-
-
---
--- Name: subscriptions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.subscriptions ALTER COLUMN id SET DEFAULT nextval('public.subscriptions_id_seq'::regclass);
-
-
---
--- Name: users id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
-
-
---
--- Name: videos id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.videos ALTER COLUMN id SET DEFAULT nextval('public.videos_id_seq'::regclass);
 
 
 --
@@ -399,6 +278,46 @@ CREATE UNIQUE INDEX index_videos_on_id ON public.videos USING btree (id);
 
 
 --
+-- Name: items fk_rails_2a3b826863; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT fk_rails_2a3b826863 FOREIGN KEY (subscription_id) REFERENCES public.subscriptions(id);
+
+
+--
+-- Name: items fk_rails_621e93af28; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT fk_rails_621e93af28 FOREIGN KEY (video_id) REFERENCES public.videos(id);
+
+
+--
+-- Name: subscriptions fk_rails_7e8baea494; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subscriptions
+    ADD CONSTRAINT fk_rails_7e8baea494 FOREIGN KEY (channel_id) REFERENCES public.channels(id);
+
+
+--
+-- Name: subscriptions fk_rails_933bdff476; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subscriptions
+    ADD CONSTRAINT fk_rails_933bdff476 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: videos fk_rails_b71dd278a6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.videos
+    ADD CONSTRAINT fk_rails_b71dd278a6 FOREIGN KEY (channel_id) REFERENCES public.channels(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -424,6 +343,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210127124541'),
 ('20211001093711'),
 ('20211008112023'),
+('20211016020737'),
 ('20220407073237');
 
 

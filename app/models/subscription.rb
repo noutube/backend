@@ -2,11 +2,11 @@
 #
 # Table name: subscriptions
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer          not null
-#  channel_id :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  id         :uuid             not null, primary key
+#  channel_id :uuid             not null
+#  user_id    :uuid             not null
 #
 # Indexes
 #
@@ -14,6 +14,11 @@
 #  index_subscriptions_on_id                      (id) UNIQUE
 #  index_subscriptions_on_user_id                 (user_id)
 #  index_subscriptions_on_user_id_and_channel_id  (user_id,channel_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (channel_id => channels.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 class Subscription < ApplicationRecord

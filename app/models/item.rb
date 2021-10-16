@@ -2,18 +2,23 @@
 #
 # Table name: items
 #
-#  id              :integer          not null, primary key
-#  subscription_id :integer          not null
-#  video_id        :integer          not null
 #  state           :integer          default("state_new"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  id              :uuid             not null, primary key
+#  subscription_id :uuid             not null
+#  video_id        :uuid             not null
 #
 # Indexes
 #
 #  index_items_on_id               (id) UNIQUE
 #  index_items_on_subscription_id  (subscription_id)
 #  index_items_on_video_id         (video_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (subscription_id => subscriptions.id)
+#  fk_rails_...  (video_id => videos.id)
 #
 
 class Item < ApplicationRecord

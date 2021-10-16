@@ -2,9 +2,7 @@
 #
 # Table name: videos
 #
-#  id              :integer          not null, primary key
 #  api_id          :string           not null
-#  channel_id      :integer          not null
 #  title           :string           not null
 #  duration        :integer          default(0), not null
 #  published_at    :datetime         not null
@@ -14,12 +12,18 @@
 #  is_live_content :boolean          default(FALSE), not null
 #  is_upcoming     :boolean          default(FALSE), not null
 #  scheduled_at    :datetime
+#  id              :uuid             not null, primary key
+#  channel_id      :uuid             not null
 #
 # Indexes
 #
 #  index_videos_on_api_id      (api_id) UNIQUE
 #  index_videos_on_channel_id  (channel_id)
 #  index_videos_on_id          (id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (channel_id => channels.id)
 #
 
 require 'net/http'
