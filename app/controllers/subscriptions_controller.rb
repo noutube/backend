@@ -1,3 +1,4 @@
+require 'case_insensitive_hash'
 require 'csv'
 
 class SubscriptionsController < ApiController
@@ -12,8 +13,11 @@ class SubscriptionsController < ApiController
   def takeout
     subscription_ids = []
     CSV.parse(request.body.string.force_encoding(Encoding::UTF_8), headers: true, skip_blanks: true).each do |row|
-      channel = Channel.find_or_initialize_by(api_id: row['Channel ID'])
-      channel.title = row['Channel title']
+      # CSV columns are inconsistently capitalised between users, for some reason
+      # e.g. Channel ID vs Channel Id, Channel title vs Channel Title
+      data = CaseInsensitiveHash.new(row)
+      channel = Channel.find_or_initialize_by(api_id: data['channel id'])
+      channel.title = data['channel title']
       channel.scrape
       channel.checked_at = DateTime.current if channel.new_record?
       channel.save!
