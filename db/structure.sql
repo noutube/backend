@@ -20,8 +20,8 @@ SET default_table_access_method = heap;
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -34,7 +34,6 @@ CREATE TABLE public.channels (
     api_id character varying NOT NULL,
     title character varying NOT NULL,
     thumbnail character varying DEFAULT ''::character varying NOT NULL,
-    checked_at timestamp without time zone NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     secret_key character varying DEFAULT ''::character varying NOT NULL
@@ -46,6 +45,7 @@ CREATE TABLE public.channels (
 --
 
 CREATE SEQUENCE public.channels_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -79,6 +79,7 @@ CREATE TABLE public.items (
 --
 
 CREATE SEQUENCE public.items_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -120,6 +121,7 @@ CREATE TABLE public.subscriptions (
 --
 
 CREATE SEQUENCE public.subscriptions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -152,6 +154,7 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -191,6 +194,7 @@ CREATE TABLE public.videos (
 --
 
 CREATE SEQUENCE public.videos_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -419,6 +423,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201108043801'),
 ('20210127124541'),
 ('20211001093711'),
-('20211008112023');
+('20211008112023'),
+('20220407073237');
 
 

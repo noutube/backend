@@ -19,7 +19,6 @@ class SubscriptionsController < ApiController
       channel = Channel.find_or_initialize_by(api_id: data['channel id'])
       channel.title = data['channel title']
       channel.scrape
-      channel.checked_at = DateTime.current if channel.new_record?
       channel.save!
 
       subscription = Subscription.find_or_create_by!(user: current_user, channel: channel)

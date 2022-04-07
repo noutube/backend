@@ -6,7 +6,6 @@
 #  api_id     :string           not null
 #  title      :string           not null
 #  thumbnail  :string           default(""), not null
-#  checked_at :datetime         not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  secret_key :string           default(""), not null
