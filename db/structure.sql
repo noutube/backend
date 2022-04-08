@@ -66,11 +66,11 @@ ALTER SEQUENCE public.channels_id_seq OWNED BY public.channels.id;
 
 CREATE TABLE public.items (
     id integer NOT NULL,
-    subscription_id integer NOT NULL,
     video_id integer NOT NULL,
     state integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    user_id integer NOT NULL
 );
 
 
@@ -322,10 +322,10 @@ CREATE UNIQUE INDEX index_items_on_id ON public.items USING btree (id);
 
 
 --
--- Name: index_items_on_subscription_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_items_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_items_on_subscription_id ON public.items USING btree (subscription_id);
+CREATE INDEX index_items_on_user_id ON public.items USING btree (user_id);
 
 
 --
@@ -424,6 +424,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210127124541'),
 ('20211001093711'),
 ('20211008112023'),
-('20220407073237');
+('20220407073237'),
+('20220408114949');
 
 

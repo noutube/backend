@@ -24,9 +24,9 @@ class Channel < ApplicationRecord
 
   has_many :videos, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
-  has_many :users, through: :subscriptions
   # convenience
-  has_many :items, through: :subscriptions
+  has_many :users, through: :subscriptions
+  has_many :items, through: :videos
 
   validates :api_id, presence: true
   validates :title, presence: true

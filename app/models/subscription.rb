@@ -19,9 +19,6 @@
 class Subscription < ApplicationRecord
   belongs_to :user
   belongs_to :channel
-  has_many :items, dependent: :destroy
-  # convenience
-  has_many :videos, through: :items
 
   after_create :broadcast_create
   before_destroy :broadcast_destroy

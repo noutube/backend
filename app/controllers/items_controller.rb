@@ -31,8 +31,6 @@ class ItemsController < ApiController
   private
     def collection
       Item.includes(:video)
-          .joins(:subscription)
           .accessible_by(current_ability)
-          .where(subscriptions: { user_id: current_user.id })
     end
 end
