@@ -26,19 +26,19 @@ class Subscription < ApplicationRecord
   def broadcast_create
     FeedChannel.broadcast_to(user,
                              action: :create,
-                             payload: ActiveModelSerializers::SerializableResource.new(self, include: [:channel]))
+                             payload: ActiveModelSerializers::SerializableResource.new(channel, scope: user))
   end
 
   def broadcast_update
     FeedChannel.broadcast_to(user,
                              action: :update,
-                             payload: ActiveModelSerializers::SerializableResource.new(self, include: [:channel]))
+                             payload: ActiveModelSerializers::SerializableResource.new(channel, scope: user))
   end
 
   def broadcast_destroy
     FeedChannel.broadcast_to(user,
                              action: :destroy,
-                             type: self.class.to_s.underscore,
-                             id: id)
+                             type: :channel,
+                             id: channel.id)
   end
 end

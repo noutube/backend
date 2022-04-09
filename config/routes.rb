@@ -5,9 +5,9 @@ Rails.application.routes.draw do
 
   # client
   resources :users, only: [:create, :show, :update, :destroy]
-  resources :subscriptions, only: [:index]
-  resources :items, only: [:index, :update, :destroy]
-  post 'subscriptions/takeout', to: 'subscriptions#takeout', format: 'application/json'
+  resources :channels, only: [:index]
+  resources :videos, only: [:index, :update, :destroy]
+  post 'channels/takeout', to: 'channels#takeout', format: 'application/json'
 
   # pubsub
   get 'push/:channel_id', to: 'push#validate'

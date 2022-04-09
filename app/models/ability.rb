@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     if user
       can [:read, :update, :destroy], User, id: user.id
-      can :read, Subscription, user_id: user.id
+      can [:read, :takeout], Subscription, user_id: user.id
       can [:read, :update, :destroy], Item, user_id: user.id
     else
       can :create, User
