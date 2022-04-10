@@ -33,8 +33,15 @@ class PushController < ApplicationController
       return
     end
 
-    video.scrape
+    # scraping is slow, so only do it if we really have to
+    video.scrape unless video.duration
     video.save unless video.expired_live_content?
+
+    if video.previously_new_record?
+      video.channel.users.find_each do |user|
+        Item.find_or_create_by(user: user, video: video)
+      end
+    end
 
     head :ok
   end

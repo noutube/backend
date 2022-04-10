@@ -22,6 +22,7 @@ class User < ApplicationRecord
   # convenience
   has_many :channels, through: :subscriptions
   has_many :videos, through: :items
+  has_many :video_channels, through: :videos, source: :channel
 
   validates :email,
             presence: true,
@@ -30,4 +31,8 @@ class User < ApplicationRecord
 
   validates :password,
             length: { minimum: 8 }
+
+  def all_channels
+    (channels + video_channels).uniq
+  end
 end

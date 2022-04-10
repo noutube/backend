@@ -1,7 +1,34 @@
+require 'modules/scrape'
+
 class VideosController < ApiController
   before_action :authenticate_user
 
   serialization_scope :current_user
+
+  def create
+    authorize! :create, Item
+    attributes = params.require(:data).require(:attributes).permit(:api_id)
+    # get canonical video ID from URL
+    unless scrape = Scrape.scrape('video', url: attributes[:api_id])
+      head :not_found
+      return
+    end
+    # find channel, or create if missing
+    channel = Channel.find_or_initialize_by(api_id: scrape['channelId'])
+    if channel.new_record?
+      channel.scrape
+      channel.save!
+    end
+    # find video, or create if missing
+    video = Video.find_or_initialize_by(api_id: scrape['videoId'], channel: channel)
+    video.scrape(scrape)
+    video.save!
+    # create item just for current user
+    item = Item.find_or_initialize_by(user: current_user, video: video)
+    item.state = :state_later
+    item.save!
+    render json: video, status: :created
+  end
 
   def index
     authorize! :read, Item
