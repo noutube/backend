@@ -7,7 +7,7 @@ class VideosController < ApiController
 
   def create
     authorize! :create, Item
-    attributes = params.require(:data).require(:attributes).permit(:api_id)
+    attributes = ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:'api-id'])
     # get canonical video ID from URL
     unless scrape = Scrape.scrape('video', url: attributes[:api_id])
       head :not_found
@@ -39,7 +39,7 @@ class VideosController < ApiController
     authorize! :update, Item
     item = Item.find_by!(video_id: params[:id], user: current_user)
     authorize! :update, item
-    attributes = params.require(:data).require(:attributes).permit(:state)
+    attributes = ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:state])
     if item.update(attributes)
       head :no_content
     else

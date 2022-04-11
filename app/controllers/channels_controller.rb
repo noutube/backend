@@ -9,7 +9,7 @@ class ChannelsController < ApiController
 
   def create
     authorize! :create, Subscription
-    attributes = params.require(:data).require(:attributes).permit(:api_id, :is_subscribed)
+    attributes = ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:'api-id', :'is-subscribed'])
     # get canonical channel ID from URL
     unless scrape = Scrape.scrape('channel', url: attributes[:api_id])
       head :not_found
@@ -31,7 +31,7 @@ class ChannelsController < ApiController
 
   def update
     authorize! :update, Subscription
-    attributes = params.require(:data).require(:attributes).permit(:is_subscribed)
+    attributes = ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:'is-subscribed'])
     if attributes[:is_subscribed]
       Subscription.find_or_create_by!(channel_id: params[:id], user: current_user)
     else
