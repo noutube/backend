@@ -11,9 +11,10 @@
 #
 # Indexes
 #
-#  index_items_on_id        (id) UNIQUE
-#  index_items_on_user_id   (user_id)
-#  index_items_on_video_id  (video_id)
+#  index_items_on_id                    (id) UNIQUE
+#  index_items_on_user_id               (user_id)
+#  index_items_on_user_id_and_video_id  (user_id,video_id) UNIQUE
+#  index_items_on_video_id              (video_id)
 #
 
 class Item < ApplicationRecord
