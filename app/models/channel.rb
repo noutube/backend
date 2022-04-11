@@ -79,4 +79,12 @@ class Channel < ApplicationRecord
       action: :push,
       payload: payload
   end
+
+  def broadcast_destroy(user)
+    FeedChannel.broadcast_to \
+      user,
+      action: :destroy,
+      type: :channel,
+      id: id
+  end
 end

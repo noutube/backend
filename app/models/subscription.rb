@@ -21,9 +21,21 @@ class Subscription < ApplicationRecord
   belongs_to :channel
 
   after_create :broadcast_push
-  after_destroy :broadcast_push
+  after_destroy do
+    if channel.items.where(user: user).exists?
+      broadcast_push
+    else
+      # if the user has no videos for this channel,
+      # pretend the channel no longer exists
+      broadcast_destroy
+    end
+  end
 
   def broadcast_push
     channel.broadcast_push(user)
+  end
+
+  def broadcast_destroy
+    channel.broadcast_destroy(user)
   end
 end
