@@ -2,28 +2,27 @@
 #
 # Table name: items
 #
-#  id              :integer          not null, primary key
-#  subscription_id :integer          not null
-#  video_id        :integer          not null
-#  state           :integer          default("state_new"), not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id         :integer          not null, primary key
+#  video_id   :integer          not null
+#  state      :integer          default("state_new"), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :integer          not null
 #
 # Indexes
 #
-#  index_items_on_id               (id) UNIQUE
-#  index_items_on_subscription_id  (subscription_id)
-#  index_items_on_video_id         (video_id)
+#  index_items_on_id        (id) UNIQUE
+#  index_items_on_user_id   (user_id)
+#  index_items_on_video_id  (video_id)
 #
 
 class Item < ApplicationRecord
   enum state: [:state_new, :state_later]
 
-  belongs_to :subscription
+  belongs_to :user
   belongs_to :video
   # convenience
   has_one :channel, through: :video
-  has_one :user, through: :subscription
 
   after_create :broadcast_create
   after_update :broadcast_update
@@ -34,19 +33,19 @@ class Item < ApplicationRecord
   def broadcast_create
     FeedChannel.broadcast_to(user,
                              action: :create,
-                             payload: ActiveModelSerializers::SerializableResource.new(self, include: [:video]))
+                             payload: ActiveModelSerializers::SerializableResource.new(video, scope: user))
   end
 
   def broadcast_update
     FeedChannel.broadcast_to(user,
                              action: :update,
-                             payload: ActiveModelSerializers::SerializableResource.new(self, include: [:video]))
+                             payload: ActiveModelSerializers::SerializableResource.new(video, scope: user))
   end
 
   def broadcast_destroy
     FeedChannel.broadcast_to(user,
                              action: :destroy,
-                             type: self.class.to_s.underscore,
-                             id: id)
+                             type: :video,
+                             id: video.id)
   end
 end

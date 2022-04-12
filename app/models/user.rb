@@ -18,10 +18,10 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :subscriptions, dependent: :destroy
-  has_many :channels, through: :subscriptions
+  has_many :items, dependent: :destroy
   # convenience
-  has_many :items, through: :subscriptions
-  has_many :videos, through: :subscriptions
+  has_many :channels, through: :subscriptions
+  has_many :videos, through: :items
 
   validates :email,
             presence: true,

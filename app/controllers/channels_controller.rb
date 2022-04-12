@@ -1,16 +1,19 @@
 require 'case_insensitive_hash'
 require 'csv'
 
-class SubscriptionsController < ApiController
+class ChannelsController < ApiController
   before_action :authenticate_user
+
+  serialization_scope :current_user
 
   def index
     authorize! :read, Subscription
-    render json: collection,
-           include: [:channel]
+    render json: current_user.channels
   end
 
   def takeout
+    authorize! :takeout, Subscription
+
     subscription_ids = []
     CSV.parse(request.body.string.force_encoding(Encoding::UTF_8), headers: true, skip_blanks: true).each do |row|
       # CSV columns are inconsistently capitalised between users, for some reason
@@ -27,11 +30,4 @@ class SubscriptionsController < ApiController
 
     Subscription.where(user: current_user).where.not(id: subscription_ids).destroy_all
   end
-
-  private
-    def collection
-      Subscription.includes(:channel)
-                  .accessible_by(current_ability)
-                  .where(user_id: current_user.id)
-    end
 end

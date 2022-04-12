@@ -28,7 +28,6 @@ class Video < ApplicationRecord
   belongs_to :channel
   has_many :items, dependent: :destroy
   # convenience
-  has_many :subscriptions, through: :items
   has_many :users, through: :items
 
   validates :api_id, presence: true
@@ -36,7 +35,7 @@ class Video < ApplicationRecord
 
   after_create do
     channel.users.each do |user|
-      Item.find_or_create_by(subscription: Subscription.find_by(user: user, channel: channel), video: self)
+      Item.find_or_create_by(user: user, video: self)
     end
   end
 
