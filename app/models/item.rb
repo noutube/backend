@@ -11,9 +11,10 @@
 #
 # Indexes
 #
-#  index_items_on_id        (id) UNIQUE
-#  index_items_on_user_id   (user_id)
-#  index_items_on_video_id  (video_id)
+#  index_items_on_id                    (id) UNIQUE
+#  index_items_on_user_id               (user_id)
+#  index_items_on_user_id_and_video_id  (user_id,video_id) UNIQUE
+#  index_items_on_video_id              (video_id)
 #
 
 class Item < ApplicationRecord
@@ -24,28 +25,17 @@ class Item < ApplicationRecord
   # convenience
   has_one :channel, through: :video
 
-  after_create :broadcast_create
-  after_update :broadcast_update
+  after_create :broadcast_push
+  after_update :broadcast_push
   before_destroy :broadcast_destroy
 
   validate_enum_attribute :state
 
-  def broadcast_create
-    FeedChannel.broadcast_to(user,
-                             action: :create,
-                             payload: ActiveModelSerializers::SerializableResource.new(video, scope: user))
-  end
-
-  def broadcast_update
-    FeedChannel.broadcast_to(user,
-                             action: :update,
-                             payload: ActiveModelSerializers::SerializableResource.new(video, scope: user))
+  def broadcast_push
+    video.broadcast_push(user)
   end
 
   def broadcast_destroy
-    FeedChannel.broadcast_to(user,
-                             action: :destroy,
-                             type: :video,
-                             id: video.id)
+    video.broadcast_destroy(user)
   end
 end

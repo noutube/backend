@@ -22,7 +22,7 @@
 #  index_videos_on_id          (id) UNIQUE
 #
 
-require 'net/http'
+require 'modules/scrape'
 
 class Video < ApplicationRecord
   belongs_to :channel
@@ -33,37 +33,54 @@ class Video < ApplicationRecord
   validates :api_id, presence: true
   validates :title, presence: true
 
-  after_create do
-    channel.users.each do |user|
-      Item.find_or_create_by(user: user, video: self)
-    end
-  end
-
   after_update do
-    items.each(&:broadcast_update)
+    users.each do |user|
+      broadcast_push(user)
+    end
   end
 
   def thumbnail
     "https://i.ytimg.com/vi/#{api_id}/mqdefault.jpg"
   end
 
-  def scrape
-    return unless duration.zero?
-    response = Net::HTTP.get_response(URI("https://scrape.noutu.be/video?token=#{ENV['SCRAPE_TOKEN']}&videoId=#{api_id}"))
-    return unless response.code == '200'
-    body = JSON.parse(response.body)
+  def scrape(body = nil)
+    return unless body = Scrape.scrape('video', videoId: api_id) unless body
+
     self.duration = body['duration']
     self.is_live = body['isLive']
     self.is_live_content = body['isLiveContent']
     self.is_upcoming = body['isUpcoming']
+    if body['publishedDate'] && !published_at # leave alone if set
+      self.published_at = DateTime.parse(body['publishedDate'])
+    end
     if body['scheduledAt']
       self.scheduled_at = Time.at(body['scheduledAt'].to_i).to_datetime
     elsif self.is_live_content # don't clear for premieres
       self.scheduled_at = nil
     end
+    self.title = body['title']
   end
 
   def expired_live_content?
     is_live_content && is_upcoming && scheduled_at.nil?
+  end
+
+  def broadcast_push(user)
+    payload = ActiveModelSerializers::SerializableResource.new \
+      self,
+      scope: user,
+      include: [:channel]
+    FeedChannel.broadcast_to \
+      user,
+      action: :push,
+      payload: payload
+  end
+
+  def broadcast_destroy(user)
+    FeedChannel.broadcast_to \
+      user,
+      action: :destroy,
+      type: :video,
+      id: id
   end
 end

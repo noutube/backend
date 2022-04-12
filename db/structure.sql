@@ -329,6 +329,13 @@ CREATE INDEX index_items_on_user_id ON public.items USING btree (user_id);
 
 
 --
+-- Name: index_items_on_user_id_and_video_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_items_on_user_id_and_video_id ON public.items USING btree (user_id, video_id);
+
+
+--
 -- Name: index_items_on_video_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -425,6 +432,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211001093711'),
 ('20211008112023'),
 ('20220407073237'),
-('20220408114949');
+('20220408114949'),
+('20220411083551');
 
 

@@ -3,7 +3,7 @@ class UsersController < ApiController
 
   def create
     authorize! :create, User
-    attributes = params.require(:data).require(:attributes).permit(:email, :password)
+    attributes = ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:email, :password])
     user = User.new(attributes)
     if user.save
       render json: user, status: :created
@@ -24,7 +24,7 @@ class UsersController < ApiController
     authorize! :update, User
     user = User.find(params[:id])
     authorize! :update, user
-    attributes = params.require(:data).require(:attributes).permit(:password)
+    attributes = ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:password])
     if user.update(attributes)
       head :no_content
     else

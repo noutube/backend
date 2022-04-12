@@ -20,25 +20,22 @@ class Subscription < ApplicationRecord
   belongs_to :user
   belongs_to :channel
 
-  after_create :broadcast_create
-  before_destroy :broadcast_destroy
-
-  def broadcast_create
-    FeedChannel.broadcast_to(user,
-                             action: :create,
-                             payload: ActiveModelSerializers::SerializableResource.new(channel, scope: user))
+  after_create :broadcast_push
+  after_destroy do
+    if channel.items.where(user: user).exists?
+      broadcast_push
+    else
+      # if the user has no videos for this channel,
+      # pretend the channel no longer exists
+      broadcast_destroy
+    end
   end
 
-  def broadcast_update
-    FeedChannel.broadcast_to(user,
-                             action: :update,
-                             payload: ActiveModelSerializers::SerializableResource.new(channel, scope: user))
+  def broadcast_push
+    channel.broadcast_push(user)
   end
 
   def broadcast_destroy
-    FeedChannel.broadcast_to(user,
-                             action: :destroy,
-                             type: :channel,
-                             id: channel.id)
+    channel.broadcast_destroy(user)
   end
 end

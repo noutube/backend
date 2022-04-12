@@ -17,6 +17,7 @@
 #
 
 require 'securerandom'
+require 'modules/scrape'
 require 'net/http'
 
 class Channel < ApplicationRecord
@@ -27,6 +28,7 @@ class Channel < ApplicationRecord
   # convenience
   has_many :users, through: :subscriptions
   has_many :items, through: :videos
+  has_many :video_users, through: :items, source: :user
 
   validates :api_id, presence: true
   validates :title, presence: true
@@ -38,11 +40,17 @@ class Channel < ApplicationRecord
   after_create :subscribe
 
   after_update do
-    subscriptions.each(&:broadcast_update)
+    all_users.each do |user|
+      broadcast_push(user)
+    end
   end
 
   before_destroy do
     subscribe('unsubscribe')
+  end
+
+  def all_users
+    (users + video_users).uniq
   end
 
   def subscribe(mode = 'subscribe')
@@ -55,11 +63,28 @@ class Channel < ApplicationRecord
       'hub.verify' => 'async'
   end
 
-  def scrape
-    return unless thumbnail.blank?
-    response = Net::HTTP.get_response(URI("https://scrape.noutu.be/channel?token=#{ENV['SCRAPE_TOKEN']}&channelId=#{api_id}"))
-    return unless response.code == '200'
-    body = JSON.parse(response.body)
+  def scrape(body = nil)
+    return unless body = Scrape.scrape('channel', channelId: api_id) unless body
+
     self.thumbnail = body['thumbnail']
+    self.title = body['title']
+  end
+
+  def broadcast_push(user)
+    payload = ActiveModelSerializers::SerializableResource.new \
+      self,
+      scope: user
+    FeedChannel.broadcast_to \
+      user,
+      action: :push,
+      payload: payload
+  end
+
+  def broadcast_destroy(user)
+    FeedChannel.broadcast_to \
+      user,
+      action: :destroy,
+      type: :channel,
+      id: id
   end
 end
