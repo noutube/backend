@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  video_id   :integer          not null
-#  state      :integer          default("state_new"), not null
+#  state      :enum             default("new"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :integer          not null
@@ -18,7 +18,7 @@
 #
 
 class Item < ApplicationRecord
-  enum state: [:state_new, :state_later]
+  include PGEnum(state: [:new, :later], _prefix: true)
 
   belongs_to :user
   belongs_to :video

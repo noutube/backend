@@ -6,6 +6,7 @@ ruby '~> 2.7.0'
 gem 'rails', '~> 6.1.4.1'
 
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'activerecord-pg_enum'
 gem 'bcrypt'
 gem 'cancancan'
 gem 'enum_attributes_validation'

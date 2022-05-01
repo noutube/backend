@@ -10,7 +10,7 @@ namespace :noutube do
     subscription_count = Subscription.count
     video_count = Video.count
     item_count = Item.count
-    Item.joins(:video).where('items.state = 0 AND videos.published_at < ?', 7.days.ago).destroy_all
+    Item.joins(:video).where("items.state = 'new' AND videos.published_at < ?", 7.days.ago).destroy_all
     Video.where('(SELECT COUNT(*) FROM items WHERE items.video_id = videos.id) = 0 AND videos.published_at < ?', 1.day.ago).destroy_all
     Channel.where('(SELECT COUNT(*) FROM subscriptions WHERE subscriptions.channel_id = channels.id) = 0 AND (SELECT COUNT(*) FROM videos WHERE videos.channel_id = channels.id) = 0').destroy_all
     puts "culled #{channel_count - Channel.count} channels (#{subscription_count - Subscription.count} subscriptions)"

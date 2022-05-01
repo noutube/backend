@@ -25,7 +25,7 @@ class VideosController < ApiController
     video.save!
     # create item just for current user
     item = Item.find_or_initialize_by(user: current_user, video: video)
-    item.state = :state_later
+    item.state = :later
     item.save!
     render json: video, status: :created
   end
