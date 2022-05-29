@@ -18,7 +18,7 @@
 #
 
 class Item < ApplicationRecord
-  include PGEnum(state: [:new, :later], _prefix: true)
+  include PGEnum(state: [:new, :later, :deleted], _prefix: true)
 
   belongs_to :user
   belongs_to :video

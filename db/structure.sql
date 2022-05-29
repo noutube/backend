@@ -15,7 +15,8 @@ SET row_security = off;
 
 CREATE TYPE public.item_state AS ENUM (
     'new',
-    'later'
+    'later',
+    'deleted'
 );
 
 
@@ -444,6 +445,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220407073237'),
 ('20220408114949'),
 ('20220411083551'),
-('20220501124525');
+('20220501124525'),
+('20220529012334');
 
 
