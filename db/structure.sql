@@ -9,6 +9,17 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: item_state; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.item_state AS ENUM (
+    'new',
+    'later',
+    'deleted'
+);
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -67,7 +78,7 @@ ALTER SEQUENCE public.channels_id_seq OWNED BY public.channels.id;
 CREATE TABLE public.items (
     id integer NOT NULL,
     video_id integer NOT NULL,
-    state integer DEFAULT 0 NOT NULL,
+    state public.item_state DEFAULT 'new'::public.item_state NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     user_id integer NOT NULL
@@ -433,6 +444,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211008112023'),
 ('20220407073237'),
 ('20220408114949'),
-('20220411083551');
+('20220411083551'),
+('20220501124525'),
+('20220529012334');
 
 
