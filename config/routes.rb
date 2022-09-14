@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :channels, only: [:create, :index, :update]
   resources :videos, only: [:create, :index, :update, :destroy]
   post 'channels/takeout', to: 'channels#takeout', format: 'application/json'
+  get 'settings', to: 'settings#show'
+  patch 'settings', to: 'settings#update'
+  put 'settings', to: 'settings#update'
 
   # pubsub
   get 'push/:channel_id', to: 'push#validate'

@@ -156,7 +156,8 @@ CREATE TABLE public.users (
     email character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    password_digest character varying NOT NULL
+    password_digest character varying NOT NULL,
+    settings jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 
 
@@ -446,6 +447,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220408114949'),
 ('20220411083551'),
 ('20220501124525'),
-('20220529012334');
+('20220529012334'),
+('20220912113632');
 
 

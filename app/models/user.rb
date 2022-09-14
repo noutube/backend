@@ -7,6 +7,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  password_digest :string           not null
+#  settings        :jsonb            not null
 #
 # Indexes
 #
@@ -30,9 +31,25 @@ class User < ApplicationRecord
             format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be an email address' }
 
   validates :password,
-            length: { minimum: 8 }
+            length: { minimum: 8, allow_nil: true }
+
+  validates :settings,
+            presence: true
+
+  after_update do
+    if saved_change_to_settings?
+      broadcast_settings
+    end
+  end
 
   def all_channels
     (channels + video_channels).uniq
+  end
+
+  def broadcast_settings
+    FeedChannel.broadcast_to \
+      self,
+      action: :settings,
+      payload: settings
   end
 end
