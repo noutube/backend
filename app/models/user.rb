@@ -33,9 +33,6 @@ class User < ApplicationRecord
   validates :password,
             length: { minimum: 8, allow_nil: true }
 
-  validates :settings,
-            presence: true
-
   after_update do
     if saved_change_to_settings?
       broadcast_settings
