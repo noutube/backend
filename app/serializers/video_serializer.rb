@@ -5,5 +5,9 @@ class VideoSerializer < ActiveModel::Serializer
     Item.find_by(video: object, user: scope).state
   end
 
+  attribute :progress do
+    Item.find_by(video: object, user: scope).progress
+  end
+
   belongs_to :channel
 end

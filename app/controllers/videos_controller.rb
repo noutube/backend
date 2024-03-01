@@ -39,7 +39,7 @@ class VideosController < ApiController
     authorize! :update, Item
     item = Item.find_by!(video_id: params[:id], user: current_user)
     authorize! :update, item
-    attributes = ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:state])
+    attributes = ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:state, :progress])
     if item.update(attributes)
       head :no_content
     else
