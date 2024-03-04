@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+--
 -- Name: item_state; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -81,7 +88,8 @@ CREATE TABLE public.items (
     state public.item_state DEFAULT 'new'::public.item_state NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    user_id integer NOT NULL
+    user_id integer NOT NULL,
+    progress integer DEFAULT 0 NOT NULL
 );
 
 
@@ -448,6 +456,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220411083551'),
 ('20220501124525'),
 ('20220529012334'),
-('20220912113632');
+('20220912113632'),
+('20240301110411');
 
 
