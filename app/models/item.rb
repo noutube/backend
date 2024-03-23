@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  user_id    :integer          not null
 #  progress   :integer          default(0), not null
+#  tags       :text             default([]), not null, is an Array
 #
 # Indexes
 #
