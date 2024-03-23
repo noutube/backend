@@ -89,7 +89,8 @@ CREATE TABLE public.items (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     user_id integer NOT NULL,
-    progress integer DEFAULT 0 NOT NULL
+    progress integer DEFAULT 0 NOT NULL,
+    tags text[] DEFAULT '{}'::text[] NOT NULL
 );
 
 
@@ -457,6 +458,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220501124525'),
 ('20220529012334'),
 ('20220912113632'),
-('20240301110411');
+('20240301110411'),
+('20240323040259');
 
 

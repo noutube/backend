@@ -9,5 +9,9 @@ class VideoSerializer < ActiveModel::Serializer
     Item.find_by(video: object, user: scope).progress
   end
 
+  attribute :tags do
+    Item.find_by(video: object, user: scope).tags
+  end
+
   belongs_to :channel
 end
