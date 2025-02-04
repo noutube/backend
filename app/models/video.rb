@@ -14,6 +14,7 @@
 #  is_live_content :boolean          default(FALSE), not null
 #  is_upcoming     :boolean          default(FALSE), not null
 #  scheduled_at    :datetime
+#  visibility      :enum             default("visible"), not null
 #
 # Indexes
 #
@@ -45,6 +46,11 @@ class Video < ApplicationRecord
 
   def scrape(body = nil)
     return unless body = Scrape.scrape('video', videoId: api_id) unless body
+
+    unless body['visible']
+      self.visibility = body['reason']
+      return
+    end
 
     self.duration = body['duration']
     self.is_live = body['isLive']

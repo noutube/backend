@@ -1,6 +1,7 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -24,6 +25,19 @@ CREATE TYPE public.item_state AS ENUM (
     'new',
     'later',
     'deleted'
+);
+
+
+--
+-- Name: visibility; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.visibility AS ENUM (
+    'visible',
+    'banned',
+    'removed',
+    'private',
+    'age'
 );
 
 
@@ -54,7 +68,8 @@ CREATE TABLE public.channels (
     thumbnail character varying DEFAULT ''::character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    secret_key character varying DEFAULT ''::character varying NOT NULL
+    secret_key character varying DEFAULT ''::character varying NOT NULL,
+    visibility public.visibility DEFAULT 'visible'::public.visibility NOT NULL
 );
 
 
@@ -205,7 +220,8 @@ CREATE TABLE public.videos (
     is_live boolean DEFAULT false NOT NULL,
     is_live_content boolean DEFAULT false NOT NULL,
     is_upcoming boolean DEFAULT false NOT NULL,
-    scheduled_at timestamp without time zone
+    scheduled_at timestamp without time zone,
+    visibility public.visibility DEFAULT 'visible'::public.visibility NOT NULL
 );
 
 
@@ -457,6 +473,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220501124525'),
 ('20220529012334'),
 ('20220912113632'),
-('20240301110411');
+('20240301110411'),
+('20250204053124');
 
 

@@ -9,6 +9,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  secret_key :string           default(""), not null
+#  visibility :enum             default("visible"), not null
 #
 # Indexes
 #
@@ -65,6 +66,11 @@ class Channel < ApplicationRecord
 
   def scrape(body = nil)
     return unless body = Scrape.scrape('channel', channelId: api_id) unless body
+
+    unless body['visible']
+      self.visibility = body['reason']
+      return
+    end
 
     self.thumbnail = body['thumbnail']
     self.title = body['title']

@@ -43,19 +43,26 @@ namespace :noutube do
     puts "culled #{video_count - Video.count} videos (#{item_count - Item.count} items)"
 
     # get thumbnail if missing
-    Channel.where(thumbnail: '').find_each do |channel|
-      channel.scrape
-      channel.save
-    end
+    Channel.where(thumbnail: '', visibility: :visible)
+      .limit(12)
+      .find_each do |channel|
+        sleep 5
+        channel.scrape
+        channel.save
+      end
 
     # get duration if missing
-    Video.where(duration: 0).find_each do |video|
-      video.scrape
-      if video.expired_live_content?
-        video.destroy
-      else
-        video.save
+    Video.where(duration: 0, visibility: :visible)
+      .order(created_at: :desc)
+      .limit(24)
+      .find_each do |video|
+        sleep 5
+        video.scrape
+        if video.expired_live_content?
+          video.destroy
+        else
+          video.save
+        end
       end
-    end
   end
 end
