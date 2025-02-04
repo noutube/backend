@@ -11,8 +11,8 @@ module Scrape
     def scrape(resource, **query)
       response = Net::HTTP.get_response \
         URI::HTTPS.build \
-          host: 'scrape.noutu.be',
-          path: "/#{resource}",
+          host: 'australia-southeast1-noutube-432804.cloudfunctions.net',
+          path: "/noutube-scrape/#{resource}",
           query: URI.encode_www_form(DEFAULT_QUERY.merge(query))
       return nil unless response.code == '200'
       JSON.parse(response.body)
