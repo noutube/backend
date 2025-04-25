@@ -43,6 +43,9 @@ class PushController < ApplicationController
       end
     end
 
+    # very often scraping fails right after a video is created, so defer and try again
+    ScrapeVideoJob.set(wait: 10.seconds).perform_later(video) unless video.duration
+
     head :ok
   end
 end
