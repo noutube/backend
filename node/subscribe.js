@@ -18,7 +18,7 @@ const elapsed = (start) => {
 const getChannels = async () => {
   const client = new Client({ database: POSTGRESQL_DATABASE });
   await client.connect();
-  const { rows } = await client.query('SELECT id, api_id, title, secret_key FROM channels JOIN subscriptions ON subscriptions.channel_id = channels.id');
+  const { rows } = await client.query('SELECT channels.id AS id, api_id, title, secret_key FROM channels JOIN subscriptions ON subscriptions.channel_id = channels.id');
   await client.end();
   return rows;
 };
